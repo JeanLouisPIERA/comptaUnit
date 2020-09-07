@@ -9,6 +9,7 @@ import com.dummy.myerp.business.contrat.BusinessProxy;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 
 
+
 /**
  * <p>Classe mère des Managers</p>
  */

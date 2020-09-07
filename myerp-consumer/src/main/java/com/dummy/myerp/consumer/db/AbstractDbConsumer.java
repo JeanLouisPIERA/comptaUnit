@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import com.dummy.myerp.consumer.ConsumerHelper;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
-
+import com.dummy.myerp.consumer.db.DataSourcesEnum;
 
 /**
  * <p>Classe mère des classes de Consumer DB</p>

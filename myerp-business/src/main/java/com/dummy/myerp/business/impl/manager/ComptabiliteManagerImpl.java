@@ -78,10 +78,11 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
     /**
      * {@inheritDoc}
+     * @throws FunctionalException 
      */
     // TODO à tester
     @Override
-    public void checkEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException {
+    public void checkEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException  {
         this.checkEcritureComptableUnit(pEcritureComptable);
         this.checkEcritureComptableContext(pEcritureComptable);
     }
