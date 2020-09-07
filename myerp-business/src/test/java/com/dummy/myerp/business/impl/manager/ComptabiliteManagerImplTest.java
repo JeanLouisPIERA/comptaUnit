@@ -47,8 +47,8 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.setDate(new Date());
         vEcritureComptable.setLibelle("Libelle");
         vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
-                                                                                 null, new BigDecimal(123),
-                                                                                 null));
+                                                                                 null, null, new BigDecimal(1234)
+                                                                                 ));
         vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
                                                                                  null, null,
                                                                                  new BigDecimal(1234)));
