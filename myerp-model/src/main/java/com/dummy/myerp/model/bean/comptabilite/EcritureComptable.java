@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 
@@ -133,4 +134,17 @@ public class EcritureComptable {
             .append("}");
         return vStB.toString();
     }
+    
+    public LigneEcritureComptable createLigne(Integer pCompteComptableNumero, String pDebit, String pCredit) {
+        BigDecimal vDebit = pDebit == null ? null : new BigDecimal(pDebit);
+        BigDecimal vCredit = pCredit == null ? null : new BigDecimal(pCredit);
+        String vLibelle = ObjectUtils.defaultIfNull(vDebit, BigDecimal.ZERO)
+                                     .subtract(ObjectUtils.defaultIfNull(vCredit, BigDecimal.ZERO)).toPlainString();
+        LigneEcritureComptable vRetour = new LigneEcritureComptable(new CompteComptable(pCompteComptableNumero),
+                                                                    vLibelle,
+                                                                    vDebit, vCredit);
+        return vRetour;
+    }
+    
+    
 }
