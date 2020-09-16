@@ -1,6 +1,9 @@
 package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
@@ -11,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.TransactionStatus;
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
+import com.dummy.myerp.consumer.db.DataSourcesEnum;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
@@ -74,6 +78,55 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 4.  Enregistrer (insert/update) la valeur de la séquence en persitance
                     (table sequence_ecriture_comptable)
          */
+    	/*
+    	 * Ajoute une référence à l'écriture comptable. 
+    	   RG_Compta_5 : La référence d'une écriture comptable est composée 
+		   du code du journal dans lequel figure l'écriture suivi de l'année 
+		   et d'un numéro de séquence (propre à chaque journal) sur 5 chiffres incrémenté automatiquement à chaque écriture. 
+		   Le formatage de la référence est : XX-AAAA/#####.
+		   Ex : Journal de banque (BQ), écriture au 31/12/2016
+		   BQ-2016/00001
+		   Attention : l'écriture n'est pas enregistrée en persistance
+    	 */
+    	
+    	
+    	//Récupère la partie XX de la référrence
+    	String journalCode = pEcritureComptable.getJournal().getCode(); 
+    	
+    	//Recupère la partie AAAA de la référence
+    	Calendar calendar = new GregorianCalendar();
+    	calendar.setTime(pEcritureComptable.getDate());
+    	Integer annee = calendar.get(Calendar.YEAR);
+    	
+    	//Récupère la dernière valeur utilisée d'une séquence dans le journal comptable 
+    	JournalComptable journal = pEcritureComptable.getJournal();
+    	String sequence = ""; 
+    	Integer vId = getDaoProxy().getComptabiliteDao().queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum.MYERP, "myerp.ecriture_comptable", journal,
+                Integer.class);
+    	
+    	//Calcul et formatage de la part ##### de la référence
+    	DecimalFormat df = new DecimalFormat("00000");
+    			if (vId == null) {sequence = df.format(1) ;} 
+    			else {sequence = df.format(vId + 1);}
+    	
+    	//Constuction du String reference au format xx-AAAA/#####
+        StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
+        String vSEP1 = "-"; 
+        String vSEP2 = "/";
+        vStB.append("{")
+        	.append(journalCode)
+        	.append(vSEP1)
+            .append(annee)
+            .append(vSEP2).append(sequence)
+            .append("}");
+        String reference = vStB.toString();
+            
+		//Mise à jour de la référence de l'écriture avec la référence calculée (RG_Compta_5)
+        pEcritureComptable.setReference(reference);
+		
+        //Enregistrer (insert/update) la valeur de la séquence en persitance
+        getDaoProxy().getComptabiliteDao().insertEcritureComptable(pEcritureComptable);
+    	
     }
 
     /**

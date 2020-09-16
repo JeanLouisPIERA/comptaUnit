@@ -3,6 +3,8 @@ package com.dummy.myerp.consumer.dao.impl.db.dao;
 import java.sql.Types;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -148,6 +150,27 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         pEcritureComptable.getListLigneEcriture().clear();
         pEcritureComptable.getListLigneEcriture().addAll(vList);
     }
+    
+    /**
+     * Renvoie le dernière valeur utilisé d'une séquence
+     *
+     * <p><i><b>Attention : </b>Méthode spécifique au SGBD PostgreSQL</i></p>
+     *
+     * @param <T> : La classe de la valeur de la séquence.
+     * @param pDataSourcesId : L'identifiant de la {@link DataSource} à utiliser
+     * @param pSeqName : Le nom de la séquence dont on veut récupérer la valeur
+     * @param pSeqValueClass : Classe de la valeur de la séquence
+     * @return la dernière valeur de la séquence
+     */
+    @Override
+    public <T> T queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum pDataSourcesId,
+            String pSeqName, JournalComptable journal, Class<T> pSeqValueClass) {
+    	   	
+    	return this.queryGetSequenceValueJournalPostgreSQL(pDataSourcesId, pSeqName, journal, pSeqValueClass);
+    	
+		}
+    
+    
 
 
     // ==================== EcritureComptable - INSERT ====================
@@ -177,6 +200,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         // ===== Liste des lignes d'écriture
         this.insertListLigneEcritureComptable(pEcritureComptable);
     }
+    
 
     /** SQLinsertListLigneEcritureComptable */
     private static String SQLinsertListLigneEcritureComptable;

@@ -2,6 +2,9 @@ package com.dummy.myerp.consumer.dao.contrat;
 
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import com.dummy.myerp.consumer.db.DataSourcesEnum;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
@@ -52,6 +55,23 @@ public interface ComptabiliteDao {
      * @throws NotFoundException : Si l'écriture comptable n'est pas trouvée
      */
     EcritureComptable getEcritureComptableByRef(String pReference) throws NotFoundException;
+    
+    
+    /**
+     * Renvoie le dernière valeur utilisé d'une séquence
+     *
+     * <p><i><b>Attention : </b>Méthode spécifique au SGBD PostgreSQL</i></p>
+     *
+     * @param <T> : La classe de la valeur de la séquence.
+     * @param pDataSourcesId : L'identifiant de la {@link DataSource} à utiliser
+     * @param pSeqName : Le nom de la séquence dont on veut récupérer la valeur
+     * @param pSeqValueClass : Classe de la valeur de la séquence
+     * @return la dernière valeur de la séquence
+     */
+    <T> T queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum pDataSourcesId,
+            String pSeqName, JournalComptable journal, Class<T> pSeqValueClass);
+    
+    
 
     /**
      * Charge la liste des lignes d'écriture de l'écriture comptable {@code pEcritureComptable}
