@@ -1,9 +1,12 @@
 package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import org.junit.Test;
@@ -20,11 +23,37 @@ public class ComptabiliteManagerImplTest {
 
 
     @Test
-    public void checkEcritureComptableUnit() throws FunctionalException  {
+    public void checkEcritureComptableUnit() throws FunctionalException, ParseException  {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
+        
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        vEcritureComptable.setDate(new Date());
+        String journalCode = "Achat";
+        
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.FRANCE);
+        String sdateTest = "2020/02/01";
+        Date dateTest = simpleDateFormat.parse(sdateTest);
+        vEcritureComptable.setDate(dateTest);
+        
+        Calendar calendar = new GregorianCalendar();
+    	calendar.setTime(dateTest);
+    	Integer annee = calendar.get(Calendar.YEAR);
+    	
+    	Integer sequence = 1;
+    	DecimalFormat df = new DecimalFormat("00000");
+    	String enregistrement = df.format(sequence) ;
+    	
+    	StringBuilder vStB = new StringBuilder();
+		String vSEP1 = "-"; 
+		String vSEP2 = "/";
+		vStB.append(journalCode)
+			.append(vSEP1)
+		    .append(annee)
+		    .append(vSEP2).append(enregistrement);
+		String reference = vStB.toString();
+        
+        vEcritureComptable.setReference(reference);
+        
         vEcritureComptable.setLibelle("Libelle");
         vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
                                                                                  null, new BigDecimal(123),

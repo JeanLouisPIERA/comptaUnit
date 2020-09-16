@@ -125,7 +125,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     	
     	//Constuction du String reference au format xx-AAAA/#####
         StringBuilder vStB = new StringBuilder();
-        		//getClass().getSimpleName());
         String vSEP1 = "-"; 
         String vSEP2 = "/";
         vStB.append(journalCode)
@@ -164,7 +163,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
         Set<ConstraintViolation<EcritureComptable>> vViolations = getConstraintValidator().validate(pEcritureComptable);
         if (!vViolations.isEmpty()) {
-            throw new FunctionalException("L'écriture comptable ne respecte pas les règles de gestion.",
+            throw new FunctionalException("L'écriture comptable ne respecte pas les règles de gestion." + vViolations.toString(),
                                           new ConstraintViolationException(
                                               "L'écriture comptable ne respecte pas les contraintes de validation",
                                               vViolations));
@@ -199,6 +198,23 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
         // TODO ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
+        
+        String journalCode = pEcritureComptable.getJournal().getCode(); 
+        
+        Calendar calendar = new GregorianCalendar();
+    	calendar.setTime(pEcritureComptable.getDate());
+    	Integer year = calendar.get(Calendar.YEAR);
+    	StringBuilder vStB = new StringBuilder();
+    	vStB.append(year);
+    	String annee = vStB.toString();
+  	
+        if(pEcritureComptable.getReference().startsWith(journalCode))
+        	throw new FunctionalException("Le code journal dans la référence ne correspond pas au journal où se trouve l'écriture");
+        if(!pEcritureComptable.getReference().contains(annee))
+        		
+        		//.split(annee).toString().equals(annee)  )
+        	throw new FunctionalException("L'année dans la référence ne correspond pas à la date de l'écriture");
+        
     }
 
 
