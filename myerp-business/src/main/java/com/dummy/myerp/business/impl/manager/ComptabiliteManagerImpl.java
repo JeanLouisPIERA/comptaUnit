@@ -78,18 +78,27 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 4.  Enregistrer (insert/update) la valeur de la séquence en persitance
                     (table sequence_ecriture_comptable)
          */
-    	/*
-    	 * Ajoute une référence à l'écriture comptable. 
-    	   RG_Compta_5 : La référence d'une écriture comptable est composée 
-		   du code du journal dans lequel figure l'écriture suivi de l'année 
-		   et d'un numéro de séquence (propre à chaque journal) sur 5 chiffres incrémenté automatiquement à chaque écriture. 
-		   Le formatage de la référence est : XX-AAAA/#####.
-		   Ex : Journal de banque (BQ), écriture au 31/12/2016
-		   BQ-2016/00001
-		   Attention : l'écriture n'est pas enregistrée en persistance
-    	 */
     	
     	
+    	//Créer et checker la référence 
+    	this.createAndCheckReferenceEcritureComptableRG5(pEcritureComptable);
+    	
+        //Enregistrer (insert/update) la valeur de la séquence en persitance
+        getDaoProxy().getComptabiliteDao().insertEcritureComptable(pEcritureComptable);
+    	
+    }
+    
+    /*
+	 * Ajoute une référence à l'écriture comptable. 
+	   RG_Compta_5 : La référence d'une écriture comptable est composée 
+	   du code du journal dans lequel figure l'écriture suivi de l'année 
+	   et d'un numéro de séquence (propre à chaque journal) sur 5 chiffres incrémenté automatiquement à chaque écriture. 
+	   Le formatage de la référence est : XX-AAAA/#####.
+	   Ex : Journal de banque (BQ), écriture au 31/12/2016
+	   BQ-2016/00001
+	   Attention : l'écriture n'est pas enregistrée en persistance
+	 */
+    public void createAndCheckReferenceEcritureComptableRG5(EcritureComptable pEcritureComptable) {
     	//Récupère la partie XX de la référrence
     	String journalCode = pEcritureComptable.getJournal().getCode(); 
     	
@@ -101,8 +110,13 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     	//Récupère la dernière valeur utilisée d'une séquence dans le journal comptable 
     	JournalComptable journal = pEcritureComptable.getJournal();
     	String sequence = ""; 
-    	Integer vId = getDaoProxy().getComptabiliteDao().queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum.MYERP, "myerp.ecriture_comptable", journal,
-                Integer.class);
+    	Integer vId;
+		try {
+			vId = getDaoProxy().getComptabiliteDao().queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum.MYERP, "myerp.ecriture_comptable", journal,
+			        Integer.class);
+		} catch (Exception e) {
+			vId = null;
+		}
     	
     	//Calcul et formatage de la part ##### de la référence
     	DecimalFormat df = new DecimalFormat("00000");
@@ -110,24 +124,21 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     			else {sequence = df.format(vId + 1);}
     	
     	//Constuction du String reference au format xx-AAAA/#####
-        StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
+        StringBuilder vStB = new StringBuilder();
+        		//getClass().getSimpleName());
         String vSEP1 = "-"; 
         String vSEP2 = "/";
-        vStB.append("{")
-        	.append(journalCode)
+        vStB.append(journalCode)
         	.append(vSEP1)
             .append(annee)
-            .append(vSEP2).append(sequence)
-            .append("}");
+            .append(vSEP2).append(sequence);
         String reference = vStB.toString();
             
 		//Mise à jour de la référence de l'écriture avec la référence calculée (RG_Compta_5)
         pEcritureComptable.setReference(reference);
-		
-        //Enregistrer (insert/update) la valeur de la séquence en persitance
-        getDaoProxy().getComptabiliteDao().insertEcritureComptable(pEcritureComptable);
     	
     }
+    
 
     /**
      * {@inheritDoc}

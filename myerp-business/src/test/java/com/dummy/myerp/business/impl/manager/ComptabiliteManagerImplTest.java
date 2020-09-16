@@ -1,7 +1,10 @@
 package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import org.junit.Test;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
@@ -70,5 +73,21 @@ public class ComptabiliteManagerImplTest {
                                                                                  null));
         manager.checkEcritureComptableUnit(vEcritureComptable);
     }
+    
+    @Test
+    public void createAndCheckReferenceEcritureComptableRG5() throws FunctionalException, ParseException {
+    	EcritureComptable vEcritureComptable;
+        vEcritureComptable = new EcritureComptable();
+        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.FRANCE);
+        String sdateTest = "2020/02/01";
+        Date dateTest = simpleDateFormat.parse(sdateTest);
+        vEcritureComptable.setDate(dateTest);
+        manager.createAndCheckReferenceEcritureComptableRG5(vEcritureComptable);
+        
+        if (!vEcritureComptable.getReference().equals("AC-2020/00001")) throw new FunctionalException("La référence" + vEcritureComptable.getReference() + "n'est pas correcte");
+        
+    }
+    
 
 }
