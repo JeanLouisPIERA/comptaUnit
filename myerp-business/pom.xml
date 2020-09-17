@@ -82,6 +82,13 @@
             <scope>test</scope>
         </dependency>
         
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
+			<dependency>
+			    <groupId>org.junit.jupiter</groupId>
+			    <artifactId>junit-jupiter</artifactId>
+			    <scope>test</scope>
+			</dependency>
+        
         <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api 
         the JAXB library (Java Architecture for XML Binding) is missing in the classpath. 
         JAXB is included in Java SE 10 or older, but it is removed from Java SE from Java 11 or newer –moved to Java EE under Jakarta EE project.

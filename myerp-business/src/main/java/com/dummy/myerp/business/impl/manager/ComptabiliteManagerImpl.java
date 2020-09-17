@@ -62,7 +62,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     /**
      * {@inheritDoc}
      */
-    // TODO à tester
+    // DONE 1 à tester
     @Override
     public synchronized void addReference(EcritureComptable pEcritureComptable) {
         // TODO à implémenter
@@ -168,8 +168,9 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                                               "L'écriture comptable ne respecte pas les contraintes de validation",
                                               vViolations));
         }
+  
 
-        // ===== RG_Compta_2 : Pour qu'une écriture comptable soit valide, elle doit être équilibrée
+        //===== RG_Compta_2 : Pour qu'une écriture comptable soit valide, elle doit être équilibrée
         if (!pEcritureComptable.isEquilibree()) {
             throw new FunctionalException("L'écriture comptable n'est pas équilibrée.");
         }
@@ -195,8 +196,9 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             throw new FunctionalException(
                 "L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.");
         }
-
-        // TODO ===== RG_Compta_5 : Format et contenu de la référence
+        
+        
+        // DONE 2 ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
         
         String journalCode = pEcritureComptable.getJournal().getCode(); 
@@ -208,14 +210,43 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     	vStB.append(year);
     	String annee = vStB.toString();
   	
-        if(pEcritureComptable.getReference().startsWith(journalCode))
+        if(pEcritureComptable.getReference().contains(journalCode)==false)
         	throw new FunctionalException("Le code journal dans la référence ne correspond pas au journal où se trouve l'écriture");
-        if(!pEcritureComptable.getReference().contains(annee))
-        		
-        		//.split(annee).toString().equals(annee)  )
-        	throw new FunctionalException("L'année dans la référence ne correspond pas à la date de l'écriture");
+        if(pEcritureComptable.getReference().contains(annee)==false)
+        	throw new FunctionalException("L'année dans la référence ne correspond pas à la date de l'écriture" + annee);
         
     }
+    
+    
+    
+   
+    //DONE ====== RG_Compta_1 : Le solde d'un compte comptable est égal à la somme des montants au débit des lignes d'écriture 
+	// diminuées de la somme des montants au crédit. 
+	// Si le résultat est positif, le solde est dit "débiteur", si le résultat est négatif le solde est dit "créditeur".
+    public void checkSoldeCompteComptableRG1(EcritureComptable pEcritureComptable, CompteComptable pCompteComptable, Integer solde) throws FunctionalException  {
+    	Integer soldeCredit = 0;
+    	Integer soldeDebit = 0;
+        for (LigneEcritureComptable vLigneEcritureComptable : pEcritureComptable.getListLigneEcriture()) {
+            if(vLigneEcritureComptable.getCompteComptable().equals(pCompteComptable)) {
+            	if(vLigneEcritureComptable.getCredit()!=null) soldeCredit += vLigneEcritureComptable.getCredit().intValue();
+            	if(vLigneEcritureComptable.getDebit()!=null) soldeDebit += vLigneEcritureComptable.getDebit().intValue();
+            }
+        }
+        Integer result = soldeCredit - soldeDebit;
+        if(solde!=result) 
+        	throw new FunctionalException("La RG Compta 1 n'est pas respectée : le solde d'un compte comptable n'est pas égal \n"
+        			+ " à la somme des montants au débit des lignes d'écriture diminuées de la somme des montants au crédit. " + result + soldeCredit + soldeDebit); 
+        
+    }
+    
+    //EN CHANTIER
+    //TO DO ===== RG_Compta_4	Les montants des lignes d'écriture sont signés 
+    //et peuvent prendre des valeurs négatives (même si cela est peu fréquent).
+    public void checkLigneEcritureRG4() throws FunctionalException  {
+    	
+    }
+    
+    
 
 
     /**
