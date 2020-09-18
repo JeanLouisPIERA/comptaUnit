@@ -37,7 +37,6 @@
     <!-- Properties -->
     <!-- =============================================================== -->
     <properties>
-    
     <!-- Used to locate the profile specific configuration file. >
         <jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.execution.data.file>
         <jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.execution.data.file-->
@@ -82,12 +81,26 @@
             <scope>test</scope>
         </dependency>
         
+        <dependency>
+			    <groupId>org.mockito</groupId>
+			    <artifactId>mockito-all</artifactId>
+			    <version>1.10.19</version>
+			    <scope>test</scope>
+			</dependency>
+        
         <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
 			<dependency>
 			    <groupId>org.junit.jupiter</groupId>
 			    <artifactId>junit-jupiter</artifactId>
 			    <scope>test</scope>
 			</dependency>
+			
+		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter -->
+			<dependency>
+			    <groupId>org.mockito</groupId>
+			    <artifactId>mockito-junit-jupiter</artifactId>
+			    <scope>test</scope>
+			</dependency>	
         
         <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api 
         the JAXB library (Java Architecture for XML Binding) is missing in the classpath. 

@@ -90,15 +90,16 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     
     /*
 	 * Ajoute une référence à l'écriture comptable. 
-	   RG_Compta_5 : La référence d'une écriture comptable est composée 
-	   du code du journal dans lequel figure l'écriture suivi de l'année 
-	   et d'un numéro de séquence (propre à chaque journal) sur 5 chiffres incrémenté automatiquement à chaque écriture. 
-	   Le formatage de la référence est : XX-AAAA/#####.
-	   Ex : Journal de banque (BQ), écriture au 31/12/2016
-	   BQ-2016/00001
-	   Attention : l'écriture n'est pas enregistrée en persistance
+	 * RG_Compta_5 : La référence d'une écriture comptable est composée 
+	 * du code du journal dans lequel figure l'écriture suivi de l'année 
+	 * et d'un numéro de séquence (propre à chaque journal) sur 5 chiffres incrémenté automatiquement à chaque écriture. 
+	 * Le formatage de la référence est : XX-AAAA/#####.
+	 * Ex : Journal de banque (BQ), écriture au 31/12/2016
+	 * BQ-2016/00001
+	 * Attention : l'écriture n'est pas enregistrée en persistance
 	 */
     //======== DONE 1
+    @Override
     public void createAndCheckReferenceEcritureComptableRG5(EcritureComptable pEcritureComptable) {
     	//Récupère la partie XX de la référrence
     	String journalCode = pEcritureComptable.getJournal().getCode(); 
@@ -142,6 +143,8 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
     /**
      * {@inheritDoc}
+     * Les tests n'ont pas été réalisés pour cette méthode qui appelle 2 sous-méthodes qui ont été testées
+     * Pour cela chacune des sous-méthodes a été passée en public
      * @throws FunctionalException 
      */
     // TODO à tester
@@ -160,7 +163,8 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
     // DONE tests à compléter
-    protected void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException {
+    @Override
+    public void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException {
         // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
         Set<ConstraintViolation<EcritureComptable>> vViolations = getConstraintValidator().validate(pEcritureComptable);
         if (!vViolations.isEmpty()) {
@@ -218,10 +222,15 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         
     }
     
-  
-    //DONE 3 ====== RG_Compta_1 : Le solde d'un compte comptable est égal à la somme des montants au débit des lignes d'écriture 
-	// diminuées de la somme des montants au crédit. 
-	// Si le résultat est positif, le solde est dit "débiteur", si le résultat est négatif le solde est dit "créditeur".
+    /**
+     * DONE 3 ====== RG_Compta_1 : Le solde d'un compte comptable est égal à la somme des montants au débit des lignes d'écriture 
+  	 * diminuées de la somme des montants au crédit. 
+  	 * Si le résultat est positif, le solde est dit "débiteur", si le résultat est négatif le solde est dit "créditeur".
+     * @param pEcritureComptable
+     * @param pCompteComptable
+     * @param solde
+     * @throws FunctionalException
+     */
     public void checkSoldeCompteComptableRG1(EcritureComptable pEcritureComptable, CompteComptable pCompteComptable, Integer solde) throws FunctionalException  {
     	Integer soldeCredit = 0;
     	Integer soldeDebit = 0;
@@ -238,15 +247,19 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         
     }
     
-    //EN CHANTIER
-    //TO DO ===== RG_Compta_4	Les montants des lignes d'écriture sont signés 
-    //et peuvent prendre des valeurs négatives (même si cela est peu fréquent).
-    public void checkLigneEcritureRG4() throws FunctionalException  {
+    
+    /**
+     * RG_Compta_4	Les montants des lignes d'écriture sont signés 
+     * et peuvent prendre des valeurs négatives (même si cela est peu fréquent).
+     * @param pEcritureComptable
+     * @throws FunctionalException
+     */
+     //EN CHANTIER
+    @Override
+    public void checkLigneEcritureRG4(EcritureComptable pEcritureComptable) throws FunctionalException  {
     	
     }
     
-    
-
 
     /**
      * Vérifie que l'Ecriture comptable respecte les règles de gestion liées au contexte
@@ -255,7 +268,8 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * @param pEcritureComptable -
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
-    protected void checkEcritureComptableContext(EcritureComptable pEcritureComptable) throws FunctionalException {
+    @Override
+    public void checkEcritureComptableContext(EcritureComptable pEcritureComptable) throws FunctionalException {
         // ===== RG_Compta_6 : La référence d'une écriture comptable doit être unique
         if (StringUtils.isNoneEmpty(pEcritureComptable.getReference())) {
             try {

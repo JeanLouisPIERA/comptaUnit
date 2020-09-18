@@ -1,17 +1,24 @@
 package com.dummy.myerp.business.impl.manager;
 
-import java.math.BigDecimal;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
+
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
-import javax.validation.constraints.Digits;
-
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.BDDMockito.Then;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+
+import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
@@ -19,9 +26,23 @@ import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
 
 
+@ExtendWith(MockitoExtension.class)
 public class ComptabiliteManagerImplTest {
-
-    private ComptabiliteManagerImpl manager = new ComptabiliteManagerImpl();
+	
+	@Mock
+	EcritureComptable ecriture;
+	
+	@Mock
+	LigneEcritureComptable ligneEcriture;
+	
+	ComptabiliteManager comptaManager;
+	
+	@BeforeEach
+	public void init() {
+	comptaManager = new ComptabiliteManagerImpl();
+	}
+    
+	private ComptabiliteManagerImpl manager = new ComptabiliteManagerImpl();
     
     /**
      * Ce bout de code est erroné dans toutes les méthodes de test fournies
@@ -109,6 +130,7 @@ public class ComptabiliteManagerImplTest {
      */
     @Test(expected = FunctionalException.class)
     public void checkEcritureComptableUnitRG2() throws FunctionalException, ParseException  {
+    	/**
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -122,6 +144,31 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 1234.00, 0.00));	
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 0.00, 1233.00));		
         manager.checkEcritureComptableUnit(vEcritureComptable);
+        **/
+        
+    	
+    	//GIVEN
+    	LigneEcritureComptable ligne1 = ecriture.createLigne(1, 1234.00, 0.00);
+    	LigneEcritureComptable ligne2 = ecriture.createLigne(2, 0.00, 1233.00);
+    	ecriture.getListLigneEcriture().add(ligne1);
+    	ecriture.getListLigneEcriture().add(ligne2);
+    	when(ecriture.isEquilibree()).thenThrow(new FunctionalException("L'écriture n'est pas équilibrée"));
+    	
+    	//WHEN
+    	comptaManager.checkEcritureComptableUnit(ecriture);
+    	
+    	//THEN
+    	verify(ecriture).checkIsEquilibree(ecriture);;
+    	doThrow(new FunctionalException("L'écriture n'est pas équilibrée"));
+    	
+    	
+    	
+        
+          
+          
+          
+          
+         
     }
     
     //====== VU
