@@ -65,7 +65,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     // DONE 1 à tester
     @Override
     public synchronized void addReference(EcritureComptable pEcritureComptable) {
-        // TODO à implémenter
+        // DONE 1 à implémenter
         // Bien se réferer à la JavaDoc de cette méthode !
         /* Le principe :
                 1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
@@ -98,6 +98,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 	   BQ-2016/00001
 	   Attention : l'écriture n'est pas enregistrée en persistance
 	 */
+    //======== DONE 1
     public void createAndCheckReferenceEcritureComptableRG5(EcritureComptable pEcritureComptable) {
     	//Récupère la partie XX de la référrence
     	String journalCode = pEcritureComptable.getJournal().getCode(); 
@@ -158,7 +159,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * @param pEcritureComptable -
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
-    // TODO tests à compléter
+    // DONE tests à compléter
     protected void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException {
         // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
         Set<ConstraintViolation<EcritureComptable>> vViolations = getConstraintValidator().validate(pEcritureComptable);
@@ -171,9 +172,9 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
   
 
         //===== RG_Compta_2 : Pour qu'une écriture comptable soit valide, elle doit être équilibrée
-        if (!pEcritureComptable.isEquilibree()) {
+        if (!pEcritureComptable.isEquilibree()) 
             throw new FunctionalException("L'écriture comptable n'est pas équilibrée.");
-        }
+        
 
         // ===== RG_Compta_3 : une écriture comptable doit avoir au moins 2 lignes d'écriture (1 au débit, 1 au crédit)
         int vNbrCredit = 0;
@@ -217,10 +218,8 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         
     }
     
-    
-    
-   
-    //DONE ====== RG_Compta_1 : Le solde d'un compte comptable est égal à la somme des montants au débit des lignes d'écriture 
+  
+    //DONE 3 ====== RG_Compta_1 : Le solde d'un compte comptable est égal à la somme des montants au débit des lignes d'écriture 
 	// diminuées de la somme des montants au crédit. 
 	// Si le résultat est positif, le solde est dit "débiteur", si le résultat est négatif le solde est dit "créditeur".
     public void checkSoldeCompteComptableRG1(EcritureComptable pEcritureComptable, CompteComptable pCompteComptable, Integer solde) throws FunctionalException  {
@@ -235,7 +234,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         Integer result = soldeCredit - soldeDebit;
         if(solde!=result) 
         	throw new FunctionalException("La RG Compta 1 n'est pas respectée : le solde d'un compte comptable n'est pas égal \n"
-        			+ " à la somme des montants au débit des lignes d'écriture diminuées de la somme des montants au crédit. " + result + soldeCredit + soldeDebit); 
+        			+ " à la somme des montants au débit des lignes d'écriture diminuées de la somme des montants au crédit. "); 
         
     }
     

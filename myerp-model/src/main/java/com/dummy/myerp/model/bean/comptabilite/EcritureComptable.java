@@ -13,6 +13,9 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import com.dummy.myerp.technical.exception.FunctionalException;
+import com.dummy.myerp.technical.exception.TechnicalException;
+
 
 /**
  * Bean représentant une Écriture Comptable
@@ -81,16 +84,37 @@ public class EcritureComptable {
      *
      * @return {@link BigDecimal}, {@link BigDecimal#ZERO} si aucun montant au débit
      */
-    // TODO à tester
+    // DONE TODO à tester
     public BigDecimal getTotalDebit() {
         BigDecimal vRetour = BigDecimal.ZERO;
-        for (LigneEcritureComptable vLigneEcritureComptable : listLigneEcriture) {
+        for (LigneEcritureComptable vLigneEcritureComptable : this.getListLigneEcriture())  {
             if (vLigneEcritureComptable.getDebit() != null) {
                 vRetour = vRetour.add(vLigneEcritureComptable.getDebit());
             }
         }
         return vRetour;
     }
+    
+    
+    /**
+     * Teste le total des montants au débit des lignes d'écriture
+     *
+     * @return {@link BigDecimal}, {@link BigDecimal#ZERO} si aucun montant au débit
+     * @throws TechnicalException 
+     */
+    // DONE TODO à tester
+    public void checkGetTotalDebit(EcritureComptable pEcritureComptable, Double retour) throws FunctionalException {
+        BigDecimal vRetour = BigDecimal.ZERO;
+        for (LigneEcritureComptable vLigneEcritureComptable : pEcritureComptable.getListLigneEcriture()) {
+            if (vLigneEcritureComptable.getDebit() != null) {
+                vRetour = vRetour.add(vLigneEcritureComptable.getDebit());
+            }
+        }
+        Double dvRetour = vRetour.doubleValue();
+        if(dvRetour!=retour.doubleValue())throw new FunctionalException("Le total des écritures au débit est faux");
+        		
+    }
+    
 
     /**
      * Calcul et renvoie le total des montants au crédit des lignes d'écriture
@@ -99,21 +123,52 @@ public class EcritureComptable {
      */
     public BigDecimal getTotalCredit() {
         BigDecimal vRetour = BigDecimal.ZERO;
-        for (LigneEcritureComptable vLigneEcritureComptable : listLigneEcriture) {
+        for (LigneEcritureComptable vLigneEcritureComptable : this.getListLigneEcriture()) {
             if (vLigneEcritureComptable.getDebit() != null) {
-                vRetour = vRetour.add(vLigneEcritureComptable.getDebit());
+                vRetour = vRetour.add(vLigneEcritureComptable.getCredit());// Erreur corrigée il était indiqué getDebit()
+                // cela entrainait une erreur dans isEquilibree
+                //le TO DO de test a été posé sur la seule la méthode getTotalDebit() 
             }
         }
         return vRetour;
     }
-
+    
+    /**
+     * Teste le total des montants au crédit des lignes d'écriture
+     *
+     * @return {@link BigDecimal}, {@link BigDecimal#ZERO} si aucun montant au débit
+     * @throws TechnicalException 
+     */
+    // DONE TODO non demandé
+    public void checkGetTotalCredit(EcritureComptable pEcritureComptable, Double retour) throws FunctionalException {
+        BigDecimal vRetour = BigDecimal.ZERO;
+        for (LigneEcritureComptable vLigneEcritureComptable : pEcritureComptable.getListLigneEcriture()) {
+            if (vLigneEcritureComptable.getCredit() != null) {
+                vRetour = vRetour.add(vLigneEcritureComptable.getCredit());
+            }
+        }
+        Double dvRetour = vRetour.doubleValue();
+        if(dvRetour!=retour.doubleValue())throw new FunctionalException("Le total des écritures au débit est faux");
+        		
+    }
+    
+  
     /**
      * Renvoie si l'écriture est équilibrée (TotalDebit = TotalCrédit)
      * @return boolean
      */
     public boolean isEquilibree() {
-        boolean vRetour = this.getTotalDebit().equals(getTotalCredit());
+        boolean vRetour = this.getTotalDebit().doubleValue()==this.getTotalCredit().doubleValue();
         return vRetour;
+    }
+    
+    /**
+     * Teste si l'écriture est équilibrée (TotalDebit = TotalCrédit)
+     * @return boolean
+     * @throws TechnicalException 
+     */
+    public void checkIsEquilibree(EcritureComptable pEcritureComptable) throws FunctionalException {
+    	if(pEcritureComptable.isEquilibree()==false) throw new FunctionalException("L'écriture n'est pas équilibrée");
     }
 
     // ==================== Méthodes ====================
@@ -135,7 +190,7 @@ public class EcritureComptable {
         return vStB.toString();
     }
     
-    public LigneEcritureComptable createLigne(Integer pCompteComptableNumero, String pDebit, String pCredit) {
+    public LigneEcritureComptable createLigne(Integer pCompteComptableNumero, Double pDebit, Double pCredit) {
         BigDecimal vDebit = pDebit == null ? null : new BigDecimal(pDebit);
         BigDecimal vCredit = pCredit == null ? null : new BigDecimal(pCredit);
         String vLibelle = ObjectUtils.defaultIfNull(vDebit, BigDecimal.ZERO)
