@@ -503,7 +503,7 @@
                 </plugin>
                 
                  <!-- ===== junit-platform-surefire pour Mockito ===== -->
-                <plugin>
+                <!--  plugin>
 				    <artifactId>maven-surefire-plugin</artifactId>
 				    <dependencies>
 				        <dependency>
@@ -512,7 +512,7 @@
 				             <version>1.0.1</version>
 				         </dependency>
 				     </dependencies>
-				</plugin>
+				</plugin-->
                 
                 
                 
