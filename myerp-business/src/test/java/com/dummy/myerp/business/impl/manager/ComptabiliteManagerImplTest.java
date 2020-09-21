@@ -145,6 +145,7 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 0.00, 1233.00));		
         manager.checkEcritureComptableUnit(vEcritureComptable);
         
+        //test pour commit sur webhook Jenkins
    	
     	//GIVEN
     	/*
