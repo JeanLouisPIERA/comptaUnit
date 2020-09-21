@@ -145,30 +145,33 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 0.00, 1233.00));		
         manager.checkEcritureComptableUnit(vEcritureComptable);
         **/
-        
-    	
+   	
     	//GIVEN
+    	/*
     	LigneEcritureComptable ligne1 = ecriture.createLigne(1, 1234.00, 0.00);
     	LigneEcritureComptable ligne2 = ecriture.createLigne(2, 0.00, 1233.00);
     	ecriture.getListLigneEcriture().add(ligne1);
     	ecriture.getListLigneEcriture().add(ligne2);
     	when(ecriture.isEquilibree()).thenThrow(new FunctionalException("L'écriture n'est pas équilibrée"));
+    	*/
+    	
+    	doThrow(new FunctionalException("L'écriture n'est pas équilibrée")).when(ecriture.getListLigneEcriture()).add(ecriture.createLigne(1, 1234.00, 0.00)); 
+    	ecriture.getListLigneEcriture().add(ecriture.createLigne(2, 0.00, 1233.00));
+    	
     	
     	//WHEN
     	comptaManager.checkEcritureComptableUnit(ecriture);
+    	LigneEcritureComptable ligne1 = ecriture.createLigne(1, 1234.00, 0.00);
+    	LigneEcritureComptable ligne2 = ecriture.createLigne(2, 0.00, 1233.00);
+    	ecriture.getListLigneEcriture().add(ligne1);
+    	ecriture.getListLigneEcriture().add(ligne2);
+    	
     	
     	//THEN
-    	verify(ecriture).checkIsEquilibree(ecriture);;
+    	verify(ecriture).checkIsEquilibree(ecriture);
     	doThrow(new FunctionalException("L'écriture n'est pas équilibrée"));
     	
-    	
-    	
-        
-          
-          
-          
-          
-         
+                
     }
     
     //====== VU
