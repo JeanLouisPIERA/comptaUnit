@@ -130,7 +130,7 @@ public class ComptabiliteManagerImplTest {
      */
     @Test(expected = FunctionalException.class)
     public void checkEcritureComptableUnitRG2() throws FunctionalException, ParseException  {
-    	/**
+    	
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -144,7 +144,7 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 1234.00, 0.00));	
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 0.00, 1233.00));		
         manager.checkEcritureComptableUnit(vEcritureComptable);
-        **/
+        
    	
     	//GIVEN
     	/*
@@ -154,7 +154,7 @@ public class ComptabiliteManagerImplTest {
     	ecriture.getListLigneEcriture().add(ligne2);
     	when(ecriture.isEquilibree()).thenThrow(new FunctionalException("L'écriture n'est pas équilibrée"));
     	*/
-    	
+    	/**
     	doThrow(new FunctionalException("L'écriture n'est pas équilibrée")).when(ecriture.getListLigneEcriture()).add(ecriture.createLigne(1, 1234.00, 0.00)); 
     	ecriture.getListLigneEcriture().add(ecriture.createLigne(2, 0.00, 1233.00));
     	
@@ -170,7 +170,7 @@ public class ComptabiliteManagerImplTest {
     	//THEN
     	verify(ecriture).checkIsEquilibree(ecriture);
     	doThrow(new FunctionalException("L'écriture n'est pas équilibrée"));
-    	
+    	**/
                 
     }
     
