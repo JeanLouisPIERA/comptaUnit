@@ -1,18 +1,18 @@
 pipeline {
 agent any
-stages {
-
-stage ('Build'){
-steps{
-bat 'mvn -Dmaven.test.failure.ignore=true install'
-}
-}
-
-stage ('Test'){
-steps{
-bat 'mvn -Dmaven.test.failure.ignore=true test'
-}
-}
-
-}
+	stages {
+	
+		stage ('Build'){
+			steps{
+			bat 'mvn clean install'
+			}
+		}
+		
+		stage ('Test'){
+			steps{
+			bat 'mvn test'
+			}
+		}
+	
+	}
 }
