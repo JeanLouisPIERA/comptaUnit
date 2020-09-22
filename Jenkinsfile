@@ -11,13 +11,13 @@ agent any
 		stage ('Test'){
 			steps{
 			bat 'mvn test'
-			jacoco( 
+			}
+			steps([$class: 'JacocoPublisher', 
 			      execPattern: 'target/*.exec',
 			      classPattern: 'target/classes',
 			      sourcePattern: 'src/main/java',
 			      exclusionPattern: 'src/test*'
-				)
-			}
+			])
 		}
 	
 	}
