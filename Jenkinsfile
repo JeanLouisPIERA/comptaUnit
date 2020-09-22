@@ -12,12 +12,11 @@ agent any
 			steps{
 			bat 'mvn test'
 			}
-			steps([$class: 'JacocoPublisher', 
-			      execPattern: 'target/*.exec',
-			      classPattern: 'target/classes',
-			      sourcePattern: 'src/main/java',
-			      exclusionPattern: 'src/test*'
-			])
+			post {
+                success {
+                    junit 'target/surefire-reports/**/*.xml'
+                    }
+                
 		}
 	
 	}
