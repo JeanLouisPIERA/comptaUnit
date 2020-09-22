@@ -3,13 +3,13 @@ agent any
 stages {
 
 stage ('Build'){
-step{
+steps{
 sh 'mvn -Dmaven.test.failure.ignore=true install'
 }
 }
 
 stage ('Test'){
-step{
+steps{
 sh 'mvn -Dmaven.test.failure.ignore=true test'
 }
 }
