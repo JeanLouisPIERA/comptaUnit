@@ -12,7 +12,7 @@ agent any
 			steps{
 			bat 'mvn test'
 			}
-			steps([$class: 'JacocoPublisher', 
+			step([$class: 'JacocoPublisher', 
 			      execPattern: 'target/*.exec',
 			      classPattern: 'target/classes',
 			      sourcePattern: 'src/main/java',
