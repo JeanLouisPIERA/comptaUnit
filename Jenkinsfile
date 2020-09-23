@@ -24,15 +24,6 @@ pipeline {
 	                always {
 	                    junit '**/target/surefire-reports/*.xml'
 	                    step( [ $class: 'JacocoPublisher'] 
-	                    	                    
-							  ,enableNewApi: true,
-							  autoUpdateHealth: true,
-							  autoUpdateStability: true,
-							  failUnstable: true,
-							  failUnhealthy: true,
-							  failNoReports: true,
-							  onlyStable: false
-							  
 	                    
 	                     )
 	                    }
