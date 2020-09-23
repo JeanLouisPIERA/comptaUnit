@@ -29,7 +29,7 @@ pipeline {
 			
 			stage('Coverage') {
             steps {
-                publishCoverage adapters: [jacocoAdapter('report.xml')]
+                publishCoverage adapters: [jacoco('report.xml')]
             }
         }
         
