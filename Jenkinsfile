@@ -24,18 +24,17 @@ pipeline {
 			stage ('Test'){
 				steps{
 				bat 'mvn test'
-				jacoco( 
-			      execPattern: 'target/*.exec',
-			      classPattern: 'target/classes',
-			      sourcePattern: 'src/main/test'
-				)
 				}
 			}
-		}
-		post {
-        always {
-            junit '**/target/reports/**/*.xml'
+			
+			stage('Coverage') {
+            steps {
+                publishCoverage adapters: [jacocoAdapter('report.xml')]
+            }
         }
+        
+		}
+		
         
         
     }
