@@ -32,11 +32,7 @@ pipeline {
 							  failUnhealthy: true,
 							  failNoReports: true,
 							  onlyStable: false
-							  conditionalCoverageTargets: '80, 0, 0',
-							  fileCoverageTargets: '80, 0, 0',
-							  lineCoverageTargets: '80, 0, 0',
-							  methodCoverageTargets: '80, 0, 0',
-							  packageCoverageTargets: '80, 0, 0',
+							  
 	                    
 	                     )
 	                    }
