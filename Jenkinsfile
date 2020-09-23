@@ -23,15 +23,22 @@ pipeline {
 					post {
 	                always {
 	                    junit '**/target/surefire-reports/*.xml'
-	                    step( [ $class: 'JacocoPublisher'
-	                     ] )
-	                     publishCoverage(
-						  failUnhealthy: true, 
-						  calculateDiffForChangeRequests: true,
-						  failBuildIfCoverageDecreasedInChangeRequest: true,
-						  failNoReports: true)
-	                     step( [ $class: 'JacocoPublisher'
-	                     ] )
+	                    step( [ $class: 'JacocoPublisher'] 
+	                    	                    
+							  ,enableNewApi: true,
+							  autoUpdateHealth: true,
+							  autoUpdateStability: true,
+							  failUnstable: true,
+							  failUnhealthy: true,
+							  failNoReports: true,
+							  onlyStable: false
+							  conditionalCoverageTargets: '80, 0, 0',
+							  fileCoverageTargets: '80, 0, 0',
+							  lineCoverageTargets: '80, 0, 0',
+							  methodCoverageTargets: '80, 0, 0',
+							  packageCoverageTargets: '80, 0, 0',
+	                    
+	                     )
 	                    }
 					}
 				}
