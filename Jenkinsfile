@@ -18,14 +18,12 @@ pipeline {
 				
 				stage ('Test'){
 					steps{
-					bat 'mvn test'
+					bat 'mvn verify'
 					}
 					post {
 	                always {
 	                    junit '**/target/surefire-reports/*.xml'
-	                    step( [ $class: 'JacocoPublisher', 
-	                    $thresholds: JacocoHealthReportThresholds [minClass=0, maxClass=0, minMethod=0, maxMethod=0, minLine=0, maxLine=0,
-minBranch=0, maxBranch=0, minInstruction=0.7, maxInstruction=0.7, minComplexity=0, maxComplexity=0]
+	                    step( [ $class: 'JacocoPublisher'
 	                     ] )
 	                     
 	                    }
