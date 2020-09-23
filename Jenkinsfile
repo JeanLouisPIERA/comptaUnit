@@ -30,8 +30,8 @@ pipeline {
 						  calculateDiffForChangeRequests: true,
 						  failBuildIfCoverageDecreasedInChangeRequest: true,
 						  failNoReports: true)
-	                     [ $class: 'JacocoPublisher'
-	                     ]
+	                     step( [ $class: 'JacocoPublisher'
+	                     ] )
 	                    }
 					}
 				}
