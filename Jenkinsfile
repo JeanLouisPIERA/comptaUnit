@@ -11,13 +11,8 @@ pipeline {
 		
 			stage ('Build'){
 				steps{
-				bat 'mvn clean install'
-				jacoco(
-				    execPattern: '**/path_to_file/jacoco.exec',
-				    classPattern: '**/coverage/**',
-				    sourcePattern: '**/coverage/**',
-				    inclusionPattern: '**/*.class'
-				)
+				bat 'mvn clean build'
+				
                 }
 			}
 			
@@ -25,16 +20,27 @@ pipeline {
 				steps{
 				bat 'mvn test'
 				}
-			}
+				post {
+                success {
+                    junit 'target/surefire-reports/**/*.xml'
+                    }
+				}
+			
 			
 			stage('Coverage') {
             steps {
-                publishCoverage adapters: [jacoco('target/site/jacoco/jacoco.xml')]
+                jacoco(
+				    execPattern: '**/path_to_file/jacoco.exec',
+				    classPattern: '**/coverage/**',
+				    sourcePattern: '**/coverage/**',
+				    inclusionPattern: '**/*.class'
+				)
             }
+            
         }
         
-		}
+	}
 		
         
         
-    }
+  
