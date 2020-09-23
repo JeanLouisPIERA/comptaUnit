@@ -11,9 +11,13 @@ pipeline {
 		
 			stage ('Build'){
 				steps{
-				withMaven{
-				sh "mvn clean verify"
-				}
+				bat 'mvn clean install'
+				jacoco(
+				    execPattern: '**/path_to_file/jacoco.exec',
+				    classPattern: '**/coverage/**',
+				    sourcePattern: '**/coverage/**',
+				    inclusionPattern: '**/*.class'
+				)
                 }
 			}
 			
@@ -22,7 +26,10 @@ pipeline {
 				bat 'mvn test'
 				}
 			}
-			
-			
 		}
+		post {
+        always {
+            junit '**/target/reports/**/*.xml'
+        }
+    }
 }
