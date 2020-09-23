@@ -24,11 +24,10 @@ pipeline {
 			stage ('Test'){
 				steps{
 				bat 'mvn test'
-				jacoco(
-				    execPattern: '**/path_to_file/jacoco.exec',
-				    classPattern: '**/coverage/**',
-				    sourcePattern: '**/coverage/**',
-				    inclusionPattern: '**/*.class'
+				jacoco( 
+			      execPattern: 'target/*.exec',
+			      classPattern: 'target/classes',
+			      sourcePattern: 'src/main/test'
 				)
 				}
 			}
