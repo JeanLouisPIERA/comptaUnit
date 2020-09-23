@@ -12,7 +12,7 @@ pipeline {
 		
 				stage ('Build'){
 					steps{
-					bat 'mvn clean compile'
+					bat 'mvn clean compile',
 					
 	                }
 				}
@@ -24,6 +24,7 @@ pipeline {
 					post {
 	                success {
 	                    junit '**/target/surefire-reports/*.xml'
+	                    step( [ $class: 'JacocoPublisher' ] )
 	                    }
 					}
 				}
