@@ -23,7 +23,7 @@ pipeline {
 					}
 					post {
 	                success {
-	                    junit 'src/src/site/site.xml'
+	                    junit 'myerp-business/target/surefire-reports/*.xml'
 	                    }
 					}
 				}
