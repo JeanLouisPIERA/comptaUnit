@@ -23,7 +23,13 @@ pipeline {
 					post {
 	                success {
 	                    junit '**/target/surefire-reports/*.xml'
-	                    step( [ $class: 'JacocoPublisher'
+	                    step( [ $class: 'JacocoPublisher', 
+	 
+	                    
+		                classPattern: '**/build/classes',
+		                sourcePattern: 'src/main/java',
+		                exclusionPattern: 'src/test*'
+    
 	                     ] )
 	                     
 	                    }
