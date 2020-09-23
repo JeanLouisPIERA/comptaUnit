@@ -1,4 +1,5 @@
 pipeline {
+
 		agent {
 	        label 'master'
 	    }
@@ -9,37 +10,36 @@ pipeline {
     	
 		stages {
 		
-			stage ('Build'){
-				steps{
-				bat 'mvn clean build'
+				stage ('Build'){
+					steps{
+					bat 'mvn clean build'
+					
+	                }
+				}
 				
-                }
-			}
-			
-			stage ('Test'){
-				steps{
-				bat 'mvn test'
+				stage ('Test'){
+					steps{
+					bat 'mvn test'
+					}
+					post {
+	                success {
+	                    junit 'target/surefire-reports/**/*.xml'
+	                    }
+					}
 				}
-				post {
-                success {
-                    junit 'target/surefire-reports/**/*.xml'
-                    }
-				}
-			
-			
-			stage('Coverage') {
-            steps {
-                jacoco(
-				    execPattern: '**/path_to_file/jacoco.exec',
-				    classPattern: '**/coverage/**',
-				    sourcePattern: '**/coverage/**',
-				    inclusionPattern: '**/*.class'
-				)
-            }
-            
-        }
+				
+				stage('Coverage') {
+	            steps {
+	                jacoco(
+					    execPattern: '**/path_to_file/jacoco.exec',
+					    classPattern: '**/coverage/**',
+					    sourcePattern: '**/coverage/**',
+					    inclusionPattern: '**/*.class'
+						)
+		            }
+		        }
         
-	}
+		}
 		
         
         
