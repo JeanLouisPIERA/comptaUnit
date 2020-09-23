@@ -1,8 +1,10 @@
 pipeline {
-	agent any
+		agent {
+	        label 'master'
+	    }
 	
 		triggers {
-        	pollSCM('H/1 * * * *')
+        	cron('H/1 * * * *')
     	}
     	
 		stages {
