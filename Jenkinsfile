@@ -12,14 +12,12 @@ pipeline {
 			stage ('Build'){
 				steps{
 				bat 'mvn clean install'
-				jacoco( 
-                    execPattern: '**/target/code-coverage/**.exec',
-                    classPattern: '**/target/classes',
-                    sourcePattern: '**/src',
-                    inclusionPattern: 'com/company/**',
-                    changeBuildStatus: true,
-                    minimumInstructionCoverage: '70'
-                )
+				jacoco(
+				    execPattern: '**/path_to_file/jacoco.exec',
+				    classPattern: '**/coverage/**',
+				    sourcePattern: '**/coverage/**',
+				    inclusionPattern: '**/*.class'
+				)
                 }
 			}
 			
