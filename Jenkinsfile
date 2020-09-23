@@ -13,6 +13,7 @@ pipeline {
 				steps{
 				bat 'mvn clean install'
 				}
+				steps{
 				jacoco( 
                     execPattern: '**/target/code-coverage/**.exec',
                     classPattern: '**/target/classes',
@@ -21,6 +22,7 @@ pipeline {
                     changeBuildStatus: true,
                     minimumInstructionCoverage: '70'
                 )
+                }
 			}
 			
 			stage ('Test'){
