@@ -436,24 +436,6 @@
 				        </execution>
 				        
 				        <!--
-				            Ensures that the code coverage report for unit tests is created after
-				            unit tests have been run.
-				        -->
-				        <execution>
-				            <id>post-unit-test</id>
-				            <phase>test</phase>
-				            <goals>
-				                <goal>report</goal>
-				            </goals>
-				            <configuration>
-				                <!-- Sets the path to the file which contains the execution data. -->
-				                <dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
-				                <!-- Sets the output directory for the code coverage report. -->
-				                <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
-				            </configuration>
-				        </execution>
-				        
-				        <!--
 				            Ensures that the minimum coverage average rate is 70%.
 				        -->
 				        <execution>
@@ -476,6 +458,27 @@
 								</rules>
 							</configuration>
 						</execution>
+				        
+				        
+				        <!--
+				            Ensures that the code coverage report for unit tests is created after
+				            unit tests have been run.
+				        -->
+				        <execution>
+				            <id>post-unit-test</id>
+				            <phase>test</phase>
+				            <goals>
+				                <goal>report</goal>
+				            </goals>
+				            <configuration>
+				                <!-- Sets the path to the file which contains the execution data. -->
+				                <dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
+				                <!-- Sets the output directory for the code coverage report. -->
+				                <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+				            </configuration>
+				        </execution>
+				        
+				        
 				        
 				        
 				    </executions>
