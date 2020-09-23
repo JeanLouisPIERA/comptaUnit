@@ -32,5 +32,6 @@ pipeline {
             junit '**/target/reports/**/*.xml'
         }
         
+        
     }
 }
