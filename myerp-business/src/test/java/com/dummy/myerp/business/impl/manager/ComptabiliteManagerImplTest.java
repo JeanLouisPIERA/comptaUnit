@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.junit.Test;
@@ -16,7 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito.Then;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
+import org.springframework.transaction.TransactionStatus;
 
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
@@ -29,6 +30,7 @@ import com.dummy.myerp.technical.exception.FunctionalException;
 @ExtendWith(MockitoExtension.class)
 public class ComptabiliteManagerImplTest {
 	
+	/* ------------------------------------MOCKITO EN SUSPENS 
 	@Mock
 	EcritureComptable ecriture;
 	
@@ -41,9 +43,13 @@ public class ComptabiliteManagerImplTest {
 	public void init() {
 	comptaManager = new ComptabiliteManagerImpl();
 	}
-    
+    ----------------------------------------------------------*/
+	
 	private ComptabiliteManagerImpl manager = new ComptabiliteManagerImpl();
+	
+	  
     
+	
     /**
      * Ce bout de code est erroné dans toutes les méthodes de test fournies
      * il instantie les lignes avec new au lieu d'utiliser la méthode createLigne de la classe EcritureComptable
@@ -55,6 +61,8 @@ public class ComptabiliteManagerImplTest {
                                                                                  new BigDecimal(123)));
      */
      
+	
+	
 
     /**
      * Toutes les contraintes unitaires n'est respectée sur les attributs de l'Ecriture Comptable
@@ -283,11 +291,7 @@ public class ComptabiliteManagerImplTest {
         
     }
     
-    //======= EN CHANTIER
-    @Test
-    public void checkLigneEcritureRG4() throws FunctionalException  {
-    	
-    }
+    
     
     //====== DONE 1
     /**
@@ -310,6 +314,62 @@ public class ComptabiliteManagerImplTest {
         
         if (!vEcritureComptable.getReference().equals("AC-2020/00001")) throw new FunctionalException("La référence" + vEcritureComptable.getReference() + "n'est pas correcte");
         
+    }
+    
+    //------------------------------------------RESTE A TESTER
+    
+    @Test
+    public void getListCompteComptable() {
+		List<CompteComptable> list;
+    }
+
+
+    @Test
+    public  void getListJournalComptable() {
+    	List<JournalComptable> list;
+    }
+
+    @Test
+    public void getListEcritureComptable() {
+    	List<EcritureComptable> list;
+    }
+	
+	
+	@Test
+	public void addReference() {
+		EcritureComptable pEcritureComptable; 
+	}
+	
+	@Test
+	public void checkEcritureComptable() {
+		EcritureComptable pEcritureComptable;
+	}
+	
+	@Test
+	public void checkEcritureComptableContext() {
+	EcritureComptable pEcritureComptable;
+	}
+	
+	
+    @Test
+    public void checkLigneEcritureRG4() throws FunctionalException  {
+    	
+    }
+    
+    @Test
+    public void insertEcritureComptable() throws FunctionalException {
+    	EcritureComptable pEcritureComptable;
+    }
+    
+
+    @Test
+    public void updateEcritureComptable() throws FunctionalException {
+    	EcritureComptable pEcritureComptable;
+    }
+
+    @Test
+    public void deleteEcritureComptable() {
+    	Integer pId; 
     }
     
 

@@ -4,10 +4,10 @@ package com.dummy.myerp.model.bean.comptabilite;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
 
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
+
 
 import com.dummy.myerp.technical.exception.FunctionalException;
 
