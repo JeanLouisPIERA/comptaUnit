@@ -24,11 +24,11 @@ pipeline {
 	                always {
 	                    junit '**/target/surefire-reports/*.xml'
 	                    step( [ $class: 'JacocoPublisher' ,
-	                      publishCoverage(
+	                      
 						  failUnhealthy: true, 
 						  calculateDiffForChangeRequests: true,
 						  failBuildIfCoverageDecreasedInChangeRequest: true,
-						  failNoReports: true)
+						  failNoReports: true
 	                     ])
 	                    }
 					}
