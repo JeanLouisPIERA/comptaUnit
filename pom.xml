@@ -451,7 +451,8 @@
 											<limit>
 												<counter>INSTRUCTION</counter>
 												<value>COVEREDRATIO</value>
-												<minimum>0.7</minimum>
+												<minimum>0.1</minimum>
+												<maximum>0.7</maximum>
 											</limit>
 											<limit>
 										        <counter>CLASS</counter>
