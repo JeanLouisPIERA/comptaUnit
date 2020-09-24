@@ -30,8 +30,8 @@ pipeline {
 						  failBuildIfCoverageDecreasedInChangeRequest: true,
 						  failNoReports: true, 
 						  minimumInstructionCoverage : '0.1',
-						  maximumInstructionCoverage : '0.7'
-						  
+						  maximumInstructionCoverage : '0.7',
+						  changeBuildStatus : true
 						  
 	                     ])
 	                    }
