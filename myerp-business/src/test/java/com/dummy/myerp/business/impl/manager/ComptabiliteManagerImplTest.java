@@ -25,6 +25,7 @@ import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -320,7 +321,11 @@ public class ComptabiliteManagerImplTest {
     
     @Test
     public void getListCompteComptable() {
-		List<CompteComptable> list;
+    	
+    	List<CompteComptable> list = manager.getListCompteComptable();
+    	if (!list.isEmpty()) {
+    		
+    	}
     }
 
 
