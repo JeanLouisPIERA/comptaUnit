@@ -16,7 +16,7 @@ import com.dummy.myerp.technical.exception.FunctionalException;
 
 public class CompteComptableTest {
 	
-	CompteComptable compte = new CompteComptable(607, "Achats");
+	
 	
 	
 	/**
@@ -27,6 +27,7 @@ public class CompteComptableTest {
 	@Test
 	public void testGettersAndSettersAndConstructeurWith2Params() throws FunctionalException {
 		
+		CompteComptable compte = new CompteComptable(607, "Achats");
 		final StringBuilder message = new StringBuilder();
 		if(!compte.getLibelle().equals("Achats")) message.append("Problème sur le getter Libelle"); 
 		if(compte.getNumero()!=607) message.append("Problème sur le getter Numero");
@@ -46,8 +47,9 @@ public class CompteComptableTest {
 	 * @throws FunctionalException
 	 */
 	@Test
-	public void testCompteComptableToString() throws FunctionalException {
+	public void checkToString() throws FunctionalException {
 		
+		CompteComptable compte = new CompteComptable(607, "Achats");
 		String test = "CompteComptable{numero=607,libelle=Achats}";
 		if ((compte.toString().equals(test.toString()))==false) throw new FunctionalException("Problème sur la méthode toString de la classe CompteComptable" + test + compte.toString());
 		
@@ -60,20 +62,15 @@ public class CompteComptableTest {
 	 * @throws FunctionalException
 	 */
 	@Test
-	public void testGetByNumero() throws FunctionalException {
-	        CompteComptable c607 = new CompteComptable(607);
-			List<CompteComptable> testList = new ArrayList<CompteComptable>();
-			testList.add(c607);
-			
+	public void checkGetByNumero() throws FunctionalException {
+	        
 			CompteComptable vTest = new CompteComptable();
 			vTest.setNumero(607);
 			
-	        for (CompteComptable vCompteFromList : testList) {
-	            if (vCompteFromList != null && Objects.equals(vCompteFromList.getNumero(), 607)) {
-	                vCompteFromList=c607;
-	                break;
-	            }      
-	            if((vTest.equals(vCompteFromList))==false) throw new FunctionalException("");
-		        }
-		    }
+			List<CompteComptable> testList = new ArrayList<CompteComptable>();
+			testList.add(vTest);
+			
+			if((vTest.equals(CompteComptable.getByNumero(testList, 607))==false)) throw new FunctionalException("");
+			
+			}				
 	}
