@@ -24,13 +24,14 @@ pipeline {
 	                always {
 	                    junit '**/target/surefire-reports/*.xml'
 	                    step( [ $class: 'JacocoPublisher' ,
+	                      buildOverBuild : true,
 	                      changeBuildStatus : true,
-	                      minimumInstructionCoverage : 0.7,
-	                      minimumBranchCoverage : 0.7,
-	                      minimumClassCoverage: 0.7,
-	                      minimumComplexityCoverage: 0.7,
-						  minimumLineCoverage: 0.7,
-						  minimumMethodCoverage: 0.7
+	                      minimumInstructionCoverage : '0.7',
+	                      minimumBranchCoverage : '0.7',
+	                      minimumClassCoverage: '0.7',
+	                      minimumComplexityCoverage: '0.7',
+						  minimumLineCoverage: '0.7',
+						  minimumMethodCoverage: '0.7'
 	                     ])
 	                    }
 					}
