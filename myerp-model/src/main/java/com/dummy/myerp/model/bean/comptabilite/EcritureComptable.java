@@ -97,26 +97,6 @@ public class EcritureComptable {
     
     
     /**
-     * Teste le total des montants au débit des lignes d'écriture
-     *
-     * @return {@link BigDecimal}, {@link BigDecimal#ZERO} si aucun montant au débit
-     * @throws TechnicalException 
-     */
-    // DONE TODO à tester
-    public void checkGetTotalDebit(EcritureComptable pEcritureComptable, Double retour) throws FunctionalException {
-        BigDecimal vRetour = BigDecimal.ZERO;
-        for (LigneEcritureComptable vLigneEcritureComptable : pEcritureComptable.getListLigneEcriture()) {
-            if (vLigneEcritureComptable.getDebit() != null) {
-                vRetour = vRetour.add(vLigneEcritureComptable.getDebit());
-            }
-        }
-        Double dvRetour = vRetour.doubleValue();
-        if(dvRetour!=retour.doubleValue())throw new FunctionalException("Le total des écritures au débit est faux");
-        		
-    }
-    
-
-    /**
      * Calcul et renvoie le total des montants au crédit des lignes d'écriture
      *
      * @return {@link BigDecimal}, {@link BigDecimal#ZERO} si aucun montant au crédit
@@ -133,25 +113,6 @@ public class EcritureComptable {
         return vRetour;
     }
     
-    /**
-     * Teste le total des montants au crédit des lignes d'écriture
-     *
-     * @return {@link BigDecimal}, {@link BigDecimal#ZERO} si aucun montant au débit
-     * @throws TechnicalException 
-     */
-    // DONE TODO non demandé
-    public void checkGetTotalCredit(EcritureComptable pEcritureComptable, Double retour) throws FunctionalException {
-        BigDecimal vRetour = BigDecimal.ZERO;
-        for (LigneEcritureComptable vLigneEcritureComptable : pEcritureComptable.getListLigneEcriture()) {
-            if (vLigneEcritureComptable.getCredit() != null) {
-                vRetour = vRetour.add(vLigneEcritureComptable.getCredit());
-            }
-        }
-        Double dvRetour = vRetour.doubleValue();
-        if(dvRetour!=retour.doubleValue())throw new FunctionalException("Le total des écritures au débit est faux");
-        		
-    }
-    
   
     /**
      * Renvoie si l'écriture est équilibrée (TotalDebit = TotalCrédit)
@@ -160,15 +121,6 @@ public class EcritureComptable {
     public boolean isEquilibree() {
         boolean vRetour = this.getTotalDebit().doubleValue()==this.getTotalCredit().doubleValue();
         return vRetour;
-    }
-    
-    /**
-     * Teste si l'écriture est équilibrée (TotalDebit = TotalCrédit)
-     * @return boolean
-     * @throws TechnicalException 
-     */
-    public void checkIsEquilibree(EcritureComptable pEcritureComptable) throws FunctionalException {
-    	if(pEcritureComptable.isEquilibree()==false) throw new FunctionalException("L'écriture n'est pas équilibrée");
     }
 
     // ==================== Méthodes ====================
@@ -190,6 +142,14 @@ public class EcritureComptable {
         return vStB.toString();
     }
     
+    /**
+     * Cette méthode crée une ligne d'écriture comptable pour permettre la création d'un compte comptable
+     * WARNING : cette méthode aurait davantage sa place dans la classe LigneEcritureComptable
+     * @param pCompteComptableNumero
+     * @param pDebit
+     * @param pCredit
+     * @return
+     */
     public LigneEcritureComptable createLigne(Integer pCompteComptableNumero, Double pDebit, Double pCredit) {
         BigDecimal vDebit = pDebit == null ? null : new BigDecimal(pDebit);
         BigDecimal vCredit = pCredit == null ? null : new BigDecimal(pCredit);

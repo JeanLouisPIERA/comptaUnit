@@ -20,7 +20,7 @@ public class EcritureComptableTest {
 	 * @param pDebit
 	 * @param pCredit
 	 * @return
-	 */
+	 
     public LigneEcritureComptable createLigne(Integer pCompteComptableNumero, Double pDebit, Double pCredit) {
 		
         BigDecimal vDebit = pDebit == null ? null : new BigDecimal(pDebit);
@@ -32,10 +32,36 @@ public class EcritureComptableTest {
                                                                     vDebit, vCredit);
         return vRetour;
     }
-    
-    
+	 * @throws FunctionalException 
+    */
+	
+	/**
+	 * Teste la méthode qui crée une ligne d'écriture comptable pour permettre la création d'un compte comptable
+     * WARNING : cette méthode aurait davantage sa place dans la classe LigneEcritureComptable
+     * On compare le résultat de la méthode qui crée une ligne sur le compte comptable 2 avec la création par constructeur sur 
+     * le compte comptable 1 
+     * Le résultat de ce test est renvoyer une exception
+	 * @throws FunctionalException
+	 */
+	@Test(expected = FunctionalException.class)
+	public void checkCreateLigne() throws FunctionalException {
+        Integer pCompteComptableNumero = 1;
+        Double pDebit = 200.0;
+        Double pCredit = 0.0;
+		BigDecimal vDebit = pDebit == null ? null : new BigDecimal(pDebit);
+        BigDecimal vCredit = pCredit == null ? null : new BigDecimal(pCredit);
+        String vLibelle = ObjectUtils.defaultIfNull(vDebit, BigDecimal.ZERO)
+                                     .subtract(ObjectUtils.defaultIfNull(vCredit, BigDecimal.ZERO)).toPlainString();
+        LigneEcritureComptable vtest = new LigneEcritureComptable(new CompteComptable(pCompteComptableNumero),
+                                                                    vLibelle,
+                                                                    vDebit, vCredit);
+        EcritureComptable ecriture = new EcritureComptable();
+        LigneEcritureComptable ligneEcritureComptable = ecriture.createLigne(2, 200.0, 0.0);
+        if(!vtest.equals(ligneEcritureComptable))throw new FunctionalException("La ligne n'a pas été créée");
+    }
+	 
     /**
-     * Calcul et renvoie le total des montants au débit des lignes d'écriture
+     * Calcule et teste le total des montants au débit des lignes d'écriture
      *
      * @return {@link BigDecimal}, {@link BigDecimal#ZERO} si aucun montant au débit
      * @throws FunctionalException 
@@ -53,11 +79,13 @@ public class EcritureComptableTest {
         vEcriture.getListLigneEcriture().add(vEcriture.createLigne(2, 0.00, 301.00));
         vEcriture.getListLigneEcriture().add(vEcriture.createLigne(2, 40.00, 7.00));
         
-        vEcriture.checkGetTotalDebit(vEcriture, 341.0);
+        Double retour = 341.0;
+        Double dvRetour = vEcriture.getTotalDebit().doubleValue();
+        if(dvRetour!=retour.doubleValue())throw new FunctionalException("Le total des écritures au débit est faux");
     }
     
     /**
-     * Calcul et renvoie le total des montants au crédit des lignes d'écriture
+     * Calcul et teste le total des montants au crédit des lignes d'écriture
      *
      * @return {@link BigDecimal}, {@link BigDecimal#ZERO} si aucun montant au débit
      * @throws FunctionalException 
@@ -75,7 +103,10 @@ public class EcritureComptableTest {
         vEcriture.getListLigneEcriture().add(vEcriture.createLigne(2, 0.00, 301.00));
         vEcriture.getListLigneEcriture().add(vEcriture.createLigne(2, 40.00, 7.00));
         
-        vEcriture.checkGetTotalCredit(vEcriture, 341.0);
+        Double retour = 341.0;
+        Double dvRetour = vEcriture.getTotalCredit().doubleValue();
+        if(dvRetour!=retour.doubleValue())throw new FunctionalException("Le total des écritures au crédit est faux");
+        
     }
 
     @Test
@@ -92,14 +123,16 @@ public class EcritureComptableTest {
         //Assert.assertTrue(vEcriture.toString(), vEcriture.isEquilibree());
         pEcriture.getTotalCredit();
         pEcriture.getTotalDebit();
-        pEcriture.checkIsEquilibree(pEcriture);
+        //pEcriture.checkIsEquilibree(pEcriture);
+        if(pEcriture.isEquilibree()==false) throw new FunctionalException("L'écriture n'est pas équilibrée");
     }
+    
     /**
      * 2ème partie du test précédent
      * le clear ne sert à rien
      * Test inutile Doublon du test checkIsEquilibreeTrue()
      * @throws FunctionalException
-     */
+     
     @Test(expected = FunctionalException.class)
     public void checkIsEquilibreeFalse() throws FunctionalException{    
     	EcritureComptable pEcriture = new EcritureComptable();
@@ -114,5 +147,5 @@ public class EcritureComptableTest {
         pEcriture.getTotalDebit();
         pEcriture.checkIsEquilibree(pEcriture);
     }
-
+	*/
 }
