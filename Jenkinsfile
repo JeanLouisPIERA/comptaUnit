@@ -28,7 +28,11 @@ pipeline {
 						  failUnhealthy: true, 
 						  calculateDiffForChangeRequests: true,
 						  failBuildIfCoverageDecreasedInChangeRequest: true,
-						  failNoReports: true
+						  failNoReports: true, 
+						  minimumInstructionCoverage : '0.1',
+						  maximumInstructionCoverage : '0.7'
+						  
+						  
 	                     ])
 	                    }
 					}
