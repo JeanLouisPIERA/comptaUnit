@@ -24,10 +24,10 @@ pipeline {
 	                always {
 	                    junit '**/target/surefire-reports/*.xml'
 	                    step( [ $class: 'JacocoPublisher'] ,
-	                    jacoco.execPattern: 'target/*.exec',
-			  	        jacoco.classPattern: 'target/classes',
-				        jacoco.sourcePattern: 'src/main/java',
-				        jacoco.exclusionPattern: 'src/test*'
+	                    [jacoco.execPattern: 'target/*.exec'],
+			  	        [jacoco.classPattern: 'target/classes'],
+				        [jacoco.sourcePattern: 'src/main/java'],
+				        [jacoco.exclusionPattern: 'src/test*']
 	                     )
 	                    }
 					}
