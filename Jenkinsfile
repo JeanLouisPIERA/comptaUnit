@@ -26,7 +26,7 @@ pipeline {
 	                    step( [ 
 						  $class: 'JacocoPublisher',
 						  publishers:
-							  - jacoco:
+							  [- jacoco:
 							      targets:
 							        - instruction:
 							            healthy: 0.7
@@ -45,7 +45,7 @@ pipeline {
 							            unhealthy: 0.1
 							        - class:
 							            healthy: 0.7
-							            unhealthy: 0.1
+							            unhealthy: 0.1]
 								])
 	                    }
 					}
