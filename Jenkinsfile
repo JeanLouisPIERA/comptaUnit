@@ -23,7 +23,7 @@ pipeline {
 					post {
 	                always {
 	                    junit '**/target/surefire-reports/*.xml'
-	                    step( [ $class: 'JacocoPublisher' ,
+	                    step( [ 
 	                      buildOverBuild : true,
 	                      changeBuildStatus : true,
 	                      minimumInstructionCoverage : '0.7',
@@ -31,7 +31,8 @@ pipeline {
 	                      minimumClassCoverage: '0.7',
 	                      minimumComplexityCoverage: '0.7',
 						  minimumLineCoverage: '0.7',
-						  minimumMethodCoverage: '0.7'
+						  minimumMethodCoverage: '0.7',
+						  $class: 'JacocoPublisher'
 	                     ])
 	                    }
 					}
