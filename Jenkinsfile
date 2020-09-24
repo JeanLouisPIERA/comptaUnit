@@ -24,29 +24,8 @@ pipeline {
 	                always {
 	                    junit '**/target/surefire-reports/*.xml'
 	                    step( [ 
-						  $class: 'JacocoPublisher',
-						  publishers:
-							  [- jacoco:
-							      targets:
-							        - instruction:
-							            healthy: 0.7
-							            unhealthy: 0.1
-							        - branch:
-							            healthy: 8.7
-							            unhealthy: 0.1
-							        - complexity:
-							            healthy: 0.7
-							            unhealthy: 0.1
-							        - line:
-							            healthy: 0.7
-							            unhealthy: 0.1
-							        - method:
-							            healthy: 0.7
-							            unhealthy: 0.1
-							        - class:
-							            healthy: 0.7
-							            unhealthy: 0.1]
-								])
+						  $class: 'JacocoPublisher'
+						])
 	                    }
 					}
 				}
