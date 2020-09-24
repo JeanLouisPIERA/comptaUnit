@@ -322,10 +322,7 @@ public class ComptabiliteManagerImplTest {
     @Test
     public void getListCompteComptable() {
     	
-    	List<CompteComptable> list = manager.getListCompteComptable();
-    	if (!list.isEmpty()) {
-    		
-    	}
+    	
     }
 
 
