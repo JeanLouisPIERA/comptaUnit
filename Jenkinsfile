@@ -16,8 +16,8 @@ pipeline {
 	        }
 	        stage("Test the source code")	{
 	            steps	{
-	            bat "mvn test-compile"
-	            bat "jacoco:check"
+	            bat "mvn test-compile jacoco:check - debug "
+	            
 	            
 	            }
 	        }
