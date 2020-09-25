@@ -60,10 +60,10 @@
         <jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.execution.data.file>
         <jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.execution.data.file>
         
-        <sonar.projectKey>JeanLouisPIERA_oc-testing-java-cours</sonar.projectKey>
+        <!-- sonar.projectKey>JeanLouisPIERA_oc-testing-java-cours</sonar.projectKey>
 		<sonar.organization>brolfix2020</sonar.organization>
-		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url-->
+		 
        
     </properties>
 
@@ -438,10 +438,30 @@
 												<minimum>0.1</minimum>
 											</limit>
 											<limit>
-										        <counter>CLASS</counter>
-										        <value>MISSEDCOUNT</value>
-										        <maximum>4</maximum>
-										      </limit>
+												<counter>BRANCH</counter>
+												<value>COVEREDRATIO</value>
+												<minimum>0.1</minimum>
+											</limit>
+											<limit>
+												<counter>COMPLEXITY</counter>
+												<value>COVEREDRATIO</value>
+												<minimum>0.1</minimum>
+											</limit>
+											<limit>
+												<counter>LINE</counter>
+												<value>COVEREDRATIO</value>
+												<minimum>0.1</minimum>
+											</limit>
+											<limit>
+												<counter>METHOD</counter>
+												<value>COVEREDRATIO</value>
+												<minimum>0.1</minimum>
+											</limit>
+											<limit>
+												<counter>CLASS</counter>
+												<value>COVEREDRATIO</value>
+												<minimum>0.1</minimum>
+											</limit>
 										</limits>
 										<excludes>
 							              <exclude></exclude>
