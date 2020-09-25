@@ -22,7 +22,7 @@ pipeline {
 	         stage("Code coverage. Limiting the minimum score for lines coverage to 75%")	{
 	            steps	{
 	            bat "mvn test jacoco:report"
-	            publishHTML	(target:	[
+	            publishCoverage	(target:	[
 					reportDir:	'src/myerp-business/target/site/jacoco-ut',
 					reportFiles:	'src/myerp-business/target/site/jacoco-ut/index.html',
 					reportName:	"Code coverage report"
