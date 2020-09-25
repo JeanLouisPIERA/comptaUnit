@@ -27,7 +27,7 @@ pipeline {
 	            steps	{
 	            bat " mvn test jacoco:check jacoco:report -debug "
 	      		
-	      		step{
+	      		
 	            publishHTML	(target:	[
 							allowMissing: false,
 						    alwaysLinkToLastBuild: true,
@@ -36,9 +36,9 @@ pipeline {
 							reportFiles:	'index.html',
 							reportName:	"myerp-business coverage report"
 							])
-				}
 				
-				step{
+				
+				
 	            publishHTML	(target:	[
 							allowMissing: false,
 						    alwaysLinkToLastBuild: true,
@@ -47,7 +47,7 @@ pipeline {
 							reportFiles:	'index.html',
 							reportName:	"myerp-model coverage report"
 							])
-				}
+				
 				
 	            bat "mvn clean verify"
 	            }
