@@ -23,7 +23,7 @@ pipeline {
 	        
 	         stage("Code coverage. Limiting the minimum score for lines coverage to 75%")	{
 	            steps	{
-	            bat "mvn jacoco:pre-unit-test jacoco:check test jacoco:post-unit-test -debug "
+	            bat "mvn test jacoco:prepare-agent jacoco:check jacoco:report -debug "
 	            publishCoverage	adapters:[jacocoAdapter('**/target/coverage-reports/jacoco-ut.exec')], sourceFileResolver: sourceFiles('STORE_ALL_BUILD')
 	            bat "mvn clean verify"
 	            }
