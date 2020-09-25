@@ -24,7 +24,7 @@ pipeline {
 	            bat "mvn test jacoco:report"
 	            publishHTML	(target:	[
 					reportDir:	'src/myerp-business/target/site/jacoco-ut',
-					reportFiles:	'index.html',
+					reportFiles:	'src/myerp-business/target/site/jacoco-ut/index.html',
 					reportName:	"Code coverage report"
 				])
 	            bat "mvn clean verify"
