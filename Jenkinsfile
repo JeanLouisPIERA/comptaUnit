@@ -8,32 +8,37 @@ pipeline {
         	pollSCM('0-59/1 * * * *')
     	}
     	
-		stages {
-		
-				stage ('Build'){
-					steps{
-					bat 'mvn clean compile'
-	                }
-				}
-				
-				stage ('Test'){
-					steps{
-					bat 'mvn verify'
-					}
-					post {
-	                always {
-	                    junit '**/target/surefire-reports/*.xml'
-	                    step( [ 
-						  $class: 'JacocoPublisher'
-						])
-	                    }
-					}
-				}
-				
-				
-        
-		}
-		
-        
-        
- } 
+		stages{
+	        stage("Compile the source code")	{
+	            steps	{
+	            bat 'chmod --recursive a+rwx ./'
+	            bat "./mvnw compile"
+	            }
+	        }
+	        stage("Test the source code")	{
+	            steps	{
+	            bat "./mvnw test"
+	            }
+	        }
+	         stage("Code coverage. Limiting the minimum score for lines coverage to 75%")	{
+	            steps	{
+	            bat "./mvnw test jacoco:report"
+	            publishHTML	(target:	[
+					reportDir:	'target/site/jacoco',
+					reportFiles:	'index.html',
+					reportName:	"Code coverage report"
+				])
+	            bat "./mvnw clean verify"
+	            
+	            }
+	        }
+			stage("Package the application")	{
+		            steps	{
+		            bat "./mvnw clean package -DskipTests"
+		            }
+		        }
+	
+	    }
+	        
+	        
+	 } 
