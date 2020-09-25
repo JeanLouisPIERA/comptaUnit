@@ -60,12 +60,10 @@
         <jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.execution.data.file>
         <jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.execution.data.file>
         
-        <!--  sonar.projectKey>JeanLouisPIERA_oc-testing-java-cours</sonar.projectKey>
+        <sonar.projectKey>JeanLouisPIERA_oc-testing-java-cours</sonar.projectKey>
 		<sonar.organization>brolfix2020</sonar.organization>
-		<sonar.host.url>https://sonarcloud.io</sonar.host.url-->
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		
-		 <!-- Tell sonar where to look for the coverage file. Property inherited by submodules -->
-        <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
        
     </properties>
 
