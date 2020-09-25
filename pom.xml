@@ -423,6 +423,32 @@
 		                    for JaCoCo runtime agent.
 		                -->
 		                <propertyName>surefireArgLine</propertyName>
+		                <!--
+		                    Sets the rules  for JaCoCo thresholds within the check
+		                -->
+		               
+								<rules>
+									<rule>
+										<element>BUNDLE</element>
+										<limits>
+											<limit>
+												<counter>INSTRUCTION</counter>
+												<value>COVEREDRATIO</value>
+												<minimum>0.1</minimum>
+											</limit>
+											<limit>
+										        <counter>CLASS</counter>
+										        <value>MISSEDCOUNT</value>
+										        <maximum>4</maximum>
+										      </limit>
+										</limits>
+										<excludes>
+							              <exclude></exclude>
+							            </excludes>
+									</rule>
+								</rules>
+							
+		                
 		            </configuration>
 				    
 				    <executions>
@@ -445,28 +471,6 @@
 							<goals>
 								<goal>check</goal>
 							</goals>
-							<configuration>
-								<rules>
-									<rule>
-										<element>BUNDLE</element>
-										<limits>
-											<limit>
-												<counter>INSTRUCTION</counter>
-												<value>COVEREDRATIO</value>
-												<minimum>0.1</minimum>
-											</limit>
-											<limit>
-										        <counter>CLASS</counter>
-										        <value>MISSEDCOUNT</value>
-										        <maximum>0</maximum>
-										      </limit>
-										</limits>
-										<excludes>
-							              <exclude></exclude>
-							            </excludes>
-									</rule>
-								</rules>
-							</configuration>
 						</execution>
 				        
 				        
