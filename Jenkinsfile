@@ -23,7 +23,7 @@ pipeline {
 	            steps	{
 	            bat "mvn test jacoco:report"
 	            publishHTML	(target:	[
-					reportDir:	'target/site/jacoco',
+					reportDir:	'src/myerp-business/target/site/jacoco-ut',
 					reportFiles:	'index.html',
 					reportName:	"Code coverage report"
 				])
