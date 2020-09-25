@@ -30,7 +30,9 @@ pipeline {
 	            post {
 	                always {
 	                    junit '**/target/surefire-reports/*.xml'
+	                    step (
 	                    jacoco '**/target/site/jacoco-ut/*.xml'
+	                    )
 	                    step( [ 
 						  $class: 'JacocoPublisher'
 						])
