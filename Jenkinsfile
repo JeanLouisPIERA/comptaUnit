@@ -26,6 +26,11 @@ pipeline {
 	            steps	{
 	            bat " mvn test jacoco:check jacoco:report -debug "
 	            publishCoverage	adapters:[jacocoAdapter('**/target/coverage-reports/jacoco-ut.exec')], sourceFileResolver: sourceFiles('STORE_ALL_BUILD')
+		            publishHTML	(target:	[
+					reportDir:	'**/target/site/jacoco-ut',
+					reportFiles:	'index.html',
+					reportName:	"Code coverage report"
+				])
 	            bat "mvn clean verify"
 	            }
 	            post {
