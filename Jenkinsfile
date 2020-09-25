@@ -23,16 +23,13 @@ pipeline {
 	        
 	         stage("Code coverage. Limiting the minimum score for lines coverage to 75%")	{
 	            steps	{
-	            bat "mvn test jacoco:report"
+	            bat "mvn jacoco:pre-unit-test jacoco:check test jacoco:post-unit-test -debug "
 	            publishCoverage	adapters:[jacocoAdapter('**/target/coverage-reports/jacoco-ut.exec')], sourceFileResolver: sourceFiles('STORE_ALL_BUILD')
 	            bat "mvn clean verify"
 	            }
 	            post {
 	                always {
 	                    junit '**/target/surefire-reports/*.xml'
-	                   
-	                    jacoco '*/*.xml'
-	                   
 	                    step( [ 
 						  $class: 'JacocoPublisher'
 						])
