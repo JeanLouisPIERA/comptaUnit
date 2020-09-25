@@ -22,7 +22,7 @@ pipeline {
 	         stage("Code coverage. Limiting the minimum score for lines coverage to 75%")	{
 	            steps	{
 	            bat "mvn test jacoco:report"
-	            publishCoverage	adapters:[jacocoAdapter('src/myerp-business/target/site/jacoco-ut/jacoco.xml')]
+	            publishCoverage	adapters:[jacocoAdapter('myerp-business/target/coverage-reports/jacoco-ut.exec')]
 	            bat "mvn clean verify"
 	            
 	            }
