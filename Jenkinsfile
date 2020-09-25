@@ -20,6 +20,7 @@ pipeline {
 	            
 	            }
 	        }
+	        
 	         stage("Code coverage. Limiting the minimum score for lines coverage to 75%")	{
 	            steps	{
 	            bat "mvn test jacoco:report"
@@ -33,7 +34,7 @@ pipeline {
 						  $class: 'JacocoPublisher'
 						])
 	                    }
-	            
+	            	}
 	        }
 			stage("Package the application")	{
 		            steps	{
