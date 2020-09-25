@@ -9,6 +9,19 @@ pipeline {
     	}
     	
 		stages{
+		
+			stage("Sonar Analysis") {
+			     steps {
+			          
+			          withSonarQubeEnv(sonarqubeEnvName) {
+			          bat "mvn -B -U -Dproject.version=${version} " +
+			                              (env.BRANCH_NAME != 'master' ? "-Dsonar.branch.name=${env.BRANCH_NAME} " : "") +
+			                              " -Dsonar.value.url=${sonarqubeserver}" +
+			                              " sonar:sonar"
+					          }
+					     }
+					}
+		
 	        stage("Compile the source code")	{
 	            steps	{
 	            bat "mvn compile"
@@ -32,7 +45,7 @@ pipeline {
 		        keepAll: true,
 		        reportDir: 'myerp-business/target/site/jacoco',
 				reportFiles:	'index.html',
-				reportName:	"Code coverage report"
+				reportName:	"myerp-business coverage report"
 			])
 	            bat "mvn clean verify"
 	            }

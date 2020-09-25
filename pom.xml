@@ -63,6 +63,9 @@
         <!--  sonar.projectKey>JeanLouisPIERA_oc-testing-java-cours</sonar.projectKey>
 		<sonar.organization>brolfix2020</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url-->
+		
+		 <!-- Tell sonar where to look for the coverage file. Property inherited by submodules -->
+        <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
        
     </properties>
 
