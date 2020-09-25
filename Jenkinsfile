@@ -30,6 +30,7 @@ pipeline {
 				allowMissing: false,
 			    alwaysLinkToLastBuild: true,
 		        keepAll: true,
+		        reportDir: 'myerp-business/target/site/jacoco',
 				reportFiles:	'index.html',
 				reportName:	"Code coverage report"
 			])
