@@ -24,7 +24,7 @@ pipeline {
 	         stage("Code coverage. Limiting the minimum score for lines coverage to 75%")	{
 	            steps	{
 	            bat "mvn test jacoco:report"
-	            publishCoverage	adapters:[jacoco('**/*/jacoco.xml')], sourceFileResolver: sourceFiles('STORE_ALL_BUILD')
+	            publishCoverage	adapters::[jacocoAdapter('myerp-business/target/coverage-reports/jacoco-ut.exec')], sourceFileResolver: sourceFiles('STORE_ALL_BUILD')
 	            bat "mvn clean verify"
 	            }
 	            post {
