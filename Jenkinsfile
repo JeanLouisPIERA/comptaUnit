@@ -15,7 +15,7 @@ pipeline {
 	            bat "mvn compile"
 	            }
 	        }
-	        stage("Test the source code")	{
+	        stage("Compile the test source")	{
 	            steps	{
 	            bat "mvn test-compile  "
 	            
@@ -23,7 +23,7 @@ pipeline {
 	            }
 	            
 	       }
-	        stage("Tests unitaires")	{
+	        stage("Run tests using the suitable unit testing framework Junit")	{
 	            steps	{
 	            bat "mvn test  "
 	            
@@ -32,7 +32,7 @@ pipeline {
 	            
 	        }
 	        
-	        stage("Tests intégration")	{
+	        stage("Processing the package where to run integration tests")	{
 	            steps	{
 	            bat "mvn integration-test  "
 	            
@@ -41,7 +41,7 @@ pipeline {
 	            
 	        }
 	        
-	         stage("Code coverage. Limiting the minimum score for lines coverage to 70%")	{
+	         stage("Code coverage. Limiting the minimum score for lines coverage to 75%")	{
 	            steps	{
 	            bat " mvn jacoco:check jacoco:report"
 	      		
