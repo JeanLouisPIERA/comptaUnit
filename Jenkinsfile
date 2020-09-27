@@ -23,7 +23,7 @@ pipeline {
 	            }
 	        }
 	        
-	         stage("Code coverage. Limiting the minimum score for lines coverage to 75%")	{
+	         stage("Code coverage. Limiting the minimum score for lines coverage to 70%")	{
 	            steps	{
 	            bat " mvn test integration-test jacoco:check jacoco:report"
 	      		
