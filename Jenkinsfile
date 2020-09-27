@@ -21,11 +21,29 @@ pipeline {
 	            
 	            
 	            }
+	            
+	       }
+	        stage("Tests unitaires")	{
+	            steps	{
+	            bat "mvn test  "
+	            
+	            
+	            }     
+	            
+	        }
+	        
+	        stage("Tests unitaires")	{
+	            steps	{
+	            bat "mvn integration-test  "
+	            
+	            
+	            }     
+	            
 	        }
 	        
 	         stage("Code coverage. Limiting the minimum score for lines coverage to 70%")	{
 	            steps	{
-	            bat " mvn test integration-test jacoco:check jacoco:report"
+	            bat " mvn jacoco:check jacoco:report"
 	      		
 	      		
 	            publishHTML	(target:	[
