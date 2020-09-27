@@ -38,10 +38,9 @@ public class CompteComptableUT {
 	/**
 	 * TEST UNITAIRE
 	 * Teste la methode getByNumero()  
-	 * @throws FunctionalException
 	 */
 	@Test
-	public void checkGetByNumero() throws FunctionalException {
+	public void checkGetByNumero() {
 		
 			CompteComptable vTest = new CompteComptable();
 			vTest.setNumero(607);

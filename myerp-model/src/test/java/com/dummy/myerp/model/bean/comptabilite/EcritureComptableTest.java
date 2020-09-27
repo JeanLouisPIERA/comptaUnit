@@ -55,8 +55,9 @@ public class EcritureComptableTest {
      * Le résultat de ce test est renvoyer une exception
 	 * @throws FunctionalException
 	 */
-	@Test(expected = FunctionalException.class)
-	public void checkCreateLigne() throws FunctionalException {
+	@Test
+	//(expected = FunctionalException.class)
+	public void checkCreateLigne()  {
         Integer pCompteComptableNumero = 1;
         Double pDebit = 200.0;
         Double pCredit = 0.0;
@@ -68,8 +69,9 @@ public class EcritureComptableTest {
                                                                     vLibelle,
                                                                     vDebit, vCredit);
         EcritureComptable ecriture = new EcritureComptable();
-        LigneEcritureComptable ligneEcritureComptable = ecriture.createLigne(2, 200.0, 0.0);
-        if(!vtest.equals(ligneEcritureComptable))throw new FunctionalException("La ligne n'a pas été créée");
+        LigneEcritureComptable ligneEcritureComptable = ecriture.createLigne(1, 200.0, 0.0);
+        //if(!vtest.equals(ligneEcritureComptable))throw new FunctionalException("La ligne n'a pas été créée");
+        Assert.assertFalse("La ligne d'écriture n'a pas été correctement créée", vtest.equals(ligneEcritureComptable));
     }
 	
 	
@@ -82,31 +84,7 @@ public class EcritureComptableTest {
      * @throws TechnicalException 
      */
     @Test
-    public void checkGetTotalDebit() throws FunctionalException {
-        
-        EcritureComptable vEcriture;
-        vEcriture = new EcritureComptable();
-
-        vEcriture.setLibelle("Equilibrée");
-        vEcriture.getListLigneEcriture().add(vEcriture.createLigne(1, 200.50, 0.00));
-        vEcriture.getListLigneEcriture().add(vEcriture.createLigne(1, 100.50, 33.00));
-        vEcriture.getListLigneEcriture().add(vEcriture.createLigne(2, 0.00, 301.00));
-        vEcriture.getListLigneEcriture().add(vEcriture.createLigne(2, 40.00, 7.00));
-        
-        Double retour = 341.0;
-        Double dvRetour = vEcriture.getTotalDebit().doubleValue();
-        if(dvRetour!=retour.doubleValue())throw new FunctionalException("Le total des écritures au débit est faux");
-    }
-    
-    /**
-     * Calcul et teste le total des montants au crédit des lignes d'écriture
-     *
-     * @return {@link BigDecimal}, {@link BigDecimal#ZERO} si aucun montant au débit
-     * @throws FunctionalException 
-     * @throws TechnicalException 
-     */
-    @Test
-    public void checkGetTotalCredit() throws FunctionalException {
+    public void checkGetTotalDebit() {
         
         EcritureComptable vEcriture;
         vEcriture = new EcritureComptable();
@@ -119,12 +97,36 @@ public class EcritureComptableTest {
         
         Double retour = 341.0;
         Double dvRetour = vEcriture.getTotalCredit().doubleValue();
-        if(dvRetour!=retour.doubleValue())throw new FunctionalException("Le total des écritures au crédit est faux");
+        Assert.assertTrue("La calcul du total des montants au débit de cette écriture est faux",dvRetour==retour.doubleValue());
+    }
+    
+    /**
+     * Calcul et teste le total des montants au crédit des lignes d'écriture
+     *
+     * @return {@link BigDecimal}, {@link BigDecimal#ZERO} si aucun montant au débit
+     * @throws FunctionalException 
+     * @throws TechnicalException 
+     */
+    @Test
+    public void checkGetTotalCredit() {
+        
+        EcritureComptable vEcriture;
+        vEcriture = new EcritureComptable();
+
+        vEcriture.setLibelle("Equilibrée");
+        vEcriture.getListLigneEcriture().add(vEcriture.createLigne(1, 200.50, 0.00));
+        vEcriture.getListLigneEcriture().add(vEcriture.createLigne(1, 100.50, 33.00));
+        vEcriture.getListLigneEcriture().add(vEcriture.createLigne(2, 0.00, 301.00));
+        vEcriture.getListLigneEcriture().add(vEcriture.createLigne(2, 40.00, 7.00));
+        
+        Double retour = 341.0;
+        Double dvRetour = vEcriture.getTotalCredit().doubleValue();
+        Assert.assertTrue("La calcul du total des montants au crédit de cette écriture est faux",dvRetour==retour.doubleValue());
         
     }
 
     @Test
-    public void checkIsEquilibreeTrue() throws FunctionalException{
+    public void checkIsEquilibreeTrue() {
     	
     	EcritureComptable pEcriture = new EcritureComptable();
         
@@ -138,18 +140,9 @@ public class EcritureComptableTest {
         pEcriture.getTotalCredit();
         pEcriture.getTotalDebit();
         //pEcriture.checkIsEquilibree(pEcriture);
-        if(pEcriture.isEquilibree()==false) throw new FunctionalException("L'écriture n'est pas équilibrée");
-    }
+        Assert.assertTrue("La première écriture Equilibrée n'est pas équilibrée", pEcriture.isEquilibree());
+        pEcriture.getListLigneEcriture().clear();
     
-    /**
-     * 2ème partie du test précédent
-     * le clear ne sert à rien
-     * Test inutile Doublon du test checkIsEquilibreeTrue()
-     * @throws FunctionalException
-     
-    @Test(expected = FunctionalException.class)
-    public void checkIsEquilibreeFalse() throws FunctionalException{    
-    	EcritureComptable pEcriture = new EcritureComptable();
         pEcriture.setLibelle("Non Equilibrée");
         pEcriture.getListLigneEcriture().add(pEcriture.createLigne(1, 10.00, 0.00));
         pEcriture.getListLigneEcriture().add(pEcriture.createLigne(1, 20.00, 1.00));
@@ -159,9 +152,10 @@ public class EcritureComptableTest {
         //Assert.assertTrue(pEcriture.toString(), vEcriture.isEquilibree());
         pEcriture.getTotalCredit();
         pEcriture.getTotalDebit();
-        pEcriture.checkIsEquilibree(pEcriture);
+        //pEcriture.checkIsEquilibree(pEcriture);
+        Assert.assertFalse("La deuxième écriture Non Equilibrée n'est pas équilibrée", pEcriture.isEquilibree());
     }
-	*/
+	
     
     
     
