@@ -32,14 +32,7 @@ pipeline {
 	            
 	        }
 	        
-	        stage("Processing the package where to run integration tests")	{
-	            steps	{
-	            bat "mvn integration-test  "
-	            
-	            
-	            }     
-	            
-	        }
+	        
 	        
 	         stage("Code coverage. Limiting the minimum score for lines coverage to 75%")	{
 	            steps	{

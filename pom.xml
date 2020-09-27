@@ -431,7 +431,7 @@
       <id>integration-tests</id>
       <phase>integration-test</phase>
       <goals>
-        <goal>integration-test</goal>
+        <goal>test</goal>
       </goals>
       <configuration>
         <skipTests>false</skipTests>
