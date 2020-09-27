@@ -32,7 +32,7 @@ pipeline {
 	            
 	        }
 	        
-	        stage("Tests unitaires")	{
+	        stage("Tests intégration")	{
 	            steps	{
 	            bat "mvn integration-test  "
 	            
