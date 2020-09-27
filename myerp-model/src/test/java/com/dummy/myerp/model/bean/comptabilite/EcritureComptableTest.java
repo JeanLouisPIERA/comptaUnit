@@ -5,12 +5,18 @@ import java.math.BigDecimal;
 import org.apache.commons.lang3.ObjectUtils;
 
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.TechnicalException;
 
-
+@ExtendWith(MockitoExtension.class)
 public class EcritureComptableTest {
+	
+	@Mock
+	LigneEcritureComptable ligne ;
 	
 	/**
 	 * Methode inutile - Il ne s'agit pas d'un test - Elle est la cause d'une erreur dans les autres tests this.createLigne
@@ -32,6 +38,10 @@ public class EcritureComptableTest {
     }
 	 * @throws FunctionalException 
     */
+	
+	
+	
+	
 	
 	/**
 	 * Teste la méthode qui crée une ligne d'écriture comptable pour permettre la création d'un compte comptable
@@ -57,6 +67,8 @@ public class EcritureComptableTest {
         LigneEcritureComptable ligneEcritureComptable = ecriture.createLigne(2, 200.0, 0.0);
         if(!vtest.equals(ligneEcritureComptable))throw new FunctionalException("La ligne n'a pas été créée");
     }
+	
+	
 	 
     /**
      * Calcule et teste le total des montants au débit des lignes d'écriture

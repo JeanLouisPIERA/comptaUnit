@@ -400,13 +400,42 @@
                     <configuration>
 				        <!-- Sets the VM argument line used when unit tests are run. -->
 				        <argLine>${surefireArgLine}</argLine>
-				        <!-- Skips unit tests if the value of skip.unit.tests property is true -->
-				        <skipTests>${skip.unit.tests}</skipTests>
-				        <!-- Excludes integration tests when unit tests are run. -->
+				        <!-- Skips unit tests if the value of skip.unit.tests property is true>
+				        <skipTests>${skip.unit.tests}</skipTests-->
+				        <!-- Excludes integration tests when unit tests are run. >
 				        <excludes>
 				            <exclude>**/IT*.java</exclude>
-				        </excludes>
+				        </excludes-->
 				    </configuration>
+				    <executions>
+    <execution>
+      <id>unit-tests</id>
+      <phase>test</phase>
+      <goals>
+        <goal>test</goal>
+      </goals>
+      <configuration>
+        <skipTests>false</skipTests>
+        <includes>
+          <include>**/*UT.java</include>
+        </includes>
+      </configuration>
+    </execution>
+    <execution>
+      <id>integration-tests</id>
+      <phase>integration-test</phase>
+      <goals>
+        <goal>test</goal>
+      </goals>
+      <configuration>
+        <skipTests>false</skipTests>
+        <includes>
+         
+          <include>**/*Test.java</include>
+        </includes>
+      </configuration>
+    </execution>
+  </executions>
                 </plugin>
                 
                 <!-- ===== Coverage / Reporting ===== -->
@@ -593,7 +622,9 @@
                 <version>2.20</version>
                 <configuration>
                     <linkXRef>false</linkXRef>
+                    
                 </configuration>
+                
                 <reportSets>
                     <!-- reportSet par défaut, exécuté dans tous les modules (non-aggregate reports) -->
                     <reportSet>
@@ -618,6 +649,8 @@
                         </configuration>
                     </reportSet>
                 </reportSets>
+                
+                
             </plugin>
 
             <!-- ===== Génération de la Javadoc ===== -->

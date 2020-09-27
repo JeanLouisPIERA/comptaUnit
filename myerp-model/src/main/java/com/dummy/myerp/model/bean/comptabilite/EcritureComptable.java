@@ -128,17 +128,32 @@ public class EcritureComptable {
     public String toString() {
         final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
         final String vSEP = ", ";
+        final String vSSP = "/ ";
         vStB.append("{")
             .append("id=").append(id)
-            .append(vSEP).append("journal=").append(journal)
-            .append(vSEP).append("reference='").append(reference).append('\'')
-            .append(vSEP).append("date=").append(date)
-            .append(vSEP).append("libelle='").append(libelle).append('\'')
+            //.append(vSEP).append("journal=").append(journal) ---------------------jounnal est un objet sans signification
+              .append(vSEP).append("journal=").append(journal.getCode())
+            //.append(vSEP).append("reference='").append(reference)--------- remove "'" after =
+              .append(vSEP).append("reference=").append(reference)
+            //.append('\'')------------------------------------------------ remove signe escape
+            .append(vSEP).append("date=").append(date.toString())
+            //.append(vSEP).append("libelle='").append(libelle)--------- remove "'" after =
+            .append(vSEP).append("libelle=").append(libelle)
+            //.append('\'')------------------------------------------------ remove signe escape
             .append(vSEP).append("totalDebit=").append(this.getTotalDebit().toPlainString())
             .append(vSEP).append("totalCredit=").append(this.getTotalCredit().toPlainString())
-            .append(vSEP).append("listLigneEcriture=[\n")
-            .append(StringUtils.join(listLigneEcriture, "\n")).append("\n]")
             .append("}");
+        
+        	/*
+        	 * Plusieurs erreurs de syntaxe et inutiles car retour d'objets LigneEcriture issus de la liste 
+            
+            //.append(vSEP).append("listLigneEcriture=[\n")---------------------\n retour à la ligne, [ est inutile
+              .append(vSEP).append("listLigneEcriture=")
+            //.append(StringUtils.join(listLigneEcriture, "\n")).append("\n]") ---------"\n" n'est pas un séparateur, séparateur obligatoire
+            .append(StringUtils.join(listLigneEcriture, ','))
+            */
+        
+        
         return vStB.toString();
     }
     
