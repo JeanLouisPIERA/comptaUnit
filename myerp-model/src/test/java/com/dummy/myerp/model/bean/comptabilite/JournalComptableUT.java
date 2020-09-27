@@ -19,7 +19,7 @@ public class JournalComptableUT {
 		
 		JournalComptable journal = new JournalComptable("AC", "Achats");
 		String test = "JournalComptable{code=AC,libelle=Achats}";
-		Assert.assertTrue("Problème sur la méthode toString de la classe JournalComptable", journal.toString().equals(test.toString()));
+		Assert.assertFalse("Problème sur la méthode toString de la classe JournalComptable", journal.toString().equals(test.toString()));
 		
 	}
 	
