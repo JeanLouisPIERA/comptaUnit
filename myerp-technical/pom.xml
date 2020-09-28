@@ -44,6 +44,7 @@
     <!-- Dependencies -->
     <!-- =============================================================== -->
     <dependencies>
+    
         <!-- ===== Log4j ===== -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -107,12 +108,51 @@
             <scope>test</scope>
         </dependency>
         
+        <dependency>
+			    <groupId>org.mockito</groupId>
+			    <artifactId>mockito-all</artifactId>
+			    <scope>test</scope>
+			</dependency>
+        
         <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
 			<dependency>
 			    <groupId>org.junit.jupiter</groupId>
 			    <artifactId>junit-jupiter</artifactId>
 			    <scope>test</scope>
 			</dependency>
+			
+			<!-- https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter -->
+			<dependency>
+			    <groupId>org.mockito</groupId>
+			    <artifactId>mockito-junit-jupiter</artifactId>
+			    <scope>test</scope>
+			</dependency>	
+			
+			<dependency>
+			    <groupId>org.junit.jupiter</groupId>
+			    <artifactId>junit-jupiter-engine</artifactId>
+			    <scope>test</scope>
+			</dependency>
+			<dependency>
+			    <groupId>org.mockito</groupId>
+			    <artifactId>mockito-core</artifactId>
+			    <version>2.21.0</version>
+			    <scope>test</scope>
+			</dependency>
+			
+			
+			
+			
+			<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api 
+		        the JAXB library (Java Architecture for XML Binding) is missing in the classpath. 
+		        JAXB is included in Java SE 10 or older, but it is removed from Java SE from Java 11 or newer –moved to Java EE under Jakarta EE project.
+		        we encounter the java.lang.NoClassDefFoundError when starting the server Apache Tomcat for this reason
+		        -->
+				<dependency>
+				    <groupId>javax.xml.bind</groupId>
+				    <artifactId>jaxb-api</artifactId>
+				    <version>2.4.0-b180830.0359</version>
+				</dependency>
 			
 			
 
@@ -178,7 +218,7 @@
                 <plugin>
 				    <groupId>org.jacoco</groupId>
 				    <artifactId>jacoco-maven-plugin</artifactId>
-				    <version>0.8.5</version>
+				    <version>0.8.6</version>
 				    
 				    <executions>
 				        <!--
