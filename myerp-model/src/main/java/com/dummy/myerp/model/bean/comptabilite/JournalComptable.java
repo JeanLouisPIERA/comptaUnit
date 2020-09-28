@@ -70,7 +70,7 @@ public class JournalComptable {
     @Override
     public String toString() {
         final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
-        final String vSEP = ", ";
+        final String vSEP = ",";
         vStB.append("{")
             .append("code=").append(code)
             .append(vSEP).append("libelle=").append(libelle)

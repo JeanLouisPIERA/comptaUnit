@@ -82,15 +82,31 @@ public class LigneEcritureComptable {
 
 
     // ==================== Méthodes ====================
+    /**
+     * Corrections de plusieurs erreurs
+     * public String toString() {
+        final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
+        //final String vSEP = ", "; ------------------------- correction de l'espace après la ,
+        final String vSEP = ",";
+        vStB.append("{")
+            //.append("compteComptable=").append(compteComptable)------------ aucun intérêt d'afficher l'objet dans le toString
+        	.append("compteComptable=").append(compteComptable.getNumero())
+        	//.append(vSEP).append("libelle='").append(libelle).append('\'')-----correction du ' aprés libelle= et du \ signe escape
+            .append(vSEP).append("libelle=").append(libelle)
+            .append(vSEP).append("debit=").append(debit)
+            .append(vSEP).append("credit=").append(credit)
+            .append("}");
+     */
+    
     @Override
     public String toString() {
         final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
-        final String vSEP = ", ";
+        final String vSEP = ",";
         vStB.append("{")
-            .append("compteComptable=").append(compteComptable)
-            .append(vSEP).append("libelle='").append(libelle).append('\'')
-            .append(vSEP).append("debit=").append(debit)
-            .append(vSEP).append("credit=").append(credit)
+        	.append("compteComptable=").append(compteComptable.getNumero())
+            .append(vSEP).append("libelle=").append(libelle)
+            .append(vSEP).append("debit=").append(debit.doubleValue())
+            .append(vSEP).append("credit=").append(credit.doubleValue())
             .append("}");
         return vStB.toString();
     }

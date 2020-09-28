@@ -66,8 +66,10 @@ public class CompteComptable {
 
 
     // ==================== Méthodes ====================
-    @Override
-    public String toString() {
+   
+    /**
+     * Corrections plusieurs erreurs de syntaxe
+     * public String toString() {
         final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
         //final String vSEP = ", "; //////-------------------------- correction espace après ,
         final String vSEP = ",";
@@ -76,6 +78,17 @@ public class CompteComptable {
             //.append(vSEP).append("libelle='").append(libelle) /////-------------- correction ' après =
             .append(vSEP).append("libelle=").append(libelle)
             //.append('\'') ////////-------------------------------CORRECTION signe escape \
+            .append("}");
+        return vStB.toString();
+    }
+     */
+    @Override
+    public String toString() {
+        final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
+        final String vSEP = ",";
+        vStB.append("{")
+            .append("numero=").append(numero)
+            .append(vSEP).append("libelle=").append(libelle)
             .append("}");
         return vStB.toString();
     }

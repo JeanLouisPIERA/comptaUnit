@@ -56,8 +56,7 @@ public class EcritureComptableTest {
 	 * @throws FunctionalException
 	 */
 	@Test
-	//(expected = FunctionalException.class)
-	public void checkCreateLigne()  {
+	public void checkCreateLigne() throws FunctionalException  {
         Integer pCompteComptableNumero = 1;
         Double pDebit = 200.0;
         Double pCredit = 0.0;
@@ -69,9 +68,8 @@ public class EcritureComptableTest {
                                                                     vLibelle,
                                                                     vDebit, vCredit);
         EcritureComptable ecriture = new EcritureComptable();
-        LigneEcritureComptable ligneEcritureComptable = ecriture.createLigne(1, 200.0, 0.0);
-        //if(!vtest.equals(ligneEcritureComptable))throw new FunctionalException("La ligne n'a pas été créée");
-        Assert.assertFalse("La ligne d'écriture n'a pas été correctement créée", vtest.equals(ligneEcritureComptable));
+        LigneEcritureComptable ligne = ecriture.createLigne(1, 200.0, 0.0);
+        Assert.assertTrue("La ligne d'écriture n'a pas été correctement créée", vtest.toString().equals(ligne.toString()));
     }
 	
 	
