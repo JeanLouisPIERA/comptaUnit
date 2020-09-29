@@ -1,28 +1,18 @@
 package com.dummy.myerp.technical.exception;
 
-import org.junit.jupiter.params.aggregator.ArgumentAccessException;
 
-/**
- * Classe des Exception de type "Donnée non trouvée"
- * **************************************************************************ERREUR DE CODE
- * Le code proposé pour la création de la classe est erroné "public class NotFoundException extends Exception"
- * NotFoundException devrait étendre java.lang.object NotFoundException : cette rédaction est impossible 
- * Il s'agit de ClientErrorException
- */
-public class NotFoundException extends ArgumentAccessException {
+public class NotFoundException extends Exception {
 
     /** serialVersionUID */
     private static final long serialVersionUID = 1L;
 
     /**
-     * Constructeur.
-     * * **************************************************************************ERREUR DE CODE
-     * Constructeur inexistant pour cette exception
- 
+     * Constructeur
+ 	*/
     public NotFoundException() {
         super();
     }
-    */
+    
 
     /**
      * Constructeur.
@@ -35,14 +25,13 @@ public class NotFoundException extends ArgumentAccessException {
 
     /**
      * Constructeur.
-     * * **************************************************************************ERREUR DE CODE
-     *Constructeur inexistant pour cette exception
-     * @param pCause -
      
+     * @param pCause -
+     */
     public NotFoundException(Throwable pCause) {
         super(pCause);
     }
-	*/
+	
 
     /**
      * Constructeur.
