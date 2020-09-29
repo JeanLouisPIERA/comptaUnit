@@ -129,7 +129,7 @@
 			    <scope>test</scope>
 			</dependency>	
 			
-			<!-- dependency>
+			<dependency>
 			    <groupId>org.junit.jupiter</groupId>
 			    <artifactId>junit-jupiter-engine</artifactId>
 			    <scope>test</scope>
@@ -140,7 +140,7 @@
 			    <artifactId>mockito-core</artifactId>
 			    <version>2.21.0</version>
 			    <scope>test</scope>
-			</dependency-->
+			</dependency>
 			
 			
 			
@@ -166,48 +166,6 @@
             <scope>test</scope>
         </dependency>
 </dependencies>
-
-
-    <!-- =============================================================== -->
-    <!-- Profiles -->
-    <!-- =============================================================== -->
-    <profiles>
-        <!-- Profile utilisé pour lancer les tests d'intégration de la couche Technical -->
-        <profile>
-            <id>test-technical</id>
-            <build>
-                <plugins>
-                    <!-- Ajout du répertoire src/test-technical/java en tant que source de test du module -->
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>build-helper-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>add-test-source</id>
-                                <phase>generate-test-sources</phase>
-                                <goals>
-                                    <goal>add-test-source</goal>
-                                </goals>
-                                <configuration>
-                                    <sources>
-                                        <source>src/test-technical/java</source>
-                                    </sources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-                <testResources>
-                    <testResource>
-                        <directory>src/test/resources</directory>
-                    </testResource>
-                    <testResource>
-                        <directory>src/test-technical/resources</directory>
-                    </testResource>
-                </testResources>
-            </build>
-        </profile>
-    </profiles>
 
 
 
