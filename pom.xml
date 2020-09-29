@@ -107,9 +107,9 @@
         </profile>
         
         <!-- Profile utilisé pour lancer les tests d'intégration de la couche Technical -->
-        <profile>
+        <!-- profile>
             <id>test-technical</id>
-        </profile>
+        </profile-->
         
     </profiles>
 

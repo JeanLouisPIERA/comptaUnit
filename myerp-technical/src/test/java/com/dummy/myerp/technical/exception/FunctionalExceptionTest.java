@@ -1,13 +1,14 @@
 package com.dummy.myerp.technical.exception;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 
 
 
 
-public class FunctionalExceptionUT {
+
+public class FunctionalExceptionTest {
 	
 	
 	@Test
