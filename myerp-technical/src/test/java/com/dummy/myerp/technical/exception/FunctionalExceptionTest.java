@@ -2,15 +2,6 @@ package com.dummy.myerp.technical.exception;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-
-
-
-
-
 
 public class FunctionalExceptionTest {
 	
@@ -20,7 +11,7 @@ public class FunctionalExceptionTest {
 	
 	@Test
 	public void checkMessageFunctionalException() {
-		Assert.assertTrue("Le message de l'exception a été correctement envoyé", new FunctionalException("pMessage").getMessage().equals(new Exception("pMessage").getMessage()));
+		Assert.assertTrue("Le message de l'exception n'a pas été correctement envoyé", new FunctionalException("pMessage").getMessage().equals(new Exception("pMessage").getMessage()));
 	}
 	
 	
@@ -44,7 +35,7 @@ public class FunctionalExceptionTest {
 		FunctionalException functionalException = new FunctionalException("pMessage", pcause);
 		exception.initCause(pcause);
 		
-		Assert.assertTrue("Le message de l'exception a été correctement envoyé", new FunctionalException("pMessage").getMessage().equals(new Exception("pMessage").getMessage()));
+		Assert.assertTrue("Le message de l'exception n'a pas été correctement envoyé", new FunctionalException("pMessage").getMessage().equals(new Exception("pMessage").getMessage()));
 		Assert.assertTrue("Problème dans la reconnaissance de l'exception par FunctionalException", functionalException.getCause().toString().equals(exception.getCause().toString())); 
 		
 		
