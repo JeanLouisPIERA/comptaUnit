@@ -105,6 +105,30 @@
 		            <value>test</value>
 		        </property>
 		    </activation>
+		    <build>
+            <plugins>
+               <plugin>
+                  <executions>
+                     <execution>
+                        <phase>test</phase>
+                        <goals>
+                           <goal>run</goal>
+                        </goals>
+                        <configuration>
+                           <tasks>
+                              <echo>Using env.test.properties</echo>
+                              <copy file="myerp-business/src/main/resources/**"
+                                 tofile="${project.build.outputDirectory}
+                                 /env.properties"/>
+                           </tasks>
+                        </configuration>
+                     </execution>
+                  </executions>
+               </plugin>
+            </plugins>
+         </build>
+      
+		    
         </profile>
 
         <!-- Profile utilisé pour lancer les tests d'intégration de la couche Consumer -->
