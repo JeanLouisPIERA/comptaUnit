@@ -27,7 +27,7 @@ pipeline {
 	        
 	        stage("Run tests Junit dans tous les packages")	{
 	            steps	{
-	            bat "mvn test "
+	            bat "mvn test -X"
 	            
 	            
 	            }     
