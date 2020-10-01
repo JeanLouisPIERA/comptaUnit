@@ -133,5 +133,8 @@ public abstract class AbstractDbConsumer {
             }
         }
         mapDataSource = vMapDataSource;
+        
     }
+    
+    
 }

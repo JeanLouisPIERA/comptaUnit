@@ -49,5 +49,5 @@
 
 
     <!-- ========== SQL ========== -->
-    <import resource="sqlContext.xml"/>
+    <import resource="sqlContext.xml"></import>
 </beans>

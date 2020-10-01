@@ -23,16 +23,23 @@ pipeline {
 	            }
 	            
 	       }
-	        stage("Run tests using the suitable unit testing framework Junit")	{
+	        stage("Run tests Junit in myerp-business package")	{
 	            steps	{
-	            bat "mvn test  "
+	            bat "mvn test -P test-business "
 	            
 	            
 	            }     
 	            
 	        }
 	        
-	        
+	        stage("Run tests Junit dans tous les packages")	{
+	            steps	{
+	            bat "mvn test "
+	            
+	            
+	            }     
+	            
+	        }
 	        
 	         stage("Code coverage. Limiting the minimum score for lines coverage to 75%")	{
 	            steps	{

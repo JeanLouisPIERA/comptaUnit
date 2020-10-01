@@ -47,6 +47,14 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     protected ComptabiliteDaoImpl() {
         super();
     }
+    
+    /*
+     * METHODE AJOUTEE pour accéder à la méthode de la classe mère AbstractDbConsumer
+     */
+    public DataSource getDataSource(DataSourcesEnum pDataSourceId) {
+    	return super.getDataSource(pDataSourceId);
+    	
+    }
 
 
     // ==================== Méthodes ====================
