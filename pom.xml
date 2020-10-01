@@ -99,16 +99,7 @@
         <!-- Profile utilisé pour lancer les tests d'intégration de la couche Business -->
         <profile>
             <id>test-business</id>
-            <modules>
-	            <module>myerp-business</module>
-	         </modules>
-            <activation>
-		        <property>
-		            <name>test-business</name>
-		            <value>test</value>
-		        </property>
-		    </activation>
-		   
+
         </profile>
 
         <!-- Profile utilisé pour lancer les tests d'intégration de la couche Consumer -->
@@ -408,7 +399,7 @@
                 </plugin>
                 
                 <!-- ===== NEW - Indicateur d'activation des maven profiles ===== -->
-                <plugin>
+                <!-- plugin>
 		            <groupId>org.apache.maven.plugins</groupId>
 		            <artifactId>maven-help-plugin</artifactId>
 		            <version>3.2.0</version>
@@ -421,7 +412,7 @@
 		                    </goals>
 		                </execution>
 		            </executions>
-		        </plugin>
+		        </plugin-->
 
                 <!-- ===== Test / Reporting ===== -->
                 <plugin>
