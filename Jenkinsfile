@@ -23,6 +23,15 @@ pipeline {
 	            }
 	            
 	       }
+	       
+	       stage("Run tests Junit dans le package business")	{
+	            steps	{
+	            bat "mvn test -P test-business"
+	            
+	            
+	            }     
+	            
+	        }
 	        
 	        
 	        stage("Run tests Junit dans tous les packages")	{
