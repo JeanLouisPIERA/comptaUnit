@@ -36,7 +36,7 @@ pipeline {
 	        
 	        stage("Run tests Junit dans tous les packages  ")	{
 	            steps	{
-	            bat "mvn package -P inttests"
+	            bat "mvn test -P inttests"
 	            
 	            
 	            }     
@@ -45,7 +45,7 @@ pipeline {
 	        
 	         stage("Code coverage. Limiting the minimum score for lines coverage to 75%")	{
 	            steps	{
-	            bat " mvn jacoco:check jacoco:report"
+	            bat " mvn test jacoco:check jacoco:report"
 	      		
 	      		
 	            publishHTML	(target:	[

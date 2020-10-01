@@ -132,6 +132,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>3.0.0-M5</version>
                     <configuration>
                     	<skip>true</skip>
                     </configuration>
@@ -158,6 +159,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
+                     <version>3.0.0-M5</version>
                     <configuration>
                         <includes>
                             <include>**/*Test.java</include>
@@ -487,7 +489,7 @@
 				    </configuration>
 				    <executions>
     <execution>
-      <id>unit-tests</id>
+      <id>unittests</id>
       <phase>test</phase>
       <goals>
         <goal>test</goal>
@@ -500,7 +502,7 @@
       </configuration>
     </execution>
     <execution>
-      <id>integration-tests</id>
+      <id>inttests</id>
       <phase>integration-test</phase>
       <goals>
         <goal>test</goal>
