@@ -120,7 +120,7 @@
                         <configuration>
                            <tasks>
                               <echo>Using env.test.properties</echo>
-                              <copy file="myerp-business/src/main/resources/**"
+                              <copy file="myerp-business/src/main/resources/com/dummy/myerp/business/applicationContext.xml"
                                  tofile="${project.build.outputDirectory}
                                  /env.properties"/>
                            </tasks>
