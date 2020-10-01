@@ -10,12 +10,12 @@ pipeline {
     	
 		stages{
 		
-	        stage("Compile the source code")	{
+	        stage("Compilation du code source")	{
 	            steps	{
 	            bat "mvn compile "
 	            }
 	        }
-	        stage("Compile the test source code  ")	{
+	        stage("Compilation du code des tests  ")	{
 	            steps	{
 	            bat "mvn test-compile  "
 	            
@@ -24,7 +24,7 @@ pipeline {
 	            
 	       }
 	       
-	       stage("Run tests Junit dans le package business")	{
+	       stage("Tests unitaires avec Junit")	{
 	            steps	{
 	            bat "mvn test -P unittests"
 	            
@@ -34,16 +34,16 @@ pipeline {
 	        }
 	        
 	        
-	        stage("Run tests Junit dans tous les packages  ")	{
+	        stage("Tests d'intégration avec Failsafe")	{
 	            steps	{
-	            bat "mvn test -P inttests"
+	            bat "mvn package -P inttests"
 	            
 	            
 	            }     
 	            
 	        }
 	        
-	         stage("Code coverage. Limiting the minimum score for lines coverage to 75%")	{
+	         stage("Code coverage. Le score minimum de couverture des lignes = 75%")	{
 	            steps	{
 	            bat " mvn test jacoco:check jacoco:report"
 	      		
@@ -90,7 +90,7 @@ pipeline {
 	                    }
 	            	}
 	        }
-			stage("Package the application")	{
+			stage("Packaging de l'application")	{
 		            steps	{
 		            bat "mvn package -DskipTests"
 		            }
