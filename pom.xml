@@ -56,7 +56,7 @@
         <log4j.version>2.8.1</log4j.version>
         <spring.version>4.3.7.RELEASE</spring.version>
         
-        <!-- Used to locate the profile specific configuration file. -->
+        <!-- Used to locate the profile specific configuration file.   -->
         <jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.execution.data.file>
         <jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.execution.data.file>
         
