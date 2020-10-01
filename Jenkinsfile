@@ -79,7 +79,7 @@ pipeline {
 				
 				
 				
-	            
+	            bat "mvn verify";
 	            }
 	            post {
 	                always {
@@ -92,7 +92,7 @@ pipeline {
 	        }
 			stage("Package the application")	{
 		            steps	{
-		            bat "mvn clean package -DskipTests"
+		            bat "mvn package -DskipTests"
 		            }
 		        }
 	
