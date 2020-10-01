@@ -79,7 +79,7 @@ pipeline {
 				
 				
 				
-	            bat "mvn clean verify"
+	            
 	            }
 	            post {
 	                always {
