@@ -24,7 +24,7 @@ pipeline {
 	            
 	       }
 	       
-	       stage("Tests unitaires avec Junit")	{
+	       stage("Tests unitaires")	{
 	            steps	{
 	            bat "mvn test -P unittests"
 	            
@@ -34,7 +34,7 @@ pipeline {
 	        }
 	        
 	        
-	        stage("Tests d'intégration avec Failsafe")	{
+	        stage("Tests d'intégration")	{
 	            steps	{
 	            bat "mvn package -P inttests"
 	            

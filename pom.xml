@@ -96,79 +96,78 @@
             </properties>
         </profile>
 
-        <!-- Profile utilisé pour lancer les tests d'intégration de la couche Business -->
-        <profile>
+        <!-- Profile utilisé pour lancer les tests d'intégration du module Business -->
+        <!-- profile>
             <id>test-business</id>
-
-        </profile>
-
-        <!-- Profile utilisé pour lancer les tests d'intégration de la couche Consumer -->
-        <profile>
+        </profile-->
+        <!-- Profile utilisé pour lancer les tests d'intégration ddu module Consumer -->
+        <!-- profile>
             <id>test-consumer</id>
-        </profile>
-        
-        <!-- Profile utilisé pour lancer les tests d'intégration de la couche Technical -->
+        </profile-->
+        <!-- Profile utilisé pour lancer les tests d'intégration ddu module Technical -->
         <!-- profile>
             <id>test-technical</id>
         </profile-->
         
-    <profile>
-        <id>unittests</id>
-        <activation>
-            <activeByDefault>false</activeByDefault>
-        </activation>
-        <build>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <configuration>
-                        <includes>
-                            <include>**/*UT.java</include>
-                        </includes>
-                    </configuration>
-                </plugin>
-                <!-- skip the integration tests -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>3.0.0-M5</version>
-                    <configuration>
-                    	<skip>true</skip>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </build>
-    </profile>
-    
-    <profile>
-        <id>inttests</id>
-        <activation>
-            <activeByDefault>false</activeByDefault>
-        </activation>
-        <build>
-            <plugins>
-                <!-- skip the unit tests -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <configuration>
-                        <skip>true</skip>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                     <version>3.0.0-M5</version>
-                    <configuration>
-                        <includes>
-                            <include>**/*Test.java</include>
-                        </includes>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </build>
-    </profile>
+	    <!-- Profil utilisé pour lancer les tests unitaires de tous les modules -->   
+	    <profile>
+	        <id>unittests</id>
+	        <activation>
+	            <activeByDefault>false</activeByDefault>
+	        </activation>
+	        <build>
+	            <plugins>
+	                <plugin>
+	                    <groupId>org.apache.maven.plugins</groupId>
+	                    <artifactId>maven-surefire-plugin</artifactId>
+	                    <configuration>
+	                        <includes>
+	                            <include>**/*UT.java</include>
+	                        </includes>
+	                    </configuration>
+	                </plugin>
+	                <!-- skip the integration tests -->
+	                <plugin>
+	                    <groupId>org.apache.maven.plugins</groupId>
+	                    <artifactId>maven-failsafe-plugin</artifactId>
+	                    <version>3.0.0-M5</version>
+	                    <configuration>
+	                    	<skip>true</skip>
+	                    </configuration>
+	                </plugin>
+	            </plugins>
+	        </build>
+	    </profile>
+	    
+	    <!-- Profil utilisé pour lancer les tests d'intégration de tous les modules --> 
+	    <profile>
+	        <id>inttests</id>
+	        <activation>
+	            <activeByDefault>false</activeByDefault>
+	        </activation>
+	        <build>
+	            <plugins>
+	                <!-- skip the unit tests -->
+	                <plugin>
+	                    <groupId>org.apache.maven.plugins</groupId>
+	                    <artifactId>maven-surefire-plugin</artifactId>
+	                    <configuration>
+	                        <skip>true</skip>
+	                    </configuration>
+	                </plugin>
+	                <plugin>
+	                    <groupId>org.apache.maven.plugins</groupId>
+	                    <artifactId>maven-failsafe-plugin</artifactId>
+	                     <version>3.0.0-M5</version>
+	                    <configuration>
+	                        <includes>
+	                            <include>**/*Test.java</include>
+	                        </includes>
+	                    </configuration>
+	                </plugin>
+	            </plugins>
+	        </build>
+	    </profile>
 
 	</profiles>
 
@@ -487,35 +486,35 @@
 				            <exclude>**/IT*.java</exclude>
 				        </excludes>
 				    </configuration>
+				    
 				    <executions>
-    <execution>
-      <id>unittests</id>
-      <phase>test</phase>
-      <goals>
-        <goal>test</goal>
-      </goals>
-      <configuration>
-        <skipTests>false</skipTests>
-        <includes>
-          <include>**/*UT.java</include>
-        </includes>
-      </configuration>
-    </execution>
-    <execution>
-      <id>inttests</id>
-      <phase>integration-test</phase>
-      <goals>
-        <goal>test</goal>
-      </goals>
-      <configuration>
-        <skipTests>false</skipTests>
-        <includes>
-         
-          <include>**/*Test.java</include>
-        </includes>
-      </configuration>
-    </execution>
-  </executions>
+					    <execution>
+					      <id>unittests</id>
+					      <phase>test</phase>
+					      <goals>
+					        <goal>test</goal>
+					      </goals>
+					      <configuration>
+					        <skipTests>false</skipTests>
+					        <includes>
+					          <include>**/*UT.java</include>
+					        </includes>
+					      </configuration>
+					    </execution>
+					    <execution>
+					      <id>inttests</id>
+					      <phase>integration-test</phase>
+					      <goals>
+					        <goal>test</goal>
+					      </goals>
+					      <configuration>
+					        <skipTests>false</skipTests>
+					        <includes>
+					           <include>**/*Test.java</include>
+					        </includes>
+					      </configuration>
+					    </execution>
+					  </executions>
                 </plugin>
                 
                 <!-- ===== Coverage / Reporting ===== -->
