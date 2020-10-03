@@ -143,7 +143,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
     /**
      * {@inheritDoc}
-     * Les tests n'ont pas été réalisés pour cette méthode qui appelle 2 sous-méthodes qui ont été testées
+     * cette méthode qui appelle 2 sous-méthodes qui ont été testées
      * Pour cela chacune des sous-méthodes a été passée en public
      * @throws FunctionalException 
      */

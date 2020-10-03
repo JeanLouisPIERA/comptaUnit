@@ -1,5 +1,7 @@
 package com.dummy.myerp.consumer.dao.impl;
 
+import org.springframework.context.annotation.Configuration;
+
 import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 
@@ -7,6 +9,7 @@ import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 /**
  * <p>Implémentation du Proxy d'accès à la couche DAO.</p>
  */
+@Configuration(value= "{applicationContext.xml}")
 public final class DaoProxyImpl implements DaoProxy {
 
     // ==================== Attributs ====================

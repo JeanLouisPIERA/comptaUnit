@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,6 +27,8 @@ import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
+
+import junit.framework.AssertionFailedError;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -66,13 +69,12 @@ public class ComptabiliteManagerImplTest {
 	
 
     /**
-     * Toutes les contraintes unitaires n'est respectée sur les attributs de l'Ecriture Comptable
+     * Toutes les contraintes unitaires sont respectées sur les attributs de l'Ecriture Comptable
      * Test sans erreur
-     * @throws FunctionalException
      * @throws ParseException
      */
     @Test
-    public void checkEcritureComptableUnit() throws FunctionalException, ParseException  {
+    public void checkEcritureComptableUnit() throws ParseException  {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -85,7 +87,14 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 123.00, 0.00));	
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 0.00, 123.00));
         
-        manager.checkEcritureComptableUnit(vEcritureComptable);
+        try {
+			manager.checkEcritureComptableUnit(vEcritureComptable);
+		} catch (FunctionalException e) {
+			Assert.fail("La méthode checkEcritureComptableUnit ne fonctionne pas correctement");
+			
+		}
+        
+        
     }
     
     
@@ -95,8 +104,9 @@ public class ComptabiliteManagerImplTest {
      * @throws FunctionalException
      * @throws ParseException
      */
-    @Test(expected = FunctionalException.class)
-    public void checkEcritureComptableUnitViolation() throws FunctionalException, ParseException {
+    @Test(expected=AssertionError.class)
+    //(expected = FunctionalException.class)
+    public void checkEcritureComptableUnitViolation() throws ParseException {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         //@NotNull
@@ -109,10 +119,10 @@ public class ComptabiliteManagerImplTest {
         //vEcritureComptable.setDate(dateTest);
         
         //@Pattern Respect du regexp
-        vEcritureComptable.setReference("AC*****2020/00001");
+        vEcritureComptable.setReference("AC******-2020/00001");
         
         //@Size min 1 max 200
-        vEcritureComptable.setLibelle("");
+        vEcritureComptable.setLibelle("Libelle");
         
         /*
          * CompteComptable @NotNull
@@ -121,10 +131,15 @@ public class ComptabiliteManagerImplTest {
          * BigDecimal credit @MontantComptable @Digits(integer = 13, fraction = 2)
          */
         
-        vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 1234567891000000.00256989, 0.00));	
-        vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 0.00, 1234567891000000.00256989));
+        vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 123456789000000000000.00, 0.00));	
+        vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 0.00, 123456789.0012345674));
         
-        manager.checkEcritureComptableUnit(vEcritureComptable);
+        try {
+        	manager.checkEcritureComptableUnit(vEcritureComptable);
+		} catch (FunctionalException e) {
+			Assert.fail();
+			
+		}
         
     }
     
@@ -137,8 +152,9 @@ public class ComptabiliteManagerImplTest {
      * @throws FunctionalException
      * @throws ParseException 
      */
-    @Test(expected = FunctionalException.class)
-    public void checkEcritureComptableUnitRG2() throws FunctionalException, ParseException  {
+    @Test(expected=AssertionError.class)
+    //(expected = FunctionalException.class)
+    public void checkEcritureComptableUnitRG2() throws ParseException  {
     	
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
@@ -152,7 +168,17 @@ public class ComptabiliteManagerImplTest {
         // 2 lignes la valeur au débit 1234 n'est pas égale à la valeur au crédit 1233
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 1234.00, 0.00));	
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 0.00, 1233.00));		
-        manager.checkEcritureComptableUnit(vEcritureComptable);
+        
+        try {
+        	manager.checkEcritureComptableUnit(vEcritureComptable);
+		} catch (FunctionalException e) {
+			Assert.fail();
+			
+		}
+        
+        	
+		    
+			
         
         //test pour commit sur webhook Jenkins
    	
@@ -192,7 +218,8 @@ public class ComptabiliteManagerImplTest {
      * @throws FunctionalException
      * @throws ParseException 
      */
-    @Test(expected = FunctionalException.class)
+    @Test(expected=AssertionError.class)
+    //(expected = FunctionalException.class)
     public void checkEcritureComptableUnitRG3() throws FunctionalException, ParseException  {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
@@ -205,8 +232,15 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.setLibelle("Libelle");
         // 2 lignes mais les 2 sont au débit
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 1234.00, 0.00));	
-        vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 1233.00,0.00));
-        manager.checkEcritureComptableUnit(vEcritureComptable);
+        vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 1234.00,0.00));
+        
+        
+        try {
+        	manager.checkEcritureComptableUnit(vEcritureComptable);
+		} catch (FunctionalException e) {
+			Assert.fail();	
+		}
+       
     }
     
     //======== DONE 2
@@ -287,6 +321,7 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 0.00, 1234.00));
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 1234.00, 0.00));	
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 0.00, 1234.00));
+       
         
     	manager.checkSoldeCompteComptableRG1(vEcritureComptable, cc1, 20);
         

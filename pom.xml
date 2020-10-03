@@ -188,7 +188,7 @@
 
 
     <!-- =============================================================== -->
-    <!-- Dependency managment -->
+    <!-- Dependency management -->
     <!-- =============================================================== -->
     <dependencyManagement>
         <dependencies>
@@ -374,6 +374,34 @@
 			    <groupId>org.mockito</groupId>
 			    <artifactId>mockito-core</artifactId>
 			    <version>2.21.0</version>
+			    <scope>test</scope>
+			</dependency>
+			
+			<!-- ===== Test intégration en plus Junit===== -->
+			
+			<dependency>
+			    <groupId>org.springframework</groupId>
+			    <artifactId>spring-test</artifactId>
+			    <version>4.3.2.RELEASE</version>
+			    <scope>test</scope>
+			</dependency>
+			<dependency>
+			    <groupId>junit</groupId>
+			    <artifactId>junit</artifactId>
+			    <version>4.12</version>
+			    <scope>test</scope>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.hamcrest</groupId>
+			    <artifactId>hamcrest-library</artifactId>
+			    <version>1.3</version>
+			    <scope>test</scope>
+			</dependency>
+			<dependency>
+			    <groupId>com.jayway.jsonpath</groupId>
+			    <artifactId>json-path</artifactId>
+			    <version>2.2.0</version>
 			    <scope>test</scope>
 			</dependency>
 			

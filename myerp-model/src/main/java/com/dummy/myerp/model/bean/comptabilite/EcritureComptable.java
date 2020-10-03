@@ -42,7 +42,13 @@ public class EcritureComptable {
     @Valid
     @Size(min = 2)
     private final List<LigneEcritureComptable> listLigneEcriture = new ArrayList<>();
-
+    
+    
+    // ==================== Constructeur ====================
+    
+    public EcritureComptable() {
+    	
+    }
 
     // ==================== Getters/Setters ====================
     public Integer getId() {

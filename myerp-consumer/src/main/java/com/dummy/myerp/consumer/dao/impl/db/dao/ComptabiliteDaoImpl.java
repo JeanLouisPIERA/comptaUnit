@@ -2,14 +2,19 @@ package com.dummy.myerp.consumer.dao.impl.db.dao;
 
 import java.sql.Types;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
+import com.dummy.myerp.consumer.dao.impl.DaoProxyImpl;
 import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.CompteComptableRM;
 import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.EcritureComptableRM;
 import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.JournalComptableRM;
@@ -26,6 +31,7 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 /**
  * Implémentation de l'interface {@link ComptabiliteDao}
  */
+@Configuration(value= "{applicationContext.xml}")
 public class ComptabiliteDaoImpl extends AbstractDbConsumer implements ComptabiliteDao {
 
     // ==================== Constructeurs ====================
@@ -50,12 +56,23 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     
     /*
      * METHODE AJOUTEE pour accéder à la méthode de la classe mère AbstractDbConsumer
-     */
+     
     public DataSource getDataSource(DataSourcesEnum pDataSourceId) {
-    	return super.getDataSource(pDataSourceId);
-    	
+    	return super.getDataSource(pDataSourceId);	
     }
-
+    */
+    
+    //ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+	
+	//public DataSource dataSource = (DataSource) context.getBean("dataSourceMYERP");
+	//public DaoProxyImpl daoProxy = context.getBean(DaoProxyImpl.class);
+	
+	//public ComptabiliteDaoImpl comptabiliteDao = context.getBean(ComptabiliteDaoImpl.class);
+	
+    
+    public static void configure(Map<DataSourcesEnum, DataSource> pMapDataSource) {
+    	configure(pMapDataSource);
+    }
 
     // ==================== Méthodes ====================
     /** SQLgetListCompteComptable */
@@ -65,7 +82,9 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     }
     @Override
     public List<CompteComptable> getListCompteComptable() {
-        JdbcTemplate vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
+        JdbcTemplate vJdbcTemplate = new JdbcTemplate();
+        vJdbcTemplate.setDataSource(this.getDataSource(DataSourcesEnum.MYERP));
+    	//JdbcTemplate vJdbcTemplate = new JdbcTemplate(dataSource);
         CompteComptableRM vRM = new CompteComptableRM();
         List<CompteComptable> vList = vJdbcTemplate.query(SQLgetListCompteComptable, vRM);
         return vList;

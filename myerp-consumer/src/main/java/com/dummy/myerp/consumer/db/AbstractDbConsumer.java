@@ -6,6 +6,8 @@ import javax.sql.DataSource;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.dummy.myerp.consumer.ConsumerHelper;
@@ -46,6 +48,8 @@ public abstract class AbstractDbConsumer {
     protected static DaoProxy getDaoProxy() {
         return ConsumerHelper.getDaoProxy();
     }
+    
+    
 
 
     // ==================== Méthodes ====================
@@ -56,6 +60,8 @@ public abstract class AbstractDbConsumer {
      * @return SimpleJdbcTemplate
      */
     protected DataSource getDataSource(DataSourcesEnum pDataSourceId) {
+    	
+    	
         DataSource vRetour = this.mapDataSource.get(pDataSourceId);
         if (vRetour == null) {
             throw new UnsatisfiedLinkError("La DataSource suivante n'a pas été initialisée : " + pDataSourceId);
