@@ -61,7 +61,7 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 @ActiveProfiles({"inttests", "unittests"}) 
 @TestPropertySource("/application.properties") 
 @Transactional
-public class ComptabiliteDaoImplTest {
+public class ComptabiliteDaoImplIT {
 	/*
 	@Autowired
 	private ApplicationContext context;

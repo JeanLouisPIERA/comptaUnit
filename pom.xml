@@ -162,6 +162,7 @@
 	                    <configuration>
 	                        <includes>
 	                            <include>**/*Test.java</include>
+	                            <include>**/*IT.java</include>
 	                        </includes>
 	                    </configuration>
 	                </plugin>
@@ -382,15 +383,15 @@
 			<dependency>
 			    <groupId>org.springframework</groupId>
 			    <artifactId>spring-test</artifactId>
-			    <version>4.3.2.RELEASE</version>
+			    <version>5.2.9.RELEASE</version>
 			    <scope>test</scope>
 			</dependency>
-			<dependency>
+			<!-- dependency>
 			    <groupId>junit</groupId>
 			    <artifactId>junit</artifactId>
 			    <version>4.12</version>
 			    <scope>test</scope>
-			</dependency>
+			</dependency-->
 			
 			<dependency>
 			    <groupId>org.hamcrest</groupId>
@@ -539,6 +540,7 @@
 					        <skipTests>false</skipTests>
 					        <includes>
 					           <include>**/*Test.java</include>
+					           <include>**/*IT.java</include>
 					        </includes>
 					      </configuration>
 					    </execution>

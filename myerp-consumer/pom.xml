@@ -53,27 +53,9 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>5.2.9.RELEASE</version>
         </dependency>
         
-        <dependency>
-	        <groupId>org.testcontainers</groupId>
-	        <artifactId>testcontainers</artifactId>
-	        <scope>test</scope>
-    	</dependency>
-    	
-    	<dependency>
-	        <groupId>org.testcontainers</groupId>
-	        <artifactId>postgresql</artifactId>
-	        <scope>test</scope>
-    	</dependency>
-    	
-    	<dependency>
-		    <groupId>org.testcontainers</groupId>
-		    <artifactId>junit-jupiter</artifactId>
-		    <version>1.14.3</version>
-		    <scope>test</scope>
-		</dependency>
+       
 
 
         <!-- ========== Test Dependencies ========== -->
@@ -90,19 +72,7 @@
 			    <scope>test</scope>
 			</dependency>
 			
-		 <dependency>
-			    <groupId>org.mockito</groupId>
-			    <artifactId>mockito-all</artifactId>
-			    <version>1.10.19</version>
-			    <scope>test</scope>
-			</dependency>
-			
-			<!-- https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter -->
-			<dependency>
-			    <groupId>org.mockito</groupId>
-			    <artifactId>mockito-junit-jupiter</artifactId>
-			    <scope>test</scope>
-			</dependency>	
+		 
 			
 			
 		<!-- ===== Test intégration en plus Junit===== -->
@@ -110,28 +80,9 @@
 			<dependency>
 			    <groupId>org.springframework</groupId>
 			    <artifactId>spring-test</artifactId>
-			    <version>4.3.2.RELEASE</version>
-			    <scope>test</scope>
-			</dependency>
-			<dependency>
-			    <groupId>junit</groupId>
-			    <artifactId>junit</artifactId>
-			    <version>4.12</version>
 			    <scope>test</scope>
 			</dependency>
 			
-			<dependency>
-			    <groupId>org.hamcrest</groupId>
-			    <artifactId>hamcrest-library</artifactId>
-			    <version>1.3</version>
-			    <scope>test</scope>
-			</dependency>
-			<dependency>
-			    <groupId>com.jayway.jsonpath</groupId>
-			    <artifactId>json-path</artifactId>
-			    <version>2.2.0</version>
-			    <scope>test</scope>
-			</dependency>	
         
         <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api 
         the JAXB library (Java Architecture for XML Binding) is missing in the classpath. 
@@ -161,24 +112,7 @@
         </dependency>
     </dependencies>
     
-    <dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>org.junit</groupId>
-            <artifactId>junit-bom</artifactId>
-            <version>5.7.0</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers-bom</artifactId>
-            <version>1.14.3</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-    </dependencies>
-</dependencyManagement>
+   
 
 
     <!-- =============================================================== -->

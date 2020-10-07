@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.TechnicalException;
@@ -20,6 +21,7 @@ import com.dummy.myerp.technical.exception.TechnicalException;
 /**
  * Bean représentant une Écriture Comptable
  */
+@Component
 public class EcritureComptable {
 
     // ==================== Attributs ====================
