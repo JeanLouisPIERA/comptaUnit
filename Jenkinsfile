@@ -36,7 +36,7 @@ pipeline {
 	        
 	        stage("Tests d'intégration")	{
 	            steps	{
-	            bat "mvn verify -P inttests"
+	            bat "mvn integration-test -P inttests"
 	            
 	            
 	            }     
