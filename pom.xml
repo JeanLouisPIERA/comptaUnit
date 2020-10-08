@@ -534,7 +534,7 @@
 					      <id>inttests</id>
 					      <phase>integration-test</phase>
 					      <goals>
-					        <goal>verify</goal>
+					        <goal>test</goal>
 					      </goals>
 					      <configuration>
 					        <skipTests>false</skipTests>
@@ -624,18 +624,6 @@
 				            </goals>
 				        </execution>
 				        
-				        <!--
-				            Ensures that the code coverage report for integration tests is created after
-				            integration tests have been run.
-				        -->
-				        <execution>
-				            <id>post-int-test</id>
-				            <phase>integration-test</phase>
-				            <goals>
-				                <goal>report</goal>
-				            </goals>
-				        </execution>
-	
 				    </executions>
 				    
 				</plugin>
