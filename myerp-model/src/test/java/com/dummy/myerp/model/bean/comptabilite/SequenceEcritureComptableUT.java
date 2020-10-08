@@ -20,8 +20,8 @@ public class SequenceEcritureComptableUT {
 	public void checkSequenceToString() {
 		
 		SequenceEcritureComptable sequence = new SequenceEcritureComptable(2020,1);
-		String test = "SequenceEcritureComptable{annee=2020,derniereValeur=1}";
-		Assert.assertTrue("Problème sur la méthode toString de la classe CompteComptable", sequence.toString().equals(test.toString()));
+		String test = "SequenceEcritureComptable{annee=2020, derniereValeur=1}";
+		Assert.assertTrue("Problème sur la méthode toString de la classe CompteComptable"+"SEQUENCE="+sequence+"TEST="+test, sequence.toString().equals(test.toString()));
 		
 	}
 	

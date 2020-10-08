@@ -28,10 +28,12 @@ public class CompteComptableUT {
 	public void checkCompteToString() {
 		
 		CompteComptable compte = new CompteComptable(608,"Achats");
-		String test = "CompteComptable{numero=608,libelle=Achats}";
-		Assert.assertTrue("Problème sur la méthode toString de la classe CompteComptable", compte.toString().equals(test));
+		String test = "CompteComptable{numero=608, libelle='Achats'}";
+		Assert.assertTrue("Problème sur la méthode toString de la classe CompteComptable"+ "test=" + test + "compte=" + compte, compte.toString().equals(test));
 		
 	}
+	
+	
 	
 	/**
 	 * TEST UNITAIRE

@@ -8,7 +8,7 @@ package com.dummy.myerp.consumer.db;
 public enum DataSourcesEnum {
 
     /** MYERP */
-    MYERP("MYERP", "dev_myerp.db_1");
+    MYERP("MYERP", "MYERP");
     
 	
 	 private String code;

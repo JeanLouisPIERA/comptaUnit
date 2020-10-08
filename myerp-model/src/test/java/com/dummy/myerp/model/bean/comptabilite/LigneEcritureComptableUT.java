@@ -26,9 +26,10 @@ public class LigneEcritureComptableUT {
 		ligne.setDebit(new BigDecimal(100.0));
 		ligne.setCredit(new BigDecimal (0.0));
 		
+	
+		String test = "LigneEcritureComptable{compteComptable=CompteComptable{numero=607, libelle='null'}, libelle='pLibelle', debit=100, credit=0}";
 		
-		String test = "LigneEcritureComptable{compteComptable=607,libelle=pLibelle,debit=100.0,credit=0.0}";
-		Assert.assertTrue("Problème sur la méthode toString de la classe LigneEcritureComptable", ligne.toString().equals(test));
+		Assert.assertTrue("Problème sur la méthode toString de la classe LigneEcritureComptable" + "LIGNE=" + ligne + "TEST=" + test, ligne.toString().equals(test));
 		
 	}
 	

@@ -96,7 +96,7 @@ public class LigneEcritureComptable {
             .append(vSEP).append("debit=").append(debit)
             .append(vSEP).append("credit=").append(credit)
             .append("}");
-     */
+     
     
     @Override
     public String toString() {
@@ -110,4 +110,24 @@ public class LigneEcritureComptable {
             .append("}");
         return vStB.toString();
     }
+    
+    */
+    
+    @Override
+    public String toString() {
+        final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
+        final String vSEP = ", ";
+        vStB.append("{")
+            .append("compteComptable=").append(compteComptable)
+            .append(vSEP).append("libelle='").append(libelle).append('\'')
+            .append(vSEP).append("debit=").append(debit)
+            .append(vSEP).append("credit=").append(credit)
+            .append("}");
+        return vStB.toString();
+    }
+    
+    
+    
+    
+    
 }

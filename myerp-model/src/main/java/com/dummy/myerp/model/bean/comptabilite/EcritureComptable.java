@@ -158,7 +158,7 @@ public class EcritureComptable {
               .append(vSEP).append("listLigneEcriture=")
             //.append(StringUtils.join(listLigneEcriture, "\n")).append("\n]") ---------"\n" n'est pas un séparateur, séparateur obligatoire
             .append(StringUtils.join(listLigneEcriture, ','))
-    */
+    
     @Override
     public String toString() {
         final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
@@ -172,6 +172,25 @@ public class EcritureComptable {
             .append(vSEP).append("libelle=").append(libelle)
             .append(vSEP).append("totalDebit=").append(this.getTotalDebit().toPlainString())
             .append(vSEP).append("totalCredit=").append(this.getTotalCredit().toPlainString())
+            .append("}");
+        return vStB.toString();
+    }
+    */
+    
+    @Override
+    public String toString() {
+        final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
+        final String vSEP = ", ";
+        vStB.append("{")
+            .append("id=").append(id)
+            .append(vSEP).append("journal=").append(journal)
+            .append(vSEP).append("reference='").append(reference).append('\'')
+            .append(vSEP).append("date=").append(date)
+            .append(vSEP).append("libelle='").append(libelle).append('\'')
+            .append(vSEP).append("totalDebit=").append(this.getTotalDebit().toPlainString())
+            .append(vSEP).append("totalCredit=").append(this.getTotalCredit().toPlainString())
+            .append(vSEP).append("listLigneEcriture=[\n")
+            .append(StringUtils.join(listLigneEcriture, "\n")).append("\n]")
             .append("}");
         return vStB.toString();
     }

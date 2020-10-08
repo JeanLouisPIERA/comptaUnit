@@ -58,6 +58,8 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     public List<EcritureComptable> getListEcritureComptable() {
         return getDaoProxy().getComptabiliteDao().getListEcritureComptable();
     }
+    
+    //=================================================================================================
 
     /**
      * {@inheritDoc}
@@ -87,6 +89,8 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         getDaoProxy().getComptabiliteDao().insertEcritureComptable(pEcritureComptable);
     	
     }
+    
+    //==============================================================================================================
     
     /*
 	 * Ajoute une référence à l'écriture comptable. 
@@ -140,6 +144,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     	
     }
     
+    //=====================================================================================================
 
     /**
      * {@inheritDoc}
@@ -150,10 +155,11 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     // TODO à tester
     @Override
     public void checkEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException  {
-        this.checkEcritureComptableUnit(pEcritureComptable);
+    	this.checkEcritureComptableUnit(pEcritureComptable);
         this.checkEcritureComptableContext(pEcritureComptable);
     }
 
+    //=========================================================================================================	
 
     /**
      * Vérifie que l'Ecriture comptable respecte les règles de gestion unitaires,
@@ -222,6 +228,8 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         
     }
     
+    //====================================================================================================================
+    
     /**
      * DONE 3 ====== RG_Compta_1 : Le solde d'un compte comptable est égal à la somme des montants au débit des lignes d'écriture 
   	 * diminuées de la somme des montants au crédit. 
@@ -247,19 +255,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         
     }
     
-    
-    /**
-     * RG_Compta_4	Les montants des lignes d'écriture sont signés 
-     * et peuvent prendre des valeurs négatives (même si cela est peu fréquent).
-     * @param pEcritureComptable
-     * @throws FunctionalException
-     */
-     //EN CHANTIER
-    @Override
-    public void checkLigneEcritureRG4(EcritureComptable pEcritureComptable) throws FunctionalException  {
-    	
-    }
-    
+    //========================================================================================================================
 
     /**
      * Vérifie que l'Ecriture comptable respecte les règles de gestion liées au contexte
@@ -277,11 +273,11 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 EcritureComptable vECRef = getDaoProxy().getComptabiliteDao().getEcritureComptableByRef(
                     pEcritureComptable.getReference());
 
-                // Si l'écriture à vérifier est une nouvelle écriture (id == null),
+                // Si l'écriture à vérifier est une nouvelle écriture (id == null)
                 // ou si elle ne correspond pas à l'écriture trouvée (id != idECRef),
                 // c'est qu'il y a déjà une autre écriture avec la même référence
                 if (pEcritureComptable.getId() == null
-                    || !pEcritureComptable.getId().equals(vECRef.getId())) {
+                    ||!pEcritureComptable.getId().equals(vECRef.getId())) {
                     throw new FunctionalException("Une autre écriture comptable existe déjà avec la même référence.");
                 }
             } catch (NotFoundException vEx) {
@@ -289,7 +285,9 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             }
         }
     }
-
+    
+    //===============================================================================================================
+    
     /**
      * {@inheritDoc}
      */

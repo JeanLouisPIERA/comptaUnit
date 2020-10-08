@@ -37,14 +37,14 @@
 
 	<!-- DaoProxy -->
     <bean id="DaoProxy" class="com.dummy.myerp.consumer.dao.impl.DaoProxyImpl" factory-method="getInstance">
-        <property name="comptabiliteDao" ref="comptabiliteDao"/>
+        <property name="comptabiliteDao" ref="ComptabiliteDao"/>
     </bean>
 
     
     
     <!-- ComptabiliteDao-->
-    <bean id="comptabiliteDao" class="com.dummy.myerp.consumer.dao.impl.db.dao.ComptabiliteDaoImpl" scope ="prototype" factory-method="getInstance">
-    	<property name="dataSourceMYERP" ref="dataSourceMYERP"/>
+    <bean id="ComptabiliteDao" class="com.dummy.myerp.consumer.dao.impl.db.dao.ComptabiliteDaoImpl" factory-method="getInstance">
+    	<property name="dataSourceMYERP" ref="DataSourceMYERP"/>
     </bean>
 
 	<!-- ==================== Databases ==================== -->
@@ -59,12 +59,12 @@
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	    <property name="locations">
 	        <list>
-	            <value>classpath:/myerp-consumer/src/main/resources/application.properties</value>
+	            <value>path:/myerp-consumer/src/test/resources/application.properties</value>
 	        </list>
 	    </property>
 	</bean>
 	
-	<bean id="dataSourceMYERP"
+	<bean id="DataSourceMYERP"
         class="">
         <property name="driverClassName" value="spring.datasource.driver-class-name" />
         <property name="url" value="spring.datasource.url" />

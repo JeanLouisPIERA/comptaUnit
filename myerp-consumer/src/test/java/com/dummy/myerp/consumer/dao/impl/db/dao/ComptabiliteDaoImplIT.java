@@ -26,6 +26,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -75,6 +76,9 @@ public class ComptabiliteDaoImplIT {
 	ComptabiliteDaoImpl comptabiliteDao;
 	
 	@Autowired
+	DataSource dataSource; 
+	
+	@Autowired
 	EcritureComptable ecriture; 
 	
 	@Autowired
@@ -118,7 +122,7 @@ public class ComptabiliteDaoImplIT {
 		ecriture.setReference("AC-2020/00001");
 		
 		
-		
+		//dataSource.getConnection("postgres", "postgres")
 		comptabiliteDao.insertEcritureComptable(ecriture);
 		EcritureComptable ecritureTest = comptabiliteDao.getEcritureComptable(6);
 		

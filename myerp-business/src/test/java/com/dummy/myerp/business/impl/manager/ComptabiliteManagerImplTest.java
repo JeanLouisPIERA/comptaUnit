@@ -11,6 +11,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.validation.constraints.AssertTrue;
+
+import org.hibernate.validator.constraints.impl.AssertTrueValidator;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -72,9 +75,10 @@ public class ComptabiliteManagerImplTest {
      * Toutes les contraintes unitaires sont respectées sur les attributs de l'Ecriture Comptable
      * Test sans erreur
      * @throws ParseException
+     * @throws FunctionalException 
      */
     @Test
-    public void checkEcritureComptableUnit() throws ParseException  {
+    public void checkEcritureComptableUnit() throws ParseException, FunctionalException  {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -86,6 +90,8 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.setLibelle("Libelle");
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 123.00, 0.00));	
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 0.00, 123.00));
+        vEcritureComptable.setId(1);
+        
         
         try {
 			manager.checkEcritureComptableUnit(vEcritureComptable);
@@ -93,7 +99,7 @@ public class ComptabiliteManagerImplTest {
 			Assert.fail("La méthode checkEcritureComptableUnit ne fonctionne pas correctement");
 			
 		}
-        
+      
         
     }
     
@@ -354,12 +360,14 @@ public class ComptabiliteManagerImplTest {
     
     //------------------------------------------RESTE A TESTER
     
+   
+    //=======================================GETTERS ET SETTERS
+    /*
     @Test
     public void getListCompteComptable() {
     	
     	
     }
-
 
     @Test
     public  void getListJournalComptable() {
@@ -371,28 +379,64 @@ public class ComptabiliteManagerImplTest {
     	List<EcritureComptable> list;
     }
 	
+	*/
+	
+	
+	
+	//======================================Tests d'intégration liés au module consumer
+	//======================================Problèmes de connexion à la base de données
+	
+	/*
+	@Test
+	public void testCheckEcritureComptableContext() {
+	EcritureComptable vEcritureComptable = new EcritureComptable();
+	
+	vEcritureComptable.setReference("vReference");
+	vEcritureComptable.setId(20);
+	
+	try {
+		manager.checkEcritureComptableContext(vEcritureComptable);
+	} catch (FunctionalException e) {
+		Assert.assertTrue(e.getCause().getMessage(), e.getCause().getClass().equals(FunctionalException.class));
+	}
+	}
+	
+	
+	
+	@Test
+	public void testCheckEcritureComptable() throws ParseException {
+		
+	
+		EcritureComptable vEcritureComptable = new EcritureComptable();
+        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.FRANCE);
+        String sdateTest = "2020/02/01";
+        Date dateTest = simpleDateFormat.parse(sdateTest);
+        vEcritureComptable.setDate(dateTest);
+        vEcritureComptable.setReference("AC-2020/00001");
+        vEcritureComptable.setLibelle("Libelle");
+        vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 123.00, 0.00));	
+        vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 0.00, 123.00));
+    	vEcritureComptable.setReference("vReference");
+    	vEcritureComptable.setId(20);
+    	
+    	
+        
+    	try {
+    		manager.checkEcritureComptable(vEcritureComptable);
+    	} catch (FunctionalException e) {
+    		Assert.assertTrue(e.getCause().getMessage(), e.getCause().getClass().equals(FunctionalException.class));
+    	}
+    	
+  
+	}
 	
 	@Test
 	public void addReference() {
 		EcritureComptable pEcritureComptable; 
 	}
 	
-	@Test
-	public void checkEcritureComptable() {
-		EcritureComptable pEcritureComptable;
-	}
-	
-	@Test
-	public void checkEcritureComptableContext() {
-	EcritureComptable pEcritureComptable;
-	}
-	
-	
-    @Test
-    public void checkLigneEcritureRG4() throws FunctionalException  {
-    	
-    }
-    
+
     @Test
     public void insertEcritureComptable() throws FunctionalException {
     	EcritureComptable pEcritureComptable;
@@ -409,5 +453,5 @@ public class ComptabiliteManagerImplTest {
     	Integer pId; 
     }
     
-
+*/
 }

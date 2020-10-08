@@ -12,7 +12,6 @@ import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
  */
 
 //@Configuration
-@Component
 public final class DaoProxyImpl implements DaoProxy {
 
     // ==================== Attributs ====================

@@ -81,7 +81,7 @@ public class CompteComptable {
             .append("}");
         return vStB.toString();
     }
-     */
+     
     @Override
     public String toString() {
         final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
@@ -89,6 +89,18 @@ public class CompteComptable {
         vStB.append("{")
             .append("numero=").append(numero)
             .append(vSEP).append("libelle=").append(libelle)
+            .append("}");
+        return vStB.toString();
+    }
+    */
+    
+    @Override
+    public String toString() {
+        final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
+        final String vSEP = ", ";
+        vStB.append("{")
+            .append("numero=").append(numero)
+            .append(vSEP).append("libelle='").append(libelle).append('\'')
             .append("}");
         return vStB.toString();
     }

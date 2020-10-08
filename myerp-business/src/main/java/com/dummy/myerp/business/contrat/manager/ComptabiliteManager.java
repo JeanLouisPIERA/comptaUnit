@@ -96,16 +96,7 @@ public interface ComptabiliteManager {
      */
       void checkSoldeCompteComptableRG1(EcritureComptable pEcritureComptable, CompteComptable pCompteComptable, Integer solde) 
     		  throws FunctionalException; 
-      
-
-      /**
-       * RG_Compta_4	Les montants des lignes d'écriture sont signés 
-       * et peuvent prendre des valeurs négatives (même si cela est peu fréquent).
-       * @param pEcritureComptable
-       * @throws FunctionalException
-       */
-       //EN CHANTIER
-      void checkLigneEcritureRG4(EcritureComptable pEcritureComptable) throws FunctionalException;
+     
       
       /**
        * Vérifie que l'Ecriture comptable respecte les règles de gestion liées au contexte
