@@ -534,7 +534,7 @@
 					      <id>inttests</id>
 					      <phase>integration-test</phase>
 					      <goals>
-					        <goal>test</goal>
+					        <goal>verify</goal>
 					      </goals>
 					      <configuration>
 					        <skipTests>false</skipTests>
