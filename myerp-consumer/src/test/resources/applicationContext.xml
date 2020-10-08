@@ -59,7 +59,7 @@
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	    <property name="locations">
 	        <list>
-	            <value>path:/myerp-consumer/src/test/resources/application.properties</value>
+	            <value>path:/application.properties</value>
 	        </list>
 	    </property>
 	</bean>

@@ -1,10 +1,7 @@
 package com.dummy.myerp.consumer.dao.impl.db.dao;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.JUnitCore;
-import org.junit.runner.Result;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
 
@@ -24,14 +21,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jca.context.SpringContextResourceAdapter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,17 +44,20 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 //@Testcontainers
 //@WebAppConfiguration
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration
+@RunWith(SpringJUnit4ClassRunner.class)
+
+@ContextConfiguration("/applicationContext.xml")
+		/*
 		(locations= 
-			{"file:/myerp-consumer/src/test/resources/applicationContext.xml", 
-			"file:/myerp-consumer/src/test/resources/sqlContext.xml",
-			"file:/myerp-consumer/src/test/resources/application.properties"
-			/*, 
-			"file:/myerp-consumer/src/main/java/com/dummy/myerp/consumer/dao/impl/DaoProxyImpl.java",
-			"file:/myerp-consumer/src/main/java/com/dummy/myerp/consumer/dao/impl/db/dao/ComptabiliteDaoImpl.java"
-			*/}
+			{"file:/applicationContext.xml", 
+			"file:/sqlContext.xml",
+			"file:/application.properties"
+			//, 
+			//"file:/myerp-consumer/src/main/java/com/dummy/myerp/consumer/dao/impl/DaoProxyImpl.java",
+			//"file:/myerp-consumer/src/main/java/com/dummy/myerp/consumer/dao/impl/db/dao/ComptabiliteDaoImpl.java"
+			}
 		)
+*/
 //@WebAppConfiguration
 @ActiveProfiles({"inttests", "unittests"}) 
 @TestPropertySource("/application.properties") 
