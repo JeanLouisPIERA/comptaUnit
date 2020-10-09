@@ -548,6 +548,8 @@
 					  </executions>
                 </plugin>
                 
+  <!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->             
+                
                 <!-- ===== Coverage / Reporting ===== -->
                 
                 <plugin>
@@ -649,7 +651,7 @@
                 
                 		<execution>
 						  <id>check</id>
-						  <phase>verify</phase>
+						  <phase>integration-test</phase>
 						  <goals>
 						    <goal>check</goal>
 						  </goals>
@@ -665,7 +667,7 @@
 						          <limit>
 						            <counter>LINE</counter>
 						            <value>COVEREDRATIO</value>
-						            <minimum>5%</minimum>
+						            <minimum>0.05</minimum>
 						          </limit>
 						        </limits>
 						      </rule>
@@ -677,6 +679,13 @@
 			      </executions>
 			      
 			    </plugin>
+			    
+			    
+ <!-- ********************************************************************************************************************-->               
+                
+                
+                		    
+			    
                 
                 
                 <!-- ===== Plugin d'analyse de code Checkstyle ===== -->
