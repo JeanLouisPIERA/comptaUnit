@@ -6,14 +6,10 @@ import javax.sql.DataSource;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
-
 import com.dummy.myerp.consumer.ConsumerHelper;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
-import com.dummy.myerp.consumer.db.DataSourcesEnum;
-import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
+
 
 /**
  * <p>Classe mère des classes de Consumer DB</p>
@@ -48,8 +44,6 @@ public abstract class AbstractDbConsumer {
     protected static DaoProxy getDaoProxy() {
         return ConsumerHelper.getDaoProxy();
     }
-    
-    
 
 
     // ==================== Méthodes ====================
@@ -60,8 +54,6 @@ public abstract class AbstractDbConsumer {
      * @return SimpleJdbcTemplate
      */
     protected DataSource getDataSource(DataSourcesEnum pDataSourceId) {
-    	
-    	
         DataSource vRetour = this.mapDataSource.get(pDataSourceId);
         if (vRetour == null) {
             throw new UnsatisfiedLinkError("La DataSource suivante n'a pas été initialisée : " + pDataSourceId);
@@ -71,28 +63,7 @@ public abstract class AbstractDbConsumer {
 
 
     /**
-     * Renvoie le dernière valeur utilisé d'une séquence d'un journal 
-     *
-     * <p><i><b>Attention : </b>Méthode spécifique au SGBD PostgreSQL</i></p>
-     *
-     * @param <T> : La classe de la valeur de la séquence.
-     * @param pDataSourcesId : L'identifiant de la {@link DataSource} à utiliser
-     * @param pSeqName : Le nom de la séquence dont on veut récupérer la valeur
-     * @param pSeqValueClass : Classe de la valeur de la séquence
-     * @return la dernière valeur de la séquence
-     */
-    protected <T> T queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum pDataSourcesId,
-                                                    String pSeqName, JournalComptable journal, Class<T> pSeqValueClass) {
-
-        JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource(pDataSourcesId));
-        String vSeqSQL = "SELECT last_value FROM " + pSeqName + "WHERE journal =" + journal;
-        T vSeqValue = vJdbcTemplate.queryForObject(vSeqSQL, pSeqValueClass);
-
-        return vSeqValue;
-    }
-    
-    /**
-     * Renvoie le dernière valeur utilisé d'une séquence d'un journal 
+     * Renvoie le dernière valeur utilisé d'une séquence
      *
      * <p><i><b>Attention : </b>Méthode spécifique au SGBD PostgreSQL</i></p>
      *
@@ -111,8 +82,6 @@ public abstract class AbstractDbConsumer {
 
         return vSeqValue;
     }
-    
-    
 
 
     // ==================== Méthodes Static ====================
@@ -139,8 +108,5 @@ public abstract class AbstractDbConsumer {
             }
         }
         mapDataSource = vMapDataSource;
-        
     }
-    
-    
 }

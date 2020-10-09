@@ -77,7 +77,14 @@ pipeline {
 							reportName:	"myerp-technical coverage report"
 							])
 				
-				
+				publishHTML	(target:	[
+							allowMissing: false,
+						    alwaysLinkToLastBuild: true,
+					        keepAll: true,
+					        reportDir: 'myerp-consumer/target/site/jacoco',
+							reportFiles:	'index.html',
+							reportName:	"myerp-consumer coverage report"
+							])
 				
 	            bat "mvn verify";
 	            }

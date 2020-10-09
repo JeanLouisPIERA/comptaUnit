@@ -2,6 +2,7 @@ package com.dummy.myerp.consumer.dao.impl.db.dao;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
 
@@ -41,33 +42,14 @@ import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.technical.exception.NotFoundException;
 
-//@Testcontainers
-//@WebAppConfiguration
 
-@RunWith(SpringJUnit4ClassRunner.class)
+
+//@RunWith(SpringJUnit4ClassRunner.class)
 
 @ContextConfiguration("/applicationContext.xml")
-		/*
-		(locations= 
-			{"file:/applicationContext.xml", 
-			"file:/sqlContext.xml",
-			"file:/application.properties"
-			//, 
-			//"file:/myerp-consumer/src/main/java/com/dummy/myerp/consumer/dao/impl/DaoProxyImpl.java",
-			//"file:/myerp-consumer/src/main/java/com/dummy/myerp/consumer/dao/impl/db/dao/ComptabiliteDaoImpl.java"
-			}
-		)
-*/
-//@WebAppConfiguration
-@ActiveProfiles({"inttests", "unittests"}) 
-@TestPropertySource("/application.properties") 
+@ActiveProfiles({"inttests"}) 
 @Transactional
 public class ComptabiliteDaoImplIT {
-	/*
-	@Autowired
-	private ApplicationContext context;
-	*/
-	
 	
 	@Autowired
 	DaoProxyImpl daoProxy;
@@ -84,31 +66,9 @@ public class ComptabiliteDaoImplIT {
 	@Autowired
 	JournalComptable pJournal;
 	
-	
-	//ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-	
-	
-	//public DataSource dataSource = (DataSource) context.getBean("dataSourceMYERP");
-	
-	//public ComptabiliteDaoImpl comptabiliteDao = context.getBean(ComptabiliteDaoImpl.class);
-	
-	//public DaoProxyImpl daoProxy = context.getBean(DaoProxyImpl.class);
-	
-	
-	
-	
+
 	@Test
 	public void checkInsertEcritureComptable() throws ParseException, NotFoundException{
-		
-		
-		//EcritureComptable ecriture = new EcritureComptable();
-		//JournalComptable pJournal = new JournalComptable();
-		
-		
-		//List<JournalComptable> listJournal = comptabiliteDao.getListJournalComptable();
-		//JournalComptable.getByCode(listJournal,"AC");
-		
-		
 		
 		pJournal.setCode("AC");
 		
@@ -120,19 +80,15 @@ public class ComptabiliteDaoImplIT {
 		ecriture.setJournal(pJournal);
 		ecriture.setLibelle("Achats");
 		ecriture.setReference("AC-2020/00001");
-		
-		
-		//dataSource.getConnection("postgres", "postgres")
+	
 		comptabiliteDao.insertEcritureComptable(ecriture);
-		EcritureComptable ecritureTest = comptabiliteDao.getEcritureComptable(6);
+		EcritureComptable ecritureTest = comptabiliteDao.getEcritureComptable(1);
 		
-		
-		
-		Assert.assertTrue("", ecriture.getId().equals(ecritureTest.getId()));
+		Assert.assertTrue("Erreur dans l'insertion des données dans Postgres"+"TEST="+comptabiliteDao.getEcritureComptableByRef("6").toString(), ecriture.getId().equals(ecritureTest.getId()));
 		
 	
 	
-	//@Test
+	
 	
 		
 		
