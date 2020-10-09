@@ -57,8 +57,8 @@
         <spring.version>4.3.7.RELEASE</spring.version>
         
         <!-- Used to locate the profile specific configuration file.   -->
-        <jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.execution.data.file>
-        <jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.execution.data.file>
+        <!-- jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.execution.data.file>
+        <jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.execution.data.file-->
         
         <!-- sonar.projectKey>JeanLouisPIERA_oc-testing-java-cours</sonar.projectKey>
 		<sonar.organization>brolfix2020</sonar.organization>
@@ -647,6 +647,13 @@
 						  </configuration>
 						</execution>
                 
+                		<!-- Ensures that the minimum coverage average rate is 70%. -->
+				        <execution>
+							<id>jacoco-check</id>
+							<goals>
+								<goal>check</goal>
+							</goals>
+						</execution>
                 
 					
 			      </executions>
@@ -679,6 +686,9 @@
 			    </plugin>
 			    
 			    
+ <!-- ********************************************************************************************************************-->               
+           
+ 		    
                        
                 
                 <!-- ===== Plugin d'analyse de code Checkstyle ===== -->
