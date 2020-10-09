@@ -653,7 +653,7 @@
 						  <id>check</id>
 						  <phase>verify</phase>
 						  <goals>
-						    <goal>check</goal>
+						    <goal>verify</goal>
 						  </goals>
 						  <configuration>
 						    <rules>
@@ -683,7 +683,7 @@
 			    
  <!-- ********************************************************************************************************************-->               
                 
-               
+         
                 
                 <!-- ===== Plugin d'analyse de code Checkstyle ===== -->
                 <plugin>
