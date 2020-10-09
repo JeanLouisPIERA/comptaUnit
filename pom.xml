@@ -651,17 +651,18 @@
                 
                 		<execution>
 						  <id>check</id>
-						  <phase>verify</phase>
+						  <phase>check</phase>
 						  <goals>
-						    <goal>verify</goal>
+						    <goal>check</goal>
 						  </goals>
 						  <configuration>
 						    <rules>
 						      <rule>
-						        <element>CLASS</element>
+						        <element>BUNDLE</element>
 						        <excludes>
 						          <exclude>*Test</exclude>
 						          <exclude>*IT</exclude>
+						          <exclude>*UT</exclude>
 						        </excludes>
 						        <limits>
 						          <limit>
