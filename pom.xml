@@ -651,7 +651,7 @@
                 
                 		<execution>
 						  <id>check</id>
-						  <phase>integration-test</phase>
+						  <phase>verify</phase>
 						  <goals>
 						    <goal>check</goal>
 						  </goals>
@@ -683,10 +683,7 @@
 			    
  <!-- ********************************************************************************************************************-->               
                 
-                
-                		    
-			    
-                
+               
                 
                 <!-- ===== Plugin d'analyse de code Checkstyle ===== -->
                 <plugin>
