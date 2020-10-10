@@ -501,6 +501,8 @@
 		                </execution>
 		            </executions>
 		        </plugin-->
+		        
+		        
 
                 <!-- ===== Test / Reporting ===== -->
                 <plugin>
@@ -595,6 +597,7 @@
 			      <version>0.8.6</version>
 			      
 			      <configuration>
+			      		<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
 					    <rules>
 					      <rule>
 					        <element>BUNDLE</element>
