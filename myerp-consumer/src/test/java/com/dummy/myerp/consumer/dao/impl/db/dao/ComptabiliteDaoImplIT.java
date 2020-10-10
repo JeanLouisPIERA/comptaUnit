@@ -3,6 +3,7 @@ package com.dummy.myerp.consumer.dao.impl.db.dao;
 import org.junit.Assert;
 
 import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
@@ -41,6 +42,7 @@ import com.dummy.myerp.consumer.db.DataSourcesEnum;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
+import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
 
 
@@ -53,19 +55,19 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 public class ComptabiliteDaoImplIT {
 	
 	@Autowired
-	DaoProxyImpl daoProxy;
+	private DaoProxyImpl daoProxy;
 	
 	@Autowired
-	ComptabiliteDaoImpl comptabiliteDao;
+	private ComptabiliteDaoImpl comptabiliteDao;
 	
 	@Autowired
-	DataSource dataSource; 
+	private DataSource dataSource; 
 	
 	@Autowired
-	EcritureComptable ecriture; 
+	private EcritureComptable ecriture; 
 	
 	@Autowired
-	JournalComptable pJournal;
+	private JournalComptable pJournal;
 	
 
 	@Test
@@ -77,15 +79,20 @@ public class ComptabiliteDaoImplIT {
         String sdateTest = "2020/02/01";
         Date pDate = simpleDateFormat.parse(sdateTest);
 		ecriture.setDate(pDate);
-		ecriture.setId(6);
-		ecriture.setJournal(pJournal);
+		ecriture.setId(1);
+		//ecriture.setJournal(pJournal);
 		ecriture.setLibelle("Achats");
 		ecriture.setReference("AC-2020/00001");
 	
 		comptabiliteDao.insertEcritureComptable(ecriture);
 		EcritureComptable ecritureTest = comptabiliteDao.getEcritureComptable(1);
 		
-		Assert.assertTrue("Erreur dans l'insertion des données dans Postgres"+"TEST="+comptabiliteDao.getEcritureComptableByRef("6").toString(), ecriture.getId().equals(ecritureTest.getId()));
+		
+		Assertions.assertEquals(ecriture, ecritureTest, "Erreur dans l'insertion des données dans Postgres");
+		
+        	
+          
+		//Assert.assertTrue("Erreur dans l'insertion des données dans Postgres"+"TEST="+comptabiliteDao.getEcritureComptableByRef("6").toString(), ecriture.getId().equals(ecritureTest.getId()));
 		
 	
 	
