@@ -36,7 +36,7 @@ pipeline {
 	        
 	        stage("Tests d'intégration")	{
 	            steps	{
-	            bat "mvn test -P inttests"
+	            bat "mvn integration-test -P inttests"
 	            
 	            
 	            }     
@@ -45,19 +45,35 @@ pipeline {
 	        
 	         stage("Code coverage. Le score minimum de couverture des lignes = 75%")	{
 	            steps	{
-	            bat " mvn test jacoco:check jacoco:report -X"
+	            bat " mvn jacoco:check jacoco:report -X"
 	      		
 	      		
 	            publishHTML	(target:	[
 							allowMissing: false,
 						    alwaysLinkToLastBuild: true,
 					        keepAll: true,
-					        reportDir: 'myerp-business/target/site/jacoco',
+					        reportDir: 'myerp-business/target/site/jacoco-unit-test-coverage-report',
 							reportFiles:	'index.html',
-							reportName:	"myerp-business coverage report"
+							reportName:	"myerp-business coverage unit tests report"
 							])
 				
-				
+				publishHTML	(target:	[
+							allowMissing: false,
+						    alwaysLinkToLastBuild: true,
+					        keepAll: true,
+					        reportDir: 'myerp-business/target/site/jacoco-integration-test-coverage-report',
+							reportFiles:	'index.html',
+							reportName:	"myerp-business coverage integration tests report"
+							])
+							
+				publishHTML	(target:	[
+							allowMissing: false,
+						    alwaysLinkToLastBuild: true,
+					        keepAll: true,
+					        reportDir: 'myerp-business/target/site/jacoco-merged-test-coverage-report',
+							reportFiles:	'index.html',
+							reportName:	"myerp-business coverage integration UT/IT tests report"
+							])			
 				
 	            publishHTML	(target:	[
 							allowMissing: false,
