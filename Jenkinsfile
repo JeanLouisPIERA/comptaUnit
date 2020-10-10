@@ -45,7 +45,7 @@ pipeline {
 	        
 	         stage("Code coverage. Le score minimum de couverture des lignes = 75%")	{
 	            steps	{
-	            bat " mvn jacoco:check jacoco:report -X"
+	            bat " mvn test jacoco:check jacoco:report -X"
 	      		
 	      		
 	            publishHTML	(target:	[
@@ -54,7 +54,7 @@ pipeline {
 					        keepAll: true,
 					        reportDir: 'myerp-business/target/site/jacoco-unit-test-coverage-report',
 							reportFiles:	'index.html',
-							reportName:	"myerp-business coverage unit tests report"
+							reportName:	"myerp-business coverage UT report"
 							])
 				
 				publishHTML	(target:	[
@@ -63,7 +63,7 @@ pipeline {
 					        keepAll: true,
 					        reportDir: 'myerp-business/target/site/jacoco-integration-test-coverage-report',
 							reportFiles:	'index.html',
-							reportName:	"myerp-business coverage integration tests report"
+							reportName:	"myerp-business coverage IT report"
 							])
 							
 				publishHTML	(target:	[
@@ -72,7 +72,7 @@ pipeline {
 					        keepAll: true,
 					        reportDir: 'myerp-business/target/site/jacoco-merged-test-coverage-report',
 							reportFiles:	'index.html',
-							reportName:	"myerp-business coverage integration UT/IT tests report"
+							reportName:	"myerp-business coverage UT & IT tests report"
 							])			
 				
 	            publishHTML	(target:	[
@@ -107,6 +107,7 @@ pipeline {
 	            post {
 	                always {
 	                    junit '**/target/surefire-reports/*.xml'
+	                    junit '**/target/failsafe-reports/*.xml'
 	                    step( [ 
 						  $class: 'JacocoPublisher'
 						])
