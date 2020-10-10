@@ -59,7 +59,7 @@ pipeline {
 				
 				publishHTML	(target:	[
 							allowMissing: false,
-							allowSrcipts: true,
+							allowScripts: true,
 						    alwaysLinkToLastBuild: true,
 					        keepAll: true,
 					        reportDir: 'myerp-business/target/site/jacoco-integration-test-coverage-report',
