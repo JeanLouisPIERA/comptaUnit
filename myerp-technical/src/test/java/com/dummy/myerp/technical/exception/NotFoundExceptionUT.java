@@ -3,7 +3,7 @@ package com.dummy.myerp.technical.exception;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class NotFoundExceptionTest {
+public class NotFoundExceptionUT {
 
 @Test
 public void checkNotFoundException() {

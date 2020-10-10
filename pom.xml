@@ -64,6 +64,9 @@
 		<sonar.organization>brolfix2020</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url-->
 		 
+       <jacoco.ut.execution.data.file>${project.build.directory}/jacoco-output/jacoco-unit-tests.exec</jacoco.ut.execution.data.file>
+       <jacoco.it.execution.data.file>${project.build.directory}/jacoco-output/jacoco-integration-tests.exec</jacoco.it.execution.data.file>
+       <jacoco.merge.execution.data.file>${project.build.directory}/jacoco-output/merged.exec</jacoco.merge.execution.data.file>
        
     </properties>
 
@@ -365,12 +368,12 @@
 			    <scope>test</scope>
 			</dependency>
 			
-			<dependency>
+			<!-- dependency>
 			    <groupId>org.junit.jupiter</groupId>
 			    <artifactId>junit-jupiter-engine</artifactId>
-			    <version>5.3.1</version>
+			    <version>5.3.2</version>
 			    <scope>test</scope>
-			</dependency>
+			</dependency-->
 			<dependency>
 			    <groupId>org.mockito</groupId>
 			    <artifactId>mockito-core</artifactId>
@@ -531,7 +534,7 @@
 					        </includes>
 					      </configuration>
 					    </execution>
-					    <execution>
+					    <!-- execution>
 					      <id>inttests</id>
 					      <phase>integration-test</phase>
 					      <goals>
@@ -544,11 +547,45 @@
 					           <include>**/*IT.java</include>
 					        </includes>
 					      </configuration>
-					    </execution>
+					    </execution-->
 					  </executions>
                 </plugin>
                 
-  <!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->             
+                <plugin>
+			      <groupId>org.apache.maven.plugins</groupId>
+			      <artifactId>maven-failsafe-plugin</artifactId>
+			      <version>3.0.0-M5</version>
+			      
+			      <dependencies>
+		                <dependency>
+		                    <groupId>org.junit.jupiter</groupId>
+		                    <artifactId>junit-jupiter-engine</artifactId>
+		                    <version>5.3.2</version>
+		                </dependency>
+		            </dependencies>
+			      
+			      <configuration>
+			        <argLine>${failsafeArgline}</argLine>
+			      </configuration>
+			      <executions>
+			        <execution>
+					      <id>inttests</id>
+					      <phase>integration-test</phase>
+					      <goals>
+					        <goal>integration-test</goal>
+					      </goals>
+					      <configuration>
+					        <skipTests>false</skipTests>
+					        <includes>
+					           <include>**/*Test.java</include>
+					           <include>**/*IT.java</include>
+					        </includes>
+					      </configuration>
+					    </execution>
+                 </executions>
+    			</plugin>
+  
+			  <!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->             
                 
                 <!-- ===== Coverage / Reporting ===== -->
                 
@@ -556,6 +593,27 @@
 			      <groupId>org.jacoco</groupId>
 			      <artifactId>jacoco-maven-plugin</artifactId>
 			      <version>0.8.6</version>
+			      
+			      <configuration>
+					    <rules>
+					      <rule>
+					        <element>BUNDLE</element>
+					        <excludes>
+					          <exclude>*Test</exclude>
+					          <exclude>*IT</exclude>
+					          <exclude>*UT</exclude>
+					        </excludes>
+					        <limits>
+					          <limit>
+					            <counter>LINE</counter>
+					            <value>COVEREDRATIO</value>
+					            <minimum>0.00</minimum>
+					          </limit>
+					        </limits>
+					      </rule>
+					    </rules>
+					    
+				  	</configuration>
 			     
 			     
 			      <executions>
@@ -563,6 +621,7 @@
 			      <!-- =====Configuring jacoco unit test coverage data===== -->
 			      <execution>
 					  <id>before-unit-test-execution</id>
+					  
 					  <goals>
 					    <goal>prepare-agent</goal>
 					  </goals>
@@ -582,7 +641,8 @@
 					  </goals>
 					  <configuration>
 					    <dataFile>${project.build.directory}/jacoco-output/jacoco-unit-tests.exec</dataFile>
-					    <outputDirectory>${project.reporting.outputDirectory}/jacoco-unit-test-coverage-report</outputDirectory>
+					    <!--outputDirectory>${project.reporting.outputDirectory}/jacoco-unit-test-coverage-report</outputDirectory-->
+					    <outputDirectory>${project.build.directory}/site/jacoco-unit-test-coverage-report</outputDirectory>
 					  </configuration>
 					</execution>
                 
@@ -596,7 +656,7 @@
 						  </goals>
 						  <configuration>
 						    <destFile>${project.build.directory}/jacoco-output/jacoco-integration-tests.exec</destFile>
-						    <propertyName>failsafe.jacoco.args</propertyName>
+						    <propertyName>failsafeArgline</propertyName>
 						  </configuration>
 						</execution>
 						
@@ -608,7 +668,8 @@
 						  </goals>
 						  <configuration>
 						    <dataFile>${project.build.directory}/jacoco-output/jacoco-integration-tests.exec</dataFile>
-						  <outputDirectory>${project.reporting.outputDirectory}/jacoco-integration-test-coverage-report</outputDirectory>
+						  <!--outputDirectory>${project.reporting.outputDirectory}/jacoco-integration-test-coverage-report</outputDirectory-->
+						  <outputDirectory>${project.build.directory}/site/jacoco-integration-test-coverage-report</outputDirectory>
 						  </configuration>
 						</execution>
                 
@@ -643,7 +704,8 @@
 						  </goals>
 						  <configuration>
 						    <dataFile>${project.build.directory}/jacoco-output/merged.exec</dataFile>
-						    <outputDirectory>${project.reporting.outputDirectory}/jacoco-merged-test-coverage-report</outputDirectory>
+						    <!-- outputDirectory>${project.reporting.outputDirectory}/jacoco-merged-test-coverage-report</outputDirectory-->
+						  	<outputDirectory>${project.build.directory}/site/jacoco-merged-test-coverage-report</outputDirectory>
 						  </configuration>
 						</execution>
                 
@@ -661,29 +723,16 @@
 			      <!-- ===== Failing the build ===== -->
                 
                 		
-						  <configuration>
-						    <rules>
-						      <rule>
-						        <element>BUNDLE</element>
-						        <excludes>
-						          <exclude>*Test</exclude>
-						          <exclude>*IT</exclude>
-						          <exclude>*UT</exclude>
-						        </excludes>
-						        <limits>
-						          <limit>
-						            <counter>LINE</counter>
-						            <value>COVEREDRATIO</value>
-						            <minimum>0.05</minimum>
-						          </limit>
-						        </limits>
-						      </rule>
-						    </rules>
-						    <dataFile>${project.build.directory}/jacoco-output/merged.exec</dataFile>
-						  </configuration>
+						  
 						
 			      
 			    </plugin>
+              
+			      
+			      
+						
+			      
+			    
 			    
 	         		    
 			    

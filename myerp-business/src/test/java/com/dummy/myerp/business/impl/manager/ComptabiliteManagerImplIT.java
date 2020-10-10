@@ -1,22 +1,19 @@
 package com.dummy.myerp.business.impl.manager;
 
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.when;
+
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+
 import java.util.Locale;
 
-import javax.validation.constraints.AssertTrue;
 
-import org.hibernate.validator.constraints.impl.AssertTrueValidator;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito.Then;
 import org.mockito.Mock;
@@ -34,8 +31,8 @@ import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import junit.framework.AssertionFailedError;
 
 
-@ExtendWith(MockitoExtension.class)
-public class ComptabiliteManagerImplTest {
+//@ExtendWith(MockitoExtension.class)
+public class ComptabiliteManagerImplIT {
 	
 	/* ------------------------------------MOCKITO EN SUSPENS 
 	@Mock
@@ -83,22 +80,21 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.FRANCE);
-        String sdateTest = "2020/02/01";
+        String sdateTest = "2021/02/01";
         Date dateTest = simpleDateFormat.parse(sdateTest);
         vEcritureComptable.setDate(dateTest);
-        vEcritureComptable.setReference("AC-2020/00001");
+        vEcritureComptable.setReference("BQ-2020/00001");
         vEcritureComptable.setLibelle("Libelle");
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 123.00, 0.00));	
-        vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 0.00, 123.00));
-        vEcritureComptable.setId(1);
+        vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 0.00, 125.00));
+        vEcritureComptable.setId(-1);
         
         
-        try {
-			manager.checkEcritureComptableUnit(vEcritureComptable);
-		} catch (FunctionalException e) {
-			Assert.fail("La méthode checkEcritureComptableUnit ne fonctionne pas correctement");
-			
-		}
+        
+        
+        Assertions.assertThrows(FunctionalException.class, () -> {
+        	manager.checkEcritureComptableUnit(vEcritureComptable);
+          });
       
         
     }
@@ -110,7 +106,8 @@ public class ComptabiliteManagerImplTest {
      * @throws FunctionalException
      * @throws ParseException
      */
-    @Test(expected=AssertionError.class)
+    @Test
+    //(expected=AssertionError.class)
     //(expected = FunctionalException.class)
     public void checkEcritureComptableUnitViolation() throws ParseException {
         EcritureComptable vEcritureComptable;
@@ -140,12 +137,11 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 123456789000000000000.00, 0.00));	
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 0.00, 123456789.0012345674));
         
-        try {
+        Assertions.assertThrows(FunctionalException.class, () -> {
         	manager.checkEcritureComptableUnit(vEcritureComptable);
-		} catch (FunctionalException e) {
-			Assert.fail();
-			
-		}
+          });
+        
+       
         
     }
     
@@ -158,7 +154,8 @@ public class ComptabiliteManagerImplTest {
      * @throws FunctionalException
      * @throws ParseException 
      */
-    @Test(expected=AssertionError.class)
+    @Test
+    //(expected=AssertionError.class)
     //(expected = FunctionalException.class)
     public void checkEcritureComptableUnitRG2() throws ParseException  {
     	
@@ -175,14 +172,10 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 1234.00, 0.00));	
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 0.00, 1233.00));		
         
-        try {
+                
+        Assertions.assertThrows(FunctionalException.class, () -> {
         	manager.checkEcritureComptableUnit(vEcritureComptable);
-		} catch (FunctionalException e) {
-			Assert.fail();
-			
-		}
-        
-        	
+          });	
 		    
 			
         
@@ -224,7 +217,8 @@ public class ComptabiliteManagerImplTest {
      * @throws FunctionalException
      * @throws ParseException 
      */
-    @Test(expected=AssertionError.class)
+    @Test
+    //(expected=AssertionError.class)
     //(expected = FunctionalException.class)
     public void checkEcritureComptableUnitRG3() throws FunctionalException, ParseException  {
         EcritureComptable vEcritureComptable;
@@ -240,12 +234,12 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 1234.00, 0.00));	
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 1234.00,0.00));
         
+       
         
-        try {
+        Assertions.assertThrows(FunctionalException.class, () -> {
         	manager.checkEcritureComptableUnit(vEcritureComptable);
-		} catch (FunctionalException e) {
-			Assert.fail();	
-		}
+          });
+        
        
     }
     
@@ -259,7 +253,8 @@ public class ComptabiliteManagerImplTest {
      * @throws FunctionalException
      * @throws ParseException
      */
-    @Test(expected = FunctionalException.class)
+    @Test
+    //(expected = FunctionalException.class)
     public void checkEcritureComptableUnitRG5() throws FunctionalException, ParseException  {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
@@ -303,7 +298,12 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.setLibelle("Libelle");
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 1234.00, 0.00));	
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 0.00, 1234.00));
-        manager.checkEcritureComptableUnit(vEcritureComptable);
+        
+        Assertions.assertThrows(FunctionalException.class, () -> {
+        	manager.checkEcritureComptableUnit(vEcritureComptable);
+          });
+        
+        
     }
     
     
@@ -317,7 +317,8 @@ public class ComptabiliteManagerImplTest {
      * Pour compromettre l'exécution du test, supprimer (expected = FunctionalException.class)
      * @throws FunctionalException
      */
-    @Test(expected = FunctionalException.class)
+    @Test
+    //(expected = FunctionalException.class)
     public void checkSoldeCompteComptableRG1() throws FunctionalException  {
     	EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
@@ -329,8 +330,10 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 0.00, 1234.00));
        
         
-    	manager.checkSoldeCompteComptableRG1(vEcritureComptable, cc1, 20);
-        
+    	
+    	Assertions.assertThrows(FunctionalException.class, () -> {
+    		manager.checkSoldeCompteComptableRG1(vEcritureComptable, cc1, 20);
+          });
     }
     
     

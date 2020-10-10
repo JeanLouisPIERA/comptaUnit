@@ -3,7 +3,7 @@ package com.dummy.myerp.technical.exception;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TechnicalExceptionTest {
+public class TechnicalExceptionUT {
 	
 	@Test
 	public void checkMessageTechnicalException() {

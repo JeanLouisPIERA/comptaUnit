@@ -1,8 +1,9 @@
 package com.dummy.myerp.consumer.dao.impl.db.dao;
 
 import org.junit.Assert;
-import org.junit.Test;
+
 import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
 

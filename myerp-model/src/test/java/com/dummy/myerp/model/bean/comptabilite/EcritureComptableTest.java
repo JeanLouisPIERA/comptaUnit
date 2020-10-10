@@ -1,26 +1,26 @@
 package com.dummy.myerp.model.bean.comptabilite;
 
+
+
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.annotation.Configuration;
 
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.TechnicalException;
 
-@ExtendWith(MockitoExtension.class)
+@Configuration("/applicationContext.xml")
+//@ExtendWith(MockitoExtension.class)
 public class EcritureComptableTest {
 	
-	@Mock
-	LigneEcritureComptable ligne ;
+	//@Mock
+	//LigneEcritureComptable ligne ;
 	
 	/**
 	 * Methode inutile - Il ne s'agit pas d'un test - Elle est la cause d'une erreur dans les autres tests this.createLigne
