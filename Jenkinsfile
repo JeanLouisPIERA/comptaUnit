@@ -164,10 +164,12 @@ pipeline {
 	            }
 	            post {
 	                always {
-	                step(
+	                step([
 	                    junit '**/target/surefire-reports/*.xml')
-                    step(
+	                    ]
+                    step([
 	                    junit '**/target/failsafe-reports/*.xml')
+	                    ]
 	                    step( [ 
 						  $class: 'JacocoPublisher'
 						])
