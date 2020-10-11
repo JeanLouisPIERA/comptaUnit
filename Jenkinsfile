@@ -52,9 +52,10 @@ pipeline {
 							allowMissing: false,
 						    alwaysLinkToLastBuild: true,
 					        keepAll: true,
-					        reportDir: 'myerp-business/target/site/jacoco-integration-test-coverage-report',
+					        reportDir: 'myerp-business/target/site/jacoco-unit-test-coverage-report',
 							reportFiles:	'index.html',
 							reportName:	"myerp-business coverage UT report"
+							reportTitle: "myerp-business coverage UT report"
 							])
 				
 				publishHTML	(target:	[
