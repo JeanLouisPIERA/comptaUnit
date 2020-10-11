@@ -36,7 +36,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 import com.dummy.myerp.consumer.dao.impl.DaoProxyImpl;
 import com.dummy.myerp.consumer.db.DataSourcesEnum;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
@@ -54,37 +54,34 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 @Transactional
 public class ComptabiliteDaoImplIT {
 	
-	@Autowired
-	private DaoProxyImpl daoProxy;
 	
+	/*
 	@Autowired
 	private ComptabiliteDaoImpl comptabiliteDao;
-	
+	*/
 	@Autowired
-	private DataSource dataSource; 
-	
-	@Autowired
-	private EcritureComptable ecriture; 
-	
-	@Autowired
-	private JournalComptable pJournal;
+	private DaoProxy daoProxy;;
 	
 
 	@Test
 	public void checkInsertEcritureComptable() throws ParseException, NotFoundException{
 		
-		pJournal.setCode("AC");
+		JournalComptable vJournal = new JournalComptable();
+		vJournal.setCode("AC");
+		
+		EcritureComptable ecriture = new EcritureComptable();
+		ComptabiliteDaoImpl comptabiliteDao = new ComptabiliteDaoImpl();
 		
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.FRANCE);
         String sdateTest = "2020/02/01";
         Date pDate = simpleDateFormat.parse(sdateTest);
 		ecriture.setDate(pDate);
 		ecriture.setId(1);
-		//ecriture.setJournal(pJournal);
+		ecriture.setJournal(vJournal);
 		ecriture.setLibelle("Achats");
 		ecriture.setReference("AC-2020/00001");
 	
-		comptabiliteDao.insertEcritureComptable(ecriture);
+		daoProxy.getComptabiliteDao().insertEcritureComptable(ecriture);
 		EcritureComptable ecritureTest = comptabiliteDao.getEcritureComptable(1);
 		
 		
