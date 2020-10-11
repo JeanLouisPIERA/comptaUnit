@@ -164,8 +164,10 @@ pipeline {
 	            }
 	            post {
 	                always {
-	                    junit '**/target/surefire-reports/*.xml'
-	                    junit '**/target/failsafe-reports/*.xml'
+	                step(
+	                    junit '**/target/surefire-reports/*.xml')
+                    step(
+	                    junit '**/target/failsafe-reports/*.xml')
 	                    step( [ 
 						  $class: 'JacocoPublisher'
 						])
