@@ -55,7 +55,7 @@ pipeline {
 					        reportDir: 'myerp-business/target/site/jacoco-unit-test-coverage-report',
 							reportFiles:	'index.html',
 							reportName:	"myerp-business coverage UT report"
-							reportTitle: "myerp-business coverage UT report"
+							reportTitles: "myerp-business coverage UT report"
 							])
 				
 				publishHTML	(target:	[
