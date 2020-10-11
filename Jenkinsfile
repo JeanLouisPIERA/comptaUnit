@@ -55,7 +55,33 @@ pipeline {
 					        reportDir: 'myerp-business/target/site/jacoco-unit-test-coverage-report',
 							reportFiles:	'index.html',
 							reportName:	"myerp-business coverage UT report"
-							reportTitles: "myerp-business coverage UT report"
+							])
+							
+				publishHTML	(target:	[
+							allowMissing: false,
+						    alwaysLinkToLastBuild: true,
+					        keepAll: true,
+					        reportDir: 'myerp-consumer/target/site/jacoco-unit-test-coverage-report',
+							reportFiles:	'index.html',
+							reportName:	"myerp-consumer coverage UT report"
+							])	
+							
+				publishHTML	(target:	[
+							allowMissing: false,
+						    alwaysLinkToLastBuild: true,
+					        keepAll: true,
+					        reportDir: 'myerp-model/target/site/jacoco-unit-test-coverage-report',
+							reportFiles:	'index.html',
+							reportName:	"myerp-model coverage UT report"
+							])		
+							
+				publishHTML	(target:	[
+							allowMissing: false,
+						    alwaysLinkToLastBuild: true,
+					        keepAll: true,
+					        reportDir: 'myerp-technical/target/site/jacoco-unit-test-coverage-report',
+							reportFiles:	'index.html',
+							reportName:	"myerp-technical coverage UT report"
 							])
 				
 				publishHTML	(target:	[
@@ -70,39 +96,69 @@ pipeline {
 							
 				publishHTML	(target:	[
 							allowMissing: false,
+							allowScripts: true,
+						    alwaysLinkToLastBuild: true,
+					        keepAll: true,
+					        reportDir: 'myerp-consumer/target/site/jacoco-integration-test-coverage-report',
+							reportFiles:	'index.html',
+							reportName:	"myerp-consumer coverage IT report"
+							])
+							
+				publishHTML	(target:	[
+							allowMissing: false,
+							allowScripts: true,
+						    alwaysLinkToLastBuild: true,
+					        keepAll: true,
+					        reportDir: 'myerp-model/target/site/jacoco-integration-test-coverage-report',
+							reportFiles:	'index.html',
+							reportName:	"myerp-model coverage IT report"
+							])
+							
+				publishHTML	(target:	[
+							allowMissing: false,
+							allowScripts: true,
+						    alwaysLinkToLastBuild: true,
+					        keepAll: true,
+					        reportDir: 'myerp-technical/target/site/jacoco-integration-test-coverage-report',
+							reportFiles:	'index.html',
+							reportName:	"myerp-technical coverage IT report"
+							])
+							
+				publishHTML	(target:	[
+							allowMissing: false,
 						    alwaysLinkToLastBuild: true,
 					        keepAll: true,
 					        reportDir: 'myerp-business/target/site/jacoco-merged-test-coverage-report',
 							reportFiles:	'index.html',
 							reportName:	"myerp-business coverage UT & IT tests report"
+							])
+							
+				publishHTML	(target:	[
+							allowMissing: false,
+						    alwaysLinkToLastBuild: true,
+					        keepAll: true,
+					        reportDir: 'myerp-consumer/target/site/jacoco-merged-test-coverage-report',
+							reportFiles:	'index.html',
+							reportName:	"myerp-consumer coverage UT & IT tests report"
 							])			
-				
-	            publishHTML	(target:	[
+										
+				publishHTML	(target:	[
 							allowMissing: false,
 						    alwaysLinkToLastBuild: true,
 					        keepAll: true,
-					        reportDir: 'myerp-model/target/site/jacoco',
+					        reportDir: 'myerp-model/target/site/jacoco-merged-test-coverage-report',
 							reportFiles:	'index.html',
-							reportName:	"myerp-model coverage report"
-							])
-				
-				 publishHTML	(target:	[
-							allowMissing: false,
-						    alwaysLinkToLastBuild: true,
-					        keepAll: true,
-					        reportDir: 'myerp-technical/target/site/jacoco',
-							reportFiles:	'index.html',
-							reportName:	"myerp-technical coverage report"
-							])
+							reportName:	"myerp-model coverage UT & IT tests report"
+							])			
 				
 				publishHTML	(target:	[
 							allowMissing: false,
 						    alwaysLinkToLastBuild: true,
 					        keepAll: true,
-					        reportDir: 'myerp-consumer/target/site/jacoco',
+					        reportDir: 'myerp-technical/target/site/jacoco-merged-test-coverage-report',
 							reportFiles:	'index.html',
-							reportName:	"myerp-consumer coverage report"
-							])
+							reportName:	"myerp-technical coverage UT & IT tests report"
+							])			
 				
 	            bat "mvn verify";
 	            }
