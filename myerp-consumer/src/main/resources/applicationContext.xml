@@ -49,12 +49,21 @@
         <constructor-arg value="javax.sql.DataSource"/>
     </bean-->
     
-    <bean class="org.apache.commons.dbcp2" destroy-method="close" id="dataSource">
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="dataSourceMYERP" />
+    	
+	</bean>
+	
+	
+    
+    <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSourceMYERP">
     <property name="driverClassName" value="org.postgresql.Driver" />
-    <property name="url" value="jdbc:postgresql://localhost:5432/db myerp" />
-    <property name="username" value="usr myerp" />
+    <property name="url" value="jdbc:postgresql://127.0.0.1:9032/db_myerp" />
+    <property name="username" value="usr_myerp" />
     <property name="password" value="myerp" />
 	</bean>
+	
+	
 
 
     <!-- ========== SQL ========== -->

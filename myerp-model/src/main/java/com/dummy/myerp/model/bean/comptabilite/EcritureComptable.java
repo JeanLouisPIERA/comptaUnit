@@ -2,6 +2,7 @@ package com.dummy.myerp.model.bean.comptabilite;
 
 
 import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

@@ -1,18 +1,17 @@
+  
 package com.dummy.myerp.consumer.dao.impl.db.dao;
 
 import java.sql.Types;
 import java.util.List;
-import java.util.Map;
-
-import javax.sql.DataSource;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
-
 import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.CompteComptableRM;
 import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.EcritureComptableRM;
 import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.JournalComptableRM;
@@ -25,12 +24,11 @@ import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.NotFoundException;
 
-
 /**
  * Implémentation de l'interface {@link ComptabiliteDao}
  */
-//@Configuration
-
+@Component
+@Transactional
 public class ComptabiliteDaoImpl extends AbstractDbConsumer implements ComptabiliteDao {
 
     // ==================== Constructeurs ====================
@@ -52,26 +50,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     protected ComptabiliteDaoImpl() {
         super();
     }
-    
-    /*
-     * METHODE AJOUTEE pour accéder à la méthode de la classe mère AbstractDbConsumer
-     
-    public DataSource getDataSource(DataSourcesEnum pDataSourceId) {
-    	return super.getDataSource(pDataSourceId);	
-    }
-    */
-    
-    //ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-	
-	//public DataSource dataSource = (DataSource) context.getBean("dataSourceMYERP");
-	//public DaoProxyImpl daoProxy = context.getBean(DaoProxyImpl.class);
-	
-	//public ComptabiliteDaoImpl comptabiliteDao = context.getBean(ComptabiliteDaoImpl.class);
-	
-    
-    public static void configure(Map<DataSourcesEnum, DataSource> pMapDataSource) {
-    	configure(pMapDataSource);
-    }
+
 
     // ==================== Méthodes ====================
     /** SQLgetListCompteComptable */
@@ -81,9 +60,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     }
     @Override
     public List<CompteComptable> getListCompteComptable() {
-        JdbcTemplate vJdbcTemplate = new JdbcTemplate();
-        vJdbcTemplate.setDataSource(this.getDataSource(DataSourcesEnum.MYERP));
-    	//JdbcTemplate vJdbcTemplate = new JdbcTemplate(dataSource);
+        JdbcTemplate vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
         CompteComptableRM vRM = new CompteComptableRM();
         List<CompteComptable> vList = vJdbcTemplate.query(SQLgetListCompteComptable, vRM);
         return vList;
@@ -176,27 +153,6 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         pEcritureComptable.getListLigneEcriture().clear();
         pEcritureComptable.getListLigneEcriture().addAll(vList);
     }
-    
-    /**
-     * Renvoie le dernière valeur utilisé d'une séquence
-     *
-     * <p><i><b>Attention : </b>Méthode spécifique au SGBD PostgreSQL</i></p>
-     *
-     * @param <T> : La classe de la valeur de la séquence.
-     * @param pDataSourcesId : L'identifiant de la {@link DataSource} à utiliser
-     * @param pSeqName : Le nom de la séquence dont on veut récupérer la valeur
-     * @param pSeqValueClass : Classe de la valeur de la séquence
-     * @return la dernière valeur de la séquence
-     */
-    @Override
-    public <T> T queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum pDataSourcesId,
-            String pSeqName, JournalComptable journal, Class<T> pSeqValueClass) {
-    	   	
-    	return this.queryGetSequenceValueJournalPostgreSQL(pDataSourcesId, pSeqName, journal, pSeqValueClass);
-    	
-		}
-    
-    
 
 
     // ==================== EcritureComptable - INSERT ====================
@@ -226,7 +182,6 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         // ===== Liste des lignes d'écriture
         this.insertListLigneEcritureComptable(pEcritureComptable);
     }
-    
 
     /** SQLinsertListLigneEcritureComptable */
     private static String SQLinsertListLigneEcritureComptable;
@@ -317,4 +272,11 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         vSqlParams.addValue("ecriture_id", pEcritureId);
         vJdbcTemplate.update(SQLdeleteListLigneEcritureComptable, vSqlParams);
     }
+
+	@Override
+	public <T> T queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum pDataSourcesId, String pSeqName,
+			JournalComptable journal, Class<T> pSeqValueClass) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
