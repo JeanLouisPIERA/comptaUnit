@@ -34,7 +34,7 @@ pipeline {
 	        }
 	        
 	        
-	        stage("Tests d'intégration")	{
+	        stage("Tests d'intï¿½gration")	{
 	            steps	{
 	            bat "mvn integration-test -P inttests"
 	            
@@ -166,6 +166,7 @@ pipeline {
 	                always {
 	                    junit '**/target/surefire-reports/*.xml'
 	                    junit '**/target/failsafe-reports/*.xml'
+	                    
 	                   
 	                    }
 	            	}
