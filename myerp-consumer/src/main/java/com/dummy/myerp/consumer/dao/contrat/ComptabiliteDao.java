@@ -68,7 +68,7 @@ public interface ComptabiliteDao {
      * @return la dernière valeur de la séquence
      */
     <T> T queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum pDataSourcesId,
-            String pSeqName, Class<T> pSeqValueClass);
+            String pSeqName, JournalComptable journal, Class<T> pSeqValueClass);
     
     
 

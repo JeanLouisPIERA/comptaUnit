@@ -167,6 +167,28 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     */
     @Override
     public <T> T queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum pDataSourcesId,
+            String pSeqName, JournalComptable journal, Class<T> pSeqValueClass) {
+            
+        return this.queryGetSequenceValueJournalPostgreSQL(pDataSourcesId, pSeqName, journal, pSeqValueClass);
+    	
+    	
+    	
+        
+        }
+    
+    /**
+     * Renvoie le dernière valeur utilisé d'une séquence
+     *
+     * <p><i><b>Attention : </b>Méthode spécifique au SGBD PostgreSQL</i></p>
+     *
+     * @param <T> : La classe de la valeur de la séquence.
+     * @param pDataSourcesId : L'identifiant de la {@link DataSource} à utiliser
+     * @param pSeqName : Le nom de la séquence dont on veut récupérer la valeur
+     * @param pSeqValueClass : Classe de la valeur de la séquence
+     * @return la dernière valeur de la séquence
+    */
+    @Override
+    public <T> T queryGetSequenceValuePostgreSQL(DataSourcesEnum pDataSourcesId,
             String pSeqName, Class<T> pSeqValueClass) {
             
         //return this.queryGetSequenceValueJournalPostgreSQL(pDataSourcesId, pSeqName, journal, pSeqValueClass);
@@ -179,7 +201,6 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     	
         
         }
-    
    
 
     // ==================== EcritureComptable - INSERT ====================
@@ -202,7 +223,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         vJdbcTemplate.update(SQLinsertEcritureComptable, vSqlParams);
 
         // ----- Récupération de l'id
-        Integer vId = this.queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum.MYERP, "myerp.ecriture_comptable_id_seq",
+        Integer vId = this.queryGetSequenceValuePostgreSQL(DataSourcesEnum.MYERP, "myerp.ecriture_comptable_id_seq",
                                                            Integer.class);
         pEcritureComptable.setId(vId);
 

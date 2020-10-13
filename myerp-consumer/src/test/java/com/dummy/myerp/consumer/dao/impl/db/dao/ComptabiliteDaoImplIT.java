@@ -211,8 +211,8 @@ public class ComptabiliteDaoImplIT /*extends AbstractTransactionalJUnit4SpringCo
         vJdbcTemplate.update(SQLinsertEcritureComptable, vSqlParams);
 
         // ----- Récupération de l'id
-        Integer vId = daoProxyImpl.getComptabiliteDao().
-        		queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum.MYERP, "myerp.ecriture_comptable_id_seq",
+        Integer vId = comptabilite.
+        		queryGetSequenceValuePostgreSQL(DataSourcesEnum.MYERP, "myerp.ecriture_comptable_id_seq",
                                                            Integer.class);
         ecriture.setId(vId);
 

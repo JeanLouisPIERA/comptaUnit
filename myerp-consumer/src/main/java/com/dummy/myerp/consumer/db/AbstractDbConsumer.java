@@ -72,7 +72,7 @@ public abstract class AbstractDbConsumer {
      * @param pSeqName : Le nom de la séquence dont on veut récupérer la valeur
      * @param pSeqValueClass : Classe de la valeur de la séquence
      * @return la dernière valeur de la séquence
-     
+     */
     protected <T> T queryGetSequenceValuePostgreSQL(DataSourcesEnum pDataSourcesId,
                                                     String pSeqName, Class<T> pSeqValueClass) {
 
@@ -82,7 +82,7 @@ public abstract class AbstractDbConsumer {
 
         return vSeqValue;
     }
-*/
+
 
     // ==================== Méthodes Static ====================
     /**
@@ -109,30 +109,4 @@ public abstract class AbstractDbConsumer {
         }
         mapDataSource = vMapDataSource;
     }
-
-
-	/**
-	 * Renvoie le dernière valeur utilisé d'une séquence
-	 *
-	 * <p><i><b>Attention : </b>Méthode spécifique au SGBD PostgreSQL</i></p>
-	 *
-	 * @param <T> : La classe de la valeur de la séquence.
-	 * @param pDataSourcesId : L'identifiant de la {@link DataSource} à utiliser
-	 * @param pSeqName : Le nom de la séquence dont on veut récupérer la valeur
-	 * @param pSeqValueClass : Classe de la valeur de la séquence
-	 * @return la dernière valeur de la séquence
-	
-	@Override
-	public <T> T queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum pDataSourcesId,
-	        String pSeqName, JournalComptable journal, Class<T> pSeqValueClass) {
-	        
-	    return this.queryGetSequenceValueJournalPostgreSQL(pDataSourcesId, pSeqName, journal, pSeqValueClass);
-	    
-	    }
-	 */
-	public <T> T queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum pDataSourcesId, String pSeqName,
-			Class<T> pSeqValueClass) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
