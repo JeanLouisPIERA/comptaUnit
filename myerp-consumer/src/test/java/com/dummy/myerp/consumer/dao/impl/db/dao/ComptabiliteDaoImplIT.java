@@ -17,6 +17,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import org.springframework.integration.test.context.SpringIntegrationTest;
@@ -42,6 +43,7 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 
 
 @RunWith(SpringRunner.class)
+//@Configuration("/applicationContext.xml")
 //@SpringIntegrationTest()
 //@ContextConfiguration(locations={"applicationContext.xml","sqlContext.xml"})
 /*@ExtendWith(SpringContextResourceAdapter.class)
@@ -53,8 +55,8 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 @Rollback(true)
 public class ComptabiliteDaoImplIT /*extends AbstractTransactionalJUnit4SpringContextTests*/{
 	
-	@Autowired
-	ApplicationContext applicationContext;
+	//@Autowired
+	//ApplicationContext applicationContext;
 	
 	//@Autowired
 	//private DaoProxy daoProxy;

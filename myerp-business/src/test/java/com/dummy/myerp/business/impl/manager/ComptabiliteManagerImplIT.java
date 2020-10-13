@@ -18,6 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito.Then;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.TransactionStatus;
 
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
@@ -30,9 +31,9 @@ import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
 import junit.framework.AssertionFailedError;
 
-
+@Configuration("/applicationContext.xml")
 //@ExtendWith(MockitoExtension.class)
-public class ComptabiliteManagerImplUT {
+public class ComptabiliteManagerImplIT {
 	
 	/* ------------------------------------MOCKITO EN SUSPENS 
 	@Mock
