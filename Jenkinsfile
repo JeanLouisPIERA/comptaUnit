@@ -38,7 +38,6 @@ pipeline {
 	            steps	{
 	            bat "mvn integration-test -P inttests"
 	            
-	            
 	            }     
 	            
 	        }
