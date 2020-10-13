@@ -2,11 +2,11 @@ package com.dummy.myerp.consumer.dao.impl.db.dao;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.junit.runner.RunWith;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+
+import java.sql.Types;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,23 +18,23 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.format.datetime.DateFormatter;
-import org.springframework.integration.test.context.MockIntegrationContext;
+
 import org.springframework.integration.test.context.SpringIntegrationTest;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
+
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 import com.dummy.myerp.consumer.dao.impl.DaoProxyImpl;
+import com.dummy.myerp.consumer.db.DataSourcesEnum;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 
@@ -51,7 +51,7 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 */
 @Transactional
 @Rollback(true)
-public class ComptabiliteDaoImplIT extends AbstractTransactionalJUnit4SpringContextTests{
+public class ComptabiliteDaoImplIT /*extends AbstractTransactionalJUnit4SpringContextTests*/{
 	
 	@Autowired
 	ApplicationContext applicationContext;
@@ -63,12 +63,12 @@ public class ComptabiliteDaoImplIT extends AbstractTransactionalJUnit4SpringCont
 	//@Autowired
 	//private ComptabiliteDao comptabiliteDao;
 	
-	ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+	ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml", "sqlContext.xml");
 	DataSource MYERP = (DataSource) context.getBean("dataSourceMYERP"); 
-	//ComptabiliteDaoImpl comptabilite = (ComptabiliteDaoImpl) context.getBean("DaoProxy");
+	ComptabiliteDaoImpl comptabilite = (ComptabiliteDaoImpl) context.getBean("ComptabiliteDaoImpl");
 	DaoProxyImpl daoProxyImpl = (DaoProxyImpl) context.getBean("DaoProxy");
 		
-	
+	/*
 	
 
 	@Test
@@ -89,6 +89,7 @@ public class ComptabiliteDaoImplIT extends AbstractTransactionalJUnit4SpringCont
 		//System.out.println(comptabilite);
 		System.out.println(daoProxyImpl);
 		System.out.println(MYERP); 
+		System.out.println(comptabilite); 
 		
 		JournalComptable vJournal = new JournalComptable();
 		vJournal.setCode("AC");
@@ -132,8 +133,8 @@ public class ComptabiliteDaoImplIT extends AbstractTransactionalJUnit4SpringCont
 			Assertions.assertEquals(ecritureTest.getListLigneEcriture().size(), ecriture.getListLigneEcriture().size(), "Erreur d'enregistrement du nombre de lignes de l'éciture comptable insérée");
 			Assertions.assertEquals(ecritureTest.getDate().toString(), simpleDateFormat.format(ecriture.getDate()), "Erreur d'enregistrement de la Date de l'éciture comptable insérée");
 		*/
-			
-			Assertions.assertEquals(1, idd-id, "Erreur d'enregistrement du code Journal de l'éciture comptable insérée");
+			/*
+			Assertions.assertEquals(1, idd-id, "Echec du test d'enregistrement d'une écriture comptable en base de données");
 
 		
 			txManager.rollback(status);
@@ -146,9 +147,92 @@ public class ComptabiliteDaoImplIT extends AbstractTransactionalJUnit4SpringCont
 		
 	}
 	
+	*/
+	
+	
+	
 	
     
+   
+
+	@Test
+	@Rollback
+	@Transactional
+	public void testInsertEcritureComptable() throws ParseException {
+		
+		DataSourceTransactionManager txManager = (DataSourceTransactionManager) context.getBean("txManager");
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+	    TransactionStatus status = txManager.getTransaction(def);
+		
+		JournalComptable vJournal = new JournalComptable();
+		vJournal.setCode("AC");
+		
+		
+		EcritureComptable ecriture = new EcritureComptable();
+		//ComptabiliteDaoImpl comptabiliteDao = new ComptabiliteDaoImpl();
+		
+		/*
+		List<EcritureComptable> list = daoProxyImpl.getComptabiliteDao().getListEcritureComptable();
+		Integer id=	list.size();
+		*/
+		List<EcritureComptable> listEcritures = daoProxyImpl.getComptabiliteDao().getListEcritureComptable();
+		Integer id1=listEcritures.size();
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.FRANCE);
+        String sdateTest = "2020-02-01";
+		Date pDate = simpleDateFormat.parse(sdateTest);
+        
+		ecriture.setDate(pDate);
+		//ecriture.setId(id-4);
+		ecriture.setJournal(vJournal);
+		ecriture.setLibelle("Achats");
+		ecriture.setReference("AC-2020/00001");
+		
+		
+	    
+		
+		
+        // ===== Ecriture Comptable
+        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(MYERP);
+        MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
+        vSqlParams.addValue("journal_code", ecriture.getJournal().getCode());
+        vSqlParams.addValue("reference", ecriture.getReference());
+        vSqlParams.addValue("date", ecriture.getDate(), Types.DATE);
+        vSqlParams.addValue("libelle", ecriture.getLibelle());
+
+        String SQLinsertEcritureComptable= "INSERT INTO myerp.ecriture_comptable (\r\n" + 
+        		"                    id,\r\n" + 
+        		"                    journal_code, reference, date, libelle\r\n" + 
+        		"                ) VALUES (\r\n" + 
+        		"                    nextval('myerp.ecriture_comptable_id_seq'),\r\n" + 
+        		"                    :journal_code, :reference, :date, :libelle\r\n" + 
+        		"                )";
+        
+        vJdbcTemplate.update(SQLinsertEcritureComptable, vSqlParams);
+
+        // ----- Récupération de l'id
+        Integer vId = daoProxyImpl.getComptabiliteDao().
+        		queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum.MYERP, "myerp.ecriture_comptable_id_seq",
+                                                           Integer.class);
+        ecriture.setId(vId);
+
+        // ===== Liste des lignes d'écriture
+        daoProxyImpl.getComptabiliteDao().insertListLigneEcritureComptable(ecriture);
+        
+        
+        //List<EcritureComptable> listEcritures = daoProxyImpl.getComptabiliteDao().getListEcritureComptable();
+		//Integer id1=listEcritures.size();
+		Integer id2 = daoProxyImpl.getComptabiliteDao().getListEcritureComptable().size();
+		System.out.println(id1);
+		System.out.println(id2);
+		
+		Assertions.assertEquals(1, id2-id1, "Echec du test d'enregistrement d'une écriture comptable en base de données");
+        
+    
+		txManager.rollback(status);
+		//txManager.commit(status);
 	
+	}
     
 	
 	

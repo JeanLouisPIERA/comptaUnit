@@ -154,6 +154,33 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         pEcritureComptable.getListLigneEcriture().addAll(vList);
     }
 
+    /**
+     * Renvoie le dernière valeur utilisé d'une séquence
+     *
+     * <p><i><b>Attention : </b>Méthode spécifique au SGBD PostgreSQL</i></p>
+     *
+     * @param <T> : La classe de la valeur de la séquence.
+     * @param pDataSourcesId : L'identifiant de la {@link DataSource} à utiliser
+     * @param pSeqName : Le nom de la séquence dont on veut récupérer la valeur
+     * @param pSeqValueClass : Classe de la valeur de la séquence
+     * @return la dernière valeur de la séquence
+    */
+    @Override
+    public <T> T queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum pDataSourcesId,
+            String pSeqName, Class<T> pSeqValueClass) {
+            
+        //return this.queryGetSequenceValueJournalPostgreSQL(pDataSourcesId, pSeqName, journal, pSeqValueClass);
+    	
+    	 JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource(pDataSourcesId));
+         String vSeqSQL = "SELECT last_value FROM " + pSeqName;
+         T vSeqValue = vJdbcTemplate.queryForObject(vSeqSQL, pSeqValueClass);
+
+         return vSeqValue;
+    	
+        
+        }
+    
+   
 
     // ==================== EcritureComptable - INSERT ====================
 
@@ -175,7 +202,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         vJdbcTemplate.update(SQLinsertEcritureComptable, vSqlParams);
 
         // ----- Récupération de l'id
-        Integer vId = this.queryGetSequenceValuePostgreSQL(DataSourcesEnum.MYERP, "myerp.ecriture_comptable_id_seq",
+        Integer vId = this.queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum.MYERP, "myerp.ecriture_comptable_id_seq",
                                                            Integer.class);
         pEcritureComptable.setId(vId);
 
@@ -191,8 +218,9 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     /**
      * Insert les lignes d'écriture de l'écriture comptable
      * @param pEcritureComptable l'écriture comptable
+     * PASSEE DE PROTECTED A PUBLIC
      */
-    protected void insertListLigneEcritureComptable(EcritureComptable pEcritureComptable) {
+    public void insertListLigneEcritureComptable(EcritureComptable pEcritureComptable) {
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
         MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
         vSqlParams.addValue("ecriture_id", pEcritureComptable.getId());
@@ -272,11 +300,12 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         vSqlParams.addValue("ecriture_id", pEcritureId);
         vJdbcTemplate.update(SQLdeleteListLigneEcritureComptable, vSqlParams);
     }
-
+/*
 	@Override
 	public <T> T queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum pDataSourcesId, String pSeqName,
 			JournalComptable journal, Class<T> pSeqValueClass) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	*/
 }

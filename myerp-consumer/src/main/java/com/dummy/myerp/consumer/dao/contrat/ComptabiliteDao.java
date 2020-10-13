@@ -56,7 +56,6 @@ public interface ComptabiliteDao {
      */
     EcritureComptable getEcritureComptableByRef(String pReference) throws NotFoundException;
     
-    
     /**
      * Renvoie le dernière valeur utilisé d'une séquence
      *
@@ -69,7 +68,7 @@ public interface ComptabiliteDao {
      * @return la dernière valeur de la séquence
      */
     <T> T queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum pDataSourcesId,
-            String pSeqName, JournalComptable journal, Class<T> pSeqValueClass);
+            String pSeqName, Class<T> pSeqValueClass);
     
     
 
@@ -100,4 +99,10 @@ public interface ComptabiliteDao {
      * @param pId l'id de l'écriture
      */
     void deleteEcritureComptable(Integer pId);
+
+    /**
+     * Insert une nouvelle liste de lignes comptables dans une Ecriture Comptable
+     * @param ecriture
+     */
+	void insertListLigneEcritureComptable(EcritureComptable ecriture);
 }
