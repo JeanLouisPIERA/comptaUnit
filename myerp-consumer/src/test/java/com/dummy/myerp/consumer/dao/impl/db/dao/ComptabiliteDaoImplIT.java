@@ -38,7 +38,7 @@ import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 @RunWith(SpringRunner.class)
 //@Configuration("/applicationContext.xml")
 //@SpringIntegrationTest()
-@ContextConfiguration(locations={"applicationContext.xml","sqlContext.xml"})
+@ContextConfiguration(locations={"/applicationContext.xml"})
 /*@ExtendWith(SpringContextResourceAdapter.class)
 @ContextConfiguration("/applicationContext.xml")
 @ActiveProfiles({"inttests"}) 
@@ -58,7 +58,7 @@ public class ComptabiliteDaoImplIT /*extends AbstractTransactionalJUnit4SpringCo
 	//@Autowired
 	//private ComptabiliteDao comptabiliteDao;
 	
-	ApplicationContext context = new ClassPathXmlApplicationContext("/applicationContext.xml", "/sqlContext.xml");
+	ApplicationContext context = new ClassPathXmlApplicationContext("/applicationContext.xml");
 	DataSource MYERP = (DataSource) context.getBean("dataSourceMYERP"); 
 	ComptabiliteDaoImpl comptabilite = (ComptabiliteDaoImpl) context.getBean("ComptabiliteDaoImpl");
 	DaoProxyImpl daoProxyImpl = (DaoProxyImpl) context.getBean("DaoProxy");

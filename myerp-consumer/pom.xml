@@ -205,6 +205,18 @@
     <!-- Build -->
     <!-- =============================================================== -->
     <build>
+    
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <includes>
+          <include>**/applicationContext.xml</include>
+          <include>**/sqlContext.xml</include>
+        </includes>
+      </resource>
+    </resources>
+    
     <plugins>
     
     
