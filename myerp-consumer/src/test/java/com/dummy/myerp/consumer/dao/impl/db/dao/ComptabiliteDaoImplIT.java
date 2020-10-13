@@ -58,7 +58,7 @@ public class ComptabiliteDaoImplIT /*extends AbstractTransactionalJUnit4SpringCo
 	//@Autowired
 	//private ComptabiliteDao comptabiliteDao;
 	
-	ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml", "sqlContext.xml");
+	ApplicationContext context = new ClassPathXmlApplicationContext("/applicationContext.xml", "/sqlContext.xml");
 	DataSource MYERP = (DataSource) context.getBean("dataSourceMYERP"); 
 	ComptabiliteDaoImpl comptabilite = (ComptabiliteDaoImpl) context.getBean("ComptabiliteDaoImpl");
 	DaoProxyImpl daoProxyImpl = (DaoProxyImpl) context.getBean("DaoProxy");
