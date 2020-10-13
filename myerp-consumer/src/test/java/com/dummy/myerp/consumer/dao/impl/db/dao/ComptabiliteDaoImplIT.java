@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -38,7 +39,7 @@ import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 @RunWith(SpringRunner.class)
 //@Configuration("/applicationContext.xml")
 //@SpringIntegrationTest()
-@ContextConfiguration(locations={"/applicationContext.xml"})
+//@ContextConfiguration(locations={"/applicationContext.xml"})
 /*@ExtendWith(SpringContextResourceAdapter.class)
 @ContextConfiguration("/applicationContext.xml")
 @ActiveProfiles({"inttests"}) 
@@ -58,7 +59,7 @@ public class ComptabiliteDaoImplIT /*extends AbstractTransactionalJUnit4SpringCo
 	//@Autowired
 	//private ComptabiliteDao comptabiliteDao;
 	
-	ApplicationContext context = new ClassPathXmlApplicationContext("classpath:/applicationContext.xml");
+	ApplicationContext context = new ClassPathXmlApplicationContext("classpath*:/applicationContext.xml");
 	DataSource MYERP = (DataSource) context.getBean("dataSourceMYERP"); 
 	ComptabiliteDaoImpl comptabilite = (ComptabiliteDaoImpl) context.getBean("ComptabiliteDaoImpl");
 	DaoProxyImpl daoProxyImpl = (DaoProxyImpl) context.getBean("DaoProxy");
