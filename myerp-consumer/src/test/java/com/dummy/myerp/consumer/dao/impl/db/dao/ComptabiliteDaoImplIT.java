@@ -43,7 +43,7 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 
 
 @RunWith(SpringRunner.class)
-//@Configuration("/applicationContext.xml")
+@Configuration("/applicationContext.xml")
 //@SpringIntegrationTest()
 //@ContextConfiguration(locations={"applicationContext.xml","sqlContext.xml"})
 /*@ExtendWith(SpringContextResourceAdapter.class)
