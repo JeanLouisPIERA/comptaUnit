@@ -11,6 +11,7 @@ pipeline {
        POSTGRES_PASSWORD='myerp'
 	    }
 	
+	
 		triggers {
         	pollSCM('0-59/1 * * * *')
     	}
