@@ -3,6 +3,23 @@ pipeline {
 		agent {
 	        label 'master'
 	    }
+	    
+	    environment {
+	    
+	    version: '2'
+			services:
+			  myerp.db:
+			    image: postgres:9.4
+			    ports:
+			      - "127.0.0.1:9032:5432"
+			    volumes:
+			#      - "./data/db:/var/lib/postgresql/data"
+			       - "./init/db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
+			    environment:
+			      - POSTGRES_DB=db_myerp
+			      - POSTGRES_USER=usr_myerp
+			      - POSTGRES_PASSWORD=myerp
+	    }
 	
 		triggers {
         	pollSCM('0-59/1 * * * *')
