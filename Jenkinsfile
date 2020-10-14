@@ -43,6 +43,7 @@ pipeline {
 	        }
 	        
 	        
+	        
 	         stage("Code coverage. Le score minimum de couverture des lignes = 75%")	{
 	            steps	{
 	            bat " mvn test jacoco:check jacoco:report"
