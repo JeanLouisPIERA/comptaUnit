@@ -4,6 +4,8 @@ package com.dummy.myerp.consumer.dao.impl.db.dao;
 import java.sql.Types;
 import java.util.List;
 
+import javax.inject.Named;
+
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -27,6 +29,7 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 /**
  * Implémentation de l'interface {@link ComptabiliteDao}
  */
+@Named
 @Component
 @Transactional
 public class ComptabiliteDaoImpl extends AbstractDbConsumer implements ComptabiliteDao {

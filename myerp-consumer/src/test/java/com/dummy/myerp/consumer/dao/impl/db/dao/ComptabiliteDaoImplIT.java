@@ -7,12 +7,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.sql.DataSource;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -59,12 +62,15 @@ public class ComptabiliteDaoImplIT /*extends AbstractTransactionalJUnit4SpringCo
 	//@Autowired
 	//private ComptabiliteDao comptabiliteDao;
 	
-	ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml", "sqlContext.xml"});
+	
+	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml", "sqlContext.xml"});
 	DataSource MYERP = (DataSource) context.getBean("dataSourceMYERP"); 
 	ComptabiliteDaoImpl comptabilite = (ComptabiliteDaoImpl) context.getBean("ComptabiliteDaoImpl");
 	DaoProxyImpl daoProxyImpl = (DaoProxyImpl) context.getBean("DaoProxy");
 	
-		
+	
+	
+	
 	/*
 	
 
@@ -157,9 +163,22 @@ public class ComptabiliteDaoImplIT /*extends AbstractTransactionalJUnit4SpringCo
 	@Transactional
 	public void testInsertEcritureComptable() throws ParseException {
 		
+		
 		DataSourceTransactionManager txManager = (DataSourceTransactionManager) context.getBean("txManager");
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 	    TransactionStatus status = txManager.getTransaction(def);
+				
+				//System.out.println(applicationContext);
+				//System.out.println(daoProxy);
+				//System.out.println(comptabiliteDao);
+				System.out.println(context);
+				//System.out.println(comptabilite);
+				System.out.println(daoProxyImpl);
+				System.out.println(MYERP); 
+				System.out.println(comptabilite); 
+				System.out.println(txManager);	
+				System.out.println(def);	
+				System.out.println(status);	
 		
 		JournalComptable vJournal = new JournalComptable();
 		vJournal.setCode("AC");
