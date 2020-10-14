@@ -5,10 +5,10 @@ pipeline {
 	    }
 	    
 	    environment {
-	   POSTGRES_URL='postgresql://127.0.0.1:9032:5432/' 
-	   POSTGRES_DB='db_myerp'
-       POSTGRES_USER='usr_myerp'
-       POSTGRES_PASSWORD='myerp'
+	   POSTGRES_URL="postgresql://127.0.0.1:9032:5432/" 
+	   POSTGRES_DB="db_myerp"
+       POSTGRES_USER="usr_myerp"
+       POSTGRES_PASSWORD="myerp"
 	    }
 	
 	
@@ -186,6 +186,13 @@ pipeline {
 		            }
 		        }
 	
+	    }
+	    
+	    post {
+	    	always {
+	    		cleanWs()
+	    		}
+	    
 	    }
 	        
 	        
