@@ -18,6 +18,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -29,9 +30,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.dummy.myerp.consumer.dao.impl.DaoProxyImpl;
+import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.EcritureComptableRM;
 import com.dummy.myerp.consumer.db.DataSourcesEnum;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
+import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
+import com.dummy.myerp.technical.exception.NotFoundException;
 
 
 
@@ -252,59 +256,110 @@ public class ComptabiliteDaoImplIT /*extends AbstractTransactionalJUnit4SpringCo
 	
 	}
     
-	
-	
-	
-
-	/*
-	@Container
-    private PostgreSQLContainer postgresqlContainer = new PostgreSQLContainer()
-        .withDatabaseName("foo")
-        .withUsername("foo")
-        .withPassword("secret");
-
-    @Test
-    void test() {
-        
-        assertTrue(postgresqlContainer.isRunning());
-    }
-    
-    private ComptabiliteDaoImpl comptabiliteDao;
-    
-    @Test
-    void testInteractionWithDatabase() throws ParseException {
-        //ScriptUtils.runInitScript(new JdbcDatabaseDelegate(postgresqlContainer, ""),"01_create_schema.sql");
-        
-        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(comptabiliteDao.getDataSource(DataSourcesEnum.MYERP));
-        
-        EcritureComptable ecriture = new EcritureComptable();
-		JournalComptable pJournal = new JournalComptable();
+	@Test
+	@Rollback
+	@Transactional
+	public void testGetEcritureComptable() throws NotFoundException, ParseException {
 		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.FRANCE);
-        String sdateTest = "2020/02/01";
-        Date pDate = simpleDateFormat.parse(sdateTest);
-		ecriture.setDate(pDate);
-		ecriture.setId(1);
-		ecriture.setJournal(pJournal);
-		ecriture.setLibelle("Achats");
-		ecriture.setReference("AC-2020/00001");
+		
+        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(MYERP);
+        MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
+        vSqlParams.addValue("id", -1);
+        EcritureComptableRM vRM = new EcritureComptableRM();
+        EcritureComptable vBean;
+        String SQLgetEcritureComptable = "SELECT * FROM myerp.ecriture_comptable WHERE id = :id";
+        
+        vBean = vJdbcTemplate.queryForObject(SQLgetEcritureComptable, vSqlParams, vRM);
+        
+        Assertions.assertEquals("AC", vBean.getJournal().getCode(), "Echec du test de renvoi par son Id d'une écriture comptable persistée en base de données");
+        Assertions.assertEquals("AC-2016/00001", vBean.getReference(), "Echec du test de renvoi par son Id d'une écriture comptable persistée en base de données");
+       
+	}
+	
+	
+	@Test
+	@Rollback
+	@Transactional
+	public void testUpdateEcritureComptable() throws NotFoundException, ParseException {
+		
+		DataSourceTransactionManager txManager = (DataSourceTransactionManager) context.getBean("txManager");
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+	    TransactionStatus status = txManager.getTransaction(def);
+	    
+	    EcritureComptable pEcritureComptable = comptabilite.getEcritureComptable(-2); 
+	    
+	    JournalComptable vJournal = new JournalComptable();
+		vJournal.setCode("AC");
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.FRANCE);
+        String sdateTest = "2020-02-01";
+		Date pDate = simpleDateFormat.parse(sdateTest);
+        
+		pEcritureComptable.setDate(pDate);
+		pEcritureComptable.setJournal(vJournal);
+		pEcritureComptable.setLibelle("Achats");
+		pEcritureComptable.setReference("AC-2020/00001");
+	    
+	    
+	    
+        // ===== Ecriture Comptable
+        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(MYERP);
+        MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
+        vSqlParams.addValue("id", pEcritureComptable.getId());
+        vSqlParams.addValue("journal_code", pEcritureComptable.getJournal().getCode());
+        vSqlParams.addValue("reference", pEcritureComptable.getReference());
+        vSqlParams.addValue("date", pEcritureComptable.getDate(), Types.DATE);
+        vSqlParams.addValue("libelle", pEcritureComptable.getLibelle());
+
+        String SQLinsertEcritureComptable= "INSERT INTO myerp.ecriture_comptable (\r\n" + 
+        		"                    id,\r\n" + 
+        		"                    journal_code, reference, date, libelle\r\n" + 
+        		"                ) VALUES (\r\n" + 
+        		"                    :id,\r\n" + 
+        		"                    :journal_code, :reference, :date, :libelle\r\n" + 
+        		"                )";
+        comptabilite.deleteEcritureComptable(pEcritureComptable.getId());
+        vJdbcTemplate.update(SQLinsertEcritureComptable, vSqlParams);
+
+        // ===== Liste des lignes d'écriture
+        comptabilite.deleteListLigneEcritureComptable(pEcritureComptable.getId());
+        comptabilite.insertListLigneEcritureComptable(pEcritureComptable);
+        EcritureComptable updated = comptabilite.getEcritureComptable(-2);
         
         
+        Assertions.assertEquals("AC", updated.getJournal().getCode(), "Echec du test de renvoi par son Id d'une écriture comptable persistée en base de données");
+        Assertions.assertEquals("AC-2020/00001", updated.getReference(), "Echec du test de renvoi par son Id d'une écriture comptable persistée en base de données");
+        Assertions.assertEquals("Achats", updated.getLibelle(), "Echec du test de renvoi par son Id d'une écriture comptable persistée en base de données");
         
-        comptabiliteDao.insertEcritureComptable(ecriture);
-        
-        
-        Collection<EcritureComptable> ecritures = vJdbcTemplate.query("select * From ecriture",
-                    (resultSet, i) -> new EcritureComptable (
-                    							resultSet.getDate("date"),
-                                                resultSet.getInt("Id"),
-                                                resultSet.getString("journal"),
-                                                result.getString("libelle"),
-                                                result.getString("reference")
-                                                ))));
- 
-        Assert.assertTrue("L'écriture n'a pas été correctement persistée",(ecritures).hasSize(1));
+		txManager.rollback(status);
+		//txManager.commit(status);
     }
-    */
+	
+	
+
+	@Test
+	@Rollback
+	@Transactional
+	public void getEcritureComptableByRef() throws NotFoundException {
+		
+		String pReference = "BQ-2016/00005";
+        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(MYERP);
+        MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
+        vSqlParams.addValue("reference", pReference);
+        EcritureComptableRM vRM = new EcritureComptableRM();
+        EcritureComptable vBean;
+        String SQLgetEcritureComptableByRef = "SELECT * FROM myerp.ecriture_comptable WHERE reference = :reference";
+        
+            vBean = vJdbcTemplate.queryForObject(SQLgetEcritureComptableByRef, vSqlParams, vRM);
+        
+            Assertions.assertEquals(-5, vBean.getId(), "Echec du test de renvoi par sa reference d'une écriture comptable persistée en base de données");
+            
+           
+    }
+		
+		
+		
+ 
+	
+	
 
 }

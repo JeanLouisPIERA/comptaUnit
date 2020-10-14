@@ -256,7 +256,6 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
             vSqlParams.addValue("compte_comptable_numero", vLigne.getCompteComptable().getNumero());
             vSqlParams.addValue("libelle", vLigne.getLibelle());
             vSqlParams.addValue("debit", vLigne.getDebit());
-
             vSqlParams.addValue("credit", vLigne.getCredit());
 
             vJdbcTemplate.update(SQLinsertListLigneEcritureComptable, vSqlParams);
@@ -281,8 +280,13 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         vSqlParams.addValue("reference", pEcritureComptable.getReference());
         vSqlParams.addValue("date", pEcritureComptable.getDate(), Types.DATE);
         vSqlParams.addValue("libelle", pEcritureComptable.getLibelle());
+        
+        //A RAJOUTER SINON nested exception is org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint "ecriture_comptable_pk"
+        this.deleteEcritureComptable(pEcritureComptable.getId());
 
-        vJdbcTemplate.update(SQLupdateEcritureComptable, vSqlParams);
+        //vJdbcTemplate.update(SQLupdateEcritureComptable, vSqlParams);
+        //-----------> ERREUR org.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar 
+        vJdbcTemplate.update(SQLinsertEcritureComptable, vSqlParams);
 
         // ===== Liste des lignes d'écriture
         this.deleteListLigneEcritureComptable(pEcritureComptable.getId());
