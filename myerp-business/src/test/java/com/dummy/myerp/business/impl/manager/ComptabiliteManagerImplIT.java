@@ -65,14 +65,13 @@ public class ComptabiliteManagerImplIT {
                         &&pEcritureComptable.getId().equals(vECRef.getId())) {
                 	pEcritureComptable.equals(vECRef);
                 }
-                Assertions.assertTrue(pEcritureComptable.getId().equals(vECRef.getId()), "Echec du test du RG Compta 6 : La référence de l'écriture comptable Id=" + max + "n'est pas unique");
+                Assertions.assertTrue(pEcritureComptable.getId().equals(vECRef.getId()), "Echec du test du RG Compta 6 : La référence de l'écriture comptable n'est pas unique");
                 
                 System.out.println(pEcritureComptable.getId());	
         		System.out.println(vECRef.getId());	
         }
         
-        System.out.println(max);	
-		System.out.println(nb);	
+        
     }
     
     /*
