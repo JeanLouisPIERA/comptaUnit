@@ -56,7 +56,7 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 @Rollback(true)
 public class ComptabiliteDaoImplIT /*extends AbstractTransactionalJUnit4SpringContextTests*/{
 	
-	//@Autowired
+		//@Autowired
 		//ApplicationContext applicationContext;
 		
 		//@Autowired
