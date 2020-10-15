@@ -27,6 +27,8 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
+import com.dummy.myerp.business.impl.TransactionManager;
+import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
 import com.dummy.myerp.consumer.dao.impl.DaoProxyImpl;
 import com.dummy.myerp.consumer.dao.impl.db.dao.ComptabiliteDaoImpl;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
@@ -87,7 +89,7 @@ public class ComptabiliteManagerImplTest {
      * @throws FunctionalException 
      */
     @Test
-    public void checkEcritureComptableUnit() throws ParseException, FunctionalException  {
+    public void testCheckEcritureComptableUnit() throws ParseException, FunctionalException  {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -121,7 +123,7 @@ public class ComptabiliteManagerImplTest {
     @Test
     //(expected=AssertionError.class)
     //(expected = FunctionalException.class)
-    public void checkEcritureComptableUnitViolation() throws ParseException {
+    public void testCheckEcritureComptableUnitViolation() throws ParseException {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         //@NotNull
@@ -169,7 +171,7 @@ public class ComptabiliteManagerImplTest {
     @Test
     //(expected=AssertionError.class)
     //(expected = FunctionalException.class)
-    public void checkEcritureComptableUnitRG2() throws ParseException  {
+    public void testCheckEcritureComptableUnitRG2() throws ParseException  {
     	
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
@@ -232,7 +234,7 @@ public class ComptabiliteManagerImplTest {
     @Test
     //(expected=AssertionError.class)
     //(expected = FunctionalException.class)
-    public void checkEcritureComptableUnitRG3() throws FunctionalException, ParseException  {
+    public void testCheckEcritureComptableUnitRG3() throws FunctionalException, ParseException  {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -267,7 +269,7 @@ public class ComptabiliteManagerImplTest {
      */
     @Test
     //(expected = FunctionalException.class)
-    public void checkEcritureComptableUnitRG5() throws FunctionalException, ParseException  {
+    public void testCheckEcritureComptableUnitRG5() throws FunctionalException, ParseException  {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         
@@ -331,7 +333,7 @@ public class ComptabiliteManagerImplTest {
      */
     @Test
     //(expected = FunctionalException.class)
-    public void checkSoldeCompteComptableRG1() throws FunctionalException  {
+    public void testCheckSoldeCompteComptableRG1() throws FunctionalException  {
     	EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         CompteComptable cc1 = new CompteComptable();
@@ -359,7 +361,7 @@ public class ComptabiliteManagerImplTest {
      * @throws ParseException
      */
     @Test
-    public void createAndCheckReferenceEcritureComptableRG5() throws FunctionalException, ParseException {
+    public void testCreateAndCheckReferenceEcritureComptableRG5() throws FunctionalException, ParseException {
     	EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -373,9 +375,7 @@ public class ComptabiliteManagerImplTest {
         
     }
     
-    
-    
-    
+    	
     
     
     
