@@ -180,7 +180,7 @@ stages{
 		            }
 		        }
 	
-	    
+	    }
 	    post {
 	    	always {
 	    		cleanWs()
@@ -188,5 +188,5 @@ stages{
 	    
 	    }
 	        
-	    }    
+	       
 	 } 
