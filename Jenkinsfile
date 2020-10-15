@@ -2,57 +2,50 @@ pipeline {
 
 		agent {
 	        label 'master'
-	    }
+    		}
+	    
 	    
 	    environment {
-	   POSTGRES_URL="postgresql://127.0.0.1:9032:5432/" 
-	   POSTGRES_DB="db_myerp"
-       POSTGRES_USER="usr_myerp"
-       POSTGRES_PASSWORD="myerp"
-	    }
+		   POSTGRES_URL="postgresql://127.0.0.1:9032:5432/" 
+		   POSTGRES_DB="db_myerp"
+	       POSTGRES_USER="usr_myerp"
+	       POSTGRES_PASSWORD="myerp"
+		   }
 	
 	
 		triggers {
         	pollSCM('0-59/1 * * * *')
-    	}
+    	   }
     	
-		stages{
+stages{
 		
 	        stage("Compilation du code source")	{
 	            steps	{
 	            bat "mvn compile "
 	            }
 	        }
-	        stage("Compilation du code des tests  ")	{
+	        	
+	       stage("Compilation du code des tests  ") {
 	            steps	{
 	            bat "mvn test-compile  "
-	            
-	            
 	            }
-	            
 	       }
 	       
 	       stage("Tests unitaires")	{
 	            steps	{
 	            bat "mvn test -P unittests"
-	            
-	            
 	            }     
-	            
 	        }
 	        
 	        
 	        stage("Tests d'int�gration")	{
 	            steps	{
 	            bat "mvn integration-test -P inttests"
-	            
 	            }     
-	            
 	        }
 	        
+	        stage("Code coverage. Le score minimum de couverture des lignes = 75%")	{
 	        
-	        
-	         stage("Code coverage. Le score minimum de couverture des lignes = 75%")	{
 	            steps	{
 	            bat " mvn test jacoco:check jacoco:report"
 	      		
@@ -171,22 +164,23 @@ pipeline {
 				
 	            bat "mvn verify";
 	            }
+	            
 	            post {
 	                always {
 	                    junit '**/target/surefire-reports/*.xml'
 	                    junit '**/target/failsafe-reports/*.xml'
-	                    
-	                   
+	                 
 	                    }
 	            	}
 	        }
+	        
 			stage("Packaging de l'application")	{
 		            steps	{
 		            bat "mvn package -DskipTests"
 		            }
 		        }
 	
-	    }
+	    
 	    
 	    post {
 	    	always {
@@ -195,5 +189,5 @@ pipeline {
 	    
 	    }
 	        
-	        
+	    }    
 	 } 
