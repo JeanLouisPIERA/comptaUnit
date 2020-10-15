@@ -51,24 +51,19 @@ public class ComptabiliteManagerImplIT {
     	  
         EcritureComptable pEcritureComptable = daoProxyImpl.getComptabiliteDao().getEcritureComptable(-2);
   	
-        // ===== RG_Compta_6 : La référence d'une écriture comptable doit être unique
         if (StringUtils.isNoneEmpty(pEcritureComptable.getReference())) {
             
-                // Recherche d'une écriture ayant la même référence
+                
                 EcritureComptable vECRef = daoProxyImpl.getComptabiliteDao().getEcritureComptableByRef(
                     pEcritureComptable.getReference());
 
-                // Si l'écriture à vérifier est une nouvelle écriture (id == null)
-                // ou si elle ne correspond pas à l'écriture trouvée (id != idECRef),
-                // c'est qu'il y a déjà une autre écriture avec la même référence
+                
                 if (pEcritureComptable.getId() != null
                         &&pEcritureComptable.getId().equals(vECRef.getId())) {
                 	pEcritureComptable.equals(vECRef);
                 }
                 Assertions.assertTrue(pEcritureComptable.getId().equals(vECRef.getId()), "Echec du test du RG Compta 6 : La référence de l'écriture comptable n'est pas unique");
                 
-                System.out.println(pEcritureComptable.getId());	
-        		System.out.println(vECRef.getId());	
         }
         
         
@@ -77,14 +72,6 @@ public class ComptabiliteManagerImplIT {
     /*
     @Test
 	public void testInsertEcritureComptable() throws FunctionalException, ParseException, NotFoundException {
-    	
-    	
-    	System.out.println(context);
-		//System.out.println(comptabilite);
-		System.out.println(daoProxyImpl);
-		System.out.println(MYERP); 
-		System.out.println(comptabilite); 
-		
 	    	
     		DataSourceTransactionManager ptmMyERP = (DataSourceTransactionManager) context.getBean("txManager");
 	        DefaultTransactionDefinition vTDef = new DefaultTransactionDefinition();
@@ -93,16 +80,12 @@ public class ComptabiliteManagerImplIT {
 	        TransactionStatus vTS = ptmMyERP.getTransaction(vTDef);
 	    	
 	    	EcritureComptable ecritureTest = comptabilite.getEcritureComptable(-2);
-	    	System.out.println(ecritureTest);
-	    	//Integer newId = comptabilite.getListEcritureComptable().size()-4;
 	    	ecritureTest.setId(null);
 	    		
 	    	ComptabiliteManager comptabiliteManager =BusinessProxyImpl.getInstance(daoProxyImpl, TransactionManager.getInstance()).getComptabiliteManager();
-	    	//ComptabiliteManagerImpl comptabiliteManager = new ComptabiliteManagerImpl();
 	        comptabiliteManager.checkEcritureComptable(ecritureTest);
 	        
 	        
-
 	        Assertions.assertTrue(vTS.isNewTransaction(), "Echec du test de la méthode insertEcritureComptable : la transaction n'a pas été créée");
 	
 	        try {
@@ -116,7 +99,6 @@ public class ComptabiliteManagerImplIT {
 	        
 	        Assertions.assertTrue(vTS.isCompleted(), "Echec du test sur la méthode insertEcritureComptable : la transaction n'a pas été rolled-back");
 	    }
-
     */
     
 

@@ -16,34 +16,7 @@ import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.TechnicalException;
 
 @Configuration("/applicationContext.xml")
-//@ExtendWith(MockitoExtension.class)
 public class EcritureComptableTest {
-	
-	//@Mock
-	//LigneEcritureComptable ligne ;
-	
-	/**
-	 * Methode inutile - Il ne s'agit pas d'un test - Elle est la cause d'une erreur dans les autres tests this.createLigne
-	 * @param pCompteComptableNumero
-	 * @param pDebit
-	 * @param pCredit
-	 * @return
-	 
-    public LigneEcritureComptable createLigne(Integer pCompteComptableNumero, Double pDebit, Double pCredit) {
-		
-        BigDecimal vDebit = pDebit == null ? null : new BigDecimal(pDebit);
-        BigDecimal vCredit = pCredit == null ? null : new BigDecimal(pCredit);
-        String vLibelle = ObjectUtils.defaultIfNull(vDebit, BigDecimal.ZERO)
-                                     .subtract(ObjectUtils.defaultIfNull(vCredit, BigDecimal.ZERO)).toPlainString();
-        LigneEcritureComptable vRetour = new LigneEcritureComptable(new CompteComptable(pCompteComptableNumero),
-                                                                    vLibelle,
-                                                                    vDebit, vCredit);
-        return vRetour;
-    }
-	 * @throws FunctionalException 
-    */
-	
-	
 	
 	
 	
@@ -134,10 +107,8 @@ public class EcritureComptableTest {
         pEcriture.getListLigneEcriture().add(pEcriture.createLigne(2, 0.00, 301.00));
         pEcriture.getListLigneEcriture().add(pEcriture.createLigne(2, 40.00, 0.00));
         pEcriture.getListLigneEcriture().add(pEcriture.createLigne(2, 0.00, 7.00));
-        //Assert.assertTrue(vEcriture.toString(), vEcriture.isEquilibree());
         pEcriture.getTotalCredit();
         pEcriture.getTotalDebit();
-        //pEcriture.checkIsEquilibree(pEcriture);
         Assert.assertTrue("La première écriture Equilibrée n'est pas équilibrée", pEcriture.isEquilibree());
         pEcriture.getListLigneEcriture().clear();
     
@@ -147,10 +118,8 @@ public class EcritureComptableTest {
         pEcriture.getListLigneEcriture().add(pEcriture.createLigne(2, 0.00, 30.00));
         pEcriture.getListLigneEcriture().add(pEcriture.createLigne(2, 0.00, 2.00));
         pEcriture.getListLigneEcriture().add(pEcriture.createLigne(2, 1.00, 0.00));
-        //Assert.assertTrue(pEcriture.toString(), vEcriture.isEquilibree());
         pEcriture.getTotalCredit();
         pEcriture.getTotalDebit();
-        //pEcriture.checkIsEquilibree(pEcriture);
         Assert.assertFalse("La deuxième écriture Non Equilibrée n'est pas équilibrée", pEcriture.isEquilibree());
     }
 	

@@ -44,27 +44,10 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 
 
 @RunWith(SpringRunner.class)
-//@Configuration("/applicationContext.xml")
-//@SpringIntegrationTest()
-//@ContextConfiguration(locations={"/applicationContext.xml"})
-/*@ExtendWith(SpringContextResourceAdapter.class)
-@ContextConfiguration("/applicationContext.xml")
-@ActiveProfiles({"inttests"}) 
-@Transactional
-*/
 @Transactional
 @Rollback(true)
-public class ComptabiliteDaoImplIT /*extends AbstractTransactionalJUnit4SpringContextTests*/{
-	
-		//@Autowired
-		//ApplicationContext applicationContext;
-		
-		//@Autowired
-		//private DaoProxy daoProxy;
-		
-		//private ComptabiliteDaoImpl comptabiliteDao = (ComptabiliteDaoImpl) daoProxy.getComptabiliteDao();
-		//@Autowired
-		//private ComptabiliteDao comptabiliteDao;
+public class ComptabiliteDaoImplIT {
+
 	
 	
 	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml", "sqlContext.xml"});
@@ -73,94 +56,6 @@ public class ComptabiliteDaoImplIT /*extends AbstractTransactionalJUnit4SpringCo
 	DaoProxyImpl daoProxyImpl = (DaoProxyImpl) context.getBean("DaoProxy");
 	
 	
-	
-	
-	/*
-	
-
-	@Test
-	@Rollback
-	@Transactional
-	public void checkInsertEcritureComptable() throws ParseException, NotFoundException{
-		
-		
-		DataSourceTransactionManager txManager = (DataSourceTransactionManager) context.getBean("txManager");
-		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-	    TransactionStatus status = txManager.getTransaction(def);
-        
-		
-		//System.out.println(applicationContext);
-		//System.out.println(daoProxy);
-		//System.out.println(comptabiliteDao);
-		System.out.println(context);
-		//System.out.println(comptabilite);
-		System.out.println(daoProxyImpl);
-		System.out.println(MYERP); 
-		System.out.println(comptabilite); 
-		
-		JournalComptable vJournal = new JournalComptable();
-		vJournal.setCode("AC");
-		
-		
-		EcritureComptable ecriture = new EcritureComptable();
-		//ComptabiliteDaoImpl comptabiliteDao = new ComptabiliteDaoImpl();
-		
-		List<EcritureComptable> list = daoProxyImpl.getComptabiliteDao().getListEcritureComptable();
-		Integer id=	list.size();
-		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.FRANCE);
-        String sdateTest = "2020-02-01";
-		Date pDate = simpleDateFormat.parse(sdateTest);
-        
-		ecriture.setDate(pDate);
-		//ecriture.setId(id-4);
-		ecriture.setJournal(vJournal);
-		ecriture.setLibelle("Achats");
-		ecriture.setReference("AC-2020/00001");
-
-		
-			daoProxyImpl.getComptabiliteDao().insertEcritureComptable(ecriture);
-			
-			
-			
-			Integer idd = daoProxyImpl.getComptabiliteDao().getListEcritureComptable().size();
-			System.out.println(id);
-			System.out.println(idd);
-			
-			/*
-			EcritureComptable ecritureTest = daoProxyImpl.getComptabiliteDao().getEcritureComptable(id-4);
-			
-			
-			//Assertions.assertEquals(ecritureTest.getId(), ecriture.getId(), "Erreur d'enregistrement de l'ID de l'éciture comptable insérée");
-			Assertions.assertEquals(ecritureTest.getJournal().getCode(), ecriture.getJournal().getCode(), "Erreur d'enregistrement du code Journal de l'éciture comptable insérée");
-			Assertions.assertEquals(ecritureTest.getLibelle(), ecriture.getLibelle(), "Erreur d'enregistrement du libellé de l'éciture comptable insérée");
-			Assertions.assertEquals(ecritureTest.getReference(), ecriture.getReference(), "Erreur d'enregistrement de la référence de l'éciture comptable insérée");
-			Assertions.assertEquals(ecritureTest.getTotalCredit(), ecriture.getTotalCredit(), "Erreur d'enregistrement du total Crédit de l'éciture comptable insérée");
-			Assertions.assertEquals(ecritureTest.getTotalDebit(), ecriture.getTotalDebit(), "Erreur d'enregistrement du total Débit de l'éciture comptable insérée");
-			Assertions.assertEquals(ecritureTest.getListLigneEcriture().size(), ecriture.getListLigneEcriture().size(), "Erreur d'enregistrement du nombre de lignes de l'éciture comptable insérée");
-			Assertions.assertEquals(ecritureTest.getDate().toString(), simpleDateFormat.format(ecriture.getDate()), "Erreur d'enregistrement de la Date de l'éciture comptable insérée");
-		*/
-			/*
-			Assertions.assertEquals(1, idd-id, "Echec du test d'enregistrement d'une écriture comptable en base de données");
-
-		
-			txManager.rollback(status);
-			//txManager.commit(status);
-		
-	
-	
-	
-		
-		
-	}
-	
-	*/
-	
-	
-	
-	
-    
-   
 
 	@Test
 	@Rollback
@@ -172,32 +67,14 @@ public class ComptabiliteDaoImplIT /*extends AbstractTransactionalJUnit4SpringCo
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 	    TransactionStatus status = txManager.getTransaction(def);
 				
-				//System.out.println(applicationContext);
-				//System.out.println(daoProxy);
-				//System.out.println(comptabiliteDao);
-				System.out.println(context);
-				//System.out.println(comptabilite);
-				System.out.println(daoProxyImpl);
-				System.out.println(MYERP); 
-				System.out.println(comptabilite); 
-				System.out.println(txManager);	
-				System.out.println(def);	
-				System.out.println(status);	
-		
 		JournalComptable vJournal = new JournalComptable();
 		vJournal.setCode("AC");
 		
 		
 		EcritureComptable ecriture = new EcritureComptable();
-		//ComptabiliteDaoImpl comptabiliteDao = new ComptabiliteDaoImpl();
 		
-		/*
-		List<EcritureComptable> list = daoProxyImpl.getComptabiliteDao().getListEcritureComptable();
-		Integer id=	list.size();
-		*/
 		List<EcritureComptable> listEcritures = daoProxyImpl.getComptabiliteDao().getListEcritureComptable();
 				
-				//.getComptabiliteDao().getListEcritureComptable();
 		Integer id1=listEcritures.size();
 		
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.FRANCE);
@@ -205,13 +82,9 @@ public class ComptabiliteDaoImplIT /*extends AbstractTransactionalJUnit4SpringCo
 		Date pDate = simpleDateFormat.parse(sdateTest);
         
 		ecriture.setDate(pDate);
-		//ecriture.setId(id-4);
 		ecriture.setJournal(vJournal);
 		ecriture.setLibelle("Achats");
 		ecriture.setReference("AC-2020/00001");
-		
-		
-	    
 		
 		
         // ===== Ecriture Comptable
@@ -241,12 +114,7 @@ public class ComptabiliteDaoImplIT /*extends AbstractTransactionalJUnit4SpringCo
         // ===== Liste des lignes d'écriture
         daoProxyImpl.getComptabiliteDao().insertListLigneEcritureComptable(ecriture);
         
-        
-        //List<EcritureComptable> listEcritures = daoProxyImpl.getComptabiliteDao().getListEcritureComptable();
-		//Integer id1=listEcritures.size();
 		Integer id2 = daoProxyImpl.getComptabiliteDao().getListEcritureComptable().size();
-		System.out.println(id1);
-		System.out.println(id2);
 		
 		Assertions.assertEquals(1, id2-id1, "Echec du test d'enregistrement d'une écriture comptable en base de données");
         

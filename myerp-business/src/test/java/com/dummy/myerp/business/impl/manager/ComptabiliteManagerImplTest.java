@@ -42,27 +42,9 @@ import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import junit.framework.AssertionFailedError;
 
 @Configuration("/applicationContext.xml")
-//@ExtendWith(MockitoExtension.class)
 public class ComptabiliteManagerImplTest {
 	
-	/* ------------------------------------MOCKITO EN SUSPENS 
-	@Mock
-	EcritureComptable ecriture;
-	
-	@Mock
-	LigneEcritureComptable ligneEcriture;
-	
-	ComptabiliteManager comptaManager;
-	
-	@BeforeEach
-	public void init() {
-	comptaManager = new ComptabiliteManagerImpl();
-	}
-    ----------------------------------------------------------*/
-	
-	
-	
-	
+
 	private ComptabiliteManagerImpl manager = new ComptabiliteManagerImpl();
 	
 	  
@@ -102,10 +84,7 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 123.00, 0.00));	
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 0.00, 125.00));
         vEcritureComptable.setId(-1);
-        
-        
-        
-        
+     
         Assertions.assertThrows(FunctionalException.class, () -> {
         	manager.checkEcritureComptableUnit(vEcritureComptable);
           });
@@ -190,36 +169,7 @@ public class ComptabiliteManagerImplTest {
         Assertions.assertThrows(FunctionalException.class, () -> {
         	manager.checkEcritureComptableUnit(vEcritureComptable);
           });	
-		    
-			
-        
-        //test pour commit sur webhook Jenkins
-   	
-    	//GIVEN
-    	/*
-    	LigneEcritureComptable ligne1 = ecriture.createLigne(1, 1234.00, 0.00);
-    	LigneEcritureComptable ligne2 = ecriture.createLigne(2, 0.00, 1233.00);
-    	ecriture.getListLigneEcriture().add(ligne1);
-    	ecriture.getListLigneEcriture().add(ligne2);
-    	when(ecriture.isEquilibree()).thenThrow(new FunctionalException("L'écriture n'est pas équilibrée"));
-    	*/
-    	/**
-    	doThrow(new FunctionalException("L'écriture n'est pas équilibrée")).when(ecriture.getListLigneEcriture()).add(ecriture.createLigne(1, 1234.00, 0.00)); 
-    	ecriture.getListLigneEcriture().add(ecriture.createLigne(2, 0.00, 1233.00));
-    	
-    	
-    	//WHEN
-    	comptaManager.checkEcritureComptableUnit(ecriture);
-    	LigneEcritureComptable ligne1 = ecriture.createLigne(1, 1234.00, 0.00);
-    	LigneEcritureComptable ligne2 = ecriture.createLigne(2, 0.00, 1233.00);
-    	ecriture.getListLigneEcriture().add(ligne1);
-    	ecriture.getListLigneEcriture().add(ligne2);
-    	
-    	
-    	//THEN
-    	verify(ecriture).checkIsEquilibree(ecriture);
-    	doThrow(new FunctionalException("L'écriture n'est pas équilibrée"));
-    	**/
+		   
                 
     }
     
@@ -247,9 +197,7 @@ public class ComptabiliteManagerImplTest {
         // 2 lignes mais les 2 sont au débit
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 1234.00, 0.00));	
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 1234.00,0.00));
-        
        
-        
         Assertions.assertThrows(FunctionalException.class, () -> {
         	manager.checkEcritureComptableUnit(vEcritureComptable);
           });
@@ -311,7 +259,7 @@ public class ComptabiliteManagerImplTest {
         
         vEcritureComptable.setLibelle("Libelle");
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 1234.00, 0.00));	
-        vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 0.00, 1234.00));
+        vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 1233.00, 0.00));
         
         Assertions.assertThrows(FunctionalException.class, () -> {
         	manager.checkEcritureComptableUnit(vEcritureComptable);
@@ -375,106 +323,5 @@ public class ComptabiliteManagerImplTest {
         
     }
     
-    	
-    
-    
-    
-    
-    
-    //------------------------------------------RESTE A TESTER
-    
-   
-    //=======================================GETTERS ET SETTERS
-    /*
-    @Test
-    public void getListCompteComptable() {
-    	
-    	
-    }
-
-    @Test
-    public  void getListJournalComptable() {
-    	List<JournalComptable> list;
-    }
-
-    @Test
-    public void getListEcritureComptable() {
-    	List<EcritureComptable> list;
-    }
-	
-	*/
-	
-	
-	
-	//======================================Tests d'intégration liés au module consumer
-	//======================================Problèmes de connexion à la base de données
-	
-	/*
-	@Test
-	public void testCheckEcritureComptableContext() {
-	EcritureComptable vEcritureComptable = new EcritureComptable();
-	
-	vEcritureComptable.setReference("vReference");
-	vEcritureComptable.setId(20);
-	
-	try {
-		manager.checkEcritureComptableContext(vEcritureComptable);
-	} catch (FunctionalException e) {
-		Assert.assertTrue(e.getCause().getMessage(), e.getCause().getClass().equals(FunctionalException.class));
-	}
-	}
-	
-	
-	
-	@Test
-	public void testCheckEcritureComptable() throws ParseException {
-		
-	
-		EcritureComptable vEcritureComptable = new EcritureComptable();
-        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.FRANCE);
-        String sdateTest = "2020/02/01";
-        Date dateTest = simpleDateFormat.parse(sdateTest);
-        vEcritureComptable.setDate(dateTest);
-        vEcritureComptable.setReference("AC-2020/00001");
-        vEcritureComptable.setLibelle("Libelle");
-        vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 123.00, 0.00));	
-        vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 0.00, 123.00));
-    	vEcritureComptable.setReference("vReference");
-    	vEcritureComptable.setId(20);
-    	
-    	
-        
-    	try {
-    		manager.checkEcritureComptable(vEcritureComptable);
-    	} catch (FunctionalException e) {
-    		Assert.assertTrue(e.getCause().getMessage(), e.getCause().getClass().equals(FunctionalException.class));
-    	}
-    	
   
-	}
-	
-	@Test
-	public void addReference() {
-		EcritureComptable pEcritureComptable; 
-	}
-	
-
-    @Test
-    public void insertEcritureComptable() throws FunctionalException {
-    	EcritureComptable pEcritureComptable;
-    }
-    
-
-    @Test
-    public void updateEcritureComptable() throws FunctionalException {
-    	EcritureComptable pEcritureComptable;
-    }
-
-    @Test
-    public void deleteEcritureComptable() {
-    	Integer pId; 
-    }
-    
-*/
 }
