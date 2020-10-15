@@ -31,14 +31,14 @@ stages{
 	            }
 	       }
 	       
-	       stage("Tests unitaires")	{
+	       stage("Tests unitaires JUNIT")	{
 	            steps	{
 	            bat "mvn test -P unittests"
 	            }     
 	        }
 	        
 	        
-	        stage("Tests d'int�gration")	{
+	        stage("Tests d'intégration FAILSAFE")	{
 	            steps	{
 	            bat "mvn integration-test -P inttests"
 	            }     
