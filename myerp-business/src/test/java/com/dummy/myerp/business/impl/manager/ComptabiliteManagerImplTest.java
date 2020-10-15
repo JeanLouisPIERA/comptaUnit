@@ -210,13 +210,16 @@ public class ComptabiliteManagerImplTest {
                                                                     BigDecimal.ZERO)) != 0) {
                 vNbrDebit++;
             }}
-            Assertions.assertTrue(vNbrCredit+vNbrDebit>=2, "L'écriture comptable doit avoir au moins deux lignes");
-            Assertions.assertTrue(vNbrCredit>=1, "L'écriture comptable doit avoir au moins une ligne au crédit");
-            Assertions.assertTrue(vNbrDebit>=1, "L'écriture comptable doit avoir au moins une ligne au débit");
-       
-        Assertions.assertThrows(FunctionalException.class, () -> {
-        	manager.checkEcritureComptableUnit(vEcritureComptable);
-          });
+        
+        if (vEcritureComptable.getListLigneEcriture().size() < 2
+                || vNbrCredit < 1
+                || vNbrDebit < 1) {
+                
+            Assertions.assertTrue(vNbrCredit+vNbrDebit<2, "L'écriture comptable doit avoir au moins deux lignes");
+            Assertions.assertTrue(vNbrCredit<1, "L'écriture comptable doit avoir au moins une ligne au crédit");
+            Assertions.assertTrue(vNbrDebit<1, "L'écriture comptable doit avoir au moins une ligne au débit");
+        }
+        
         
        
     }
