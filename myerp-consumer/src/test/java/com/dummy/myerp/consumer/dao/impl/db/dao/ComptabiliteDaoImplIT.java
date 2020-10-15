@@ -57,14 +57,14 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 public class ComptabiliteDaoImplIT /*extends AbstractTransactionalJUnit4SpringContextTests*/{
 	
 	//@Autowired
-	//ApplicationContext applicationContext;
-	
-	//@Autowired
-	//private DaoProxy daoProxy;
-	
-	//private ComptabiliteDaoImpl comptabiliteDao = (ComptabiliteDaoImpl) daoProxy.getComptabiliteDao();
-	//@Autowired
-	//private ComptabiliteDao comptabiliteDao;
+		//ApplicationContext applicationContext;
+		
+		//@Autowired
+		//private DaoProxy daoProxy;
+		
+		//private ComptabiliteDaoImpl comptabiliteDao = (ComptabiliteDaoImpl) daoProxy.getComptabiliteDao();
+		//@Autowired
+		//private ComptabiliteDao comptabiliteDao;
 	
 	
 	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml", "sqlContext.xml"});
