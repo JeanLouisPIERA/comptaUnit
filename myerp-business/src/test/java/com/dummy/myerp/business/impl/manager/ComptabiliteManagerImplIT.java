@@ -52,8 +52,9 @@ public class ComptabiliteManagerImplIT {
         Integer max = comptabilite.getListEcritureComptable().size();
         Random random = new Random();
         Integer nb = random.nextInt(max)-6;
+        Integer idTest = max - nb;
         
-        EcritureComptable pEcritureComptable = daoProxyImpl.getComptabiliteDao().getEcritureComptable(nb);
+        EcritureComptable pEcritureComptable = daoProxyImpl.getComptabiliteDao().getEcritureComptable(idTest);
   	
         // ===== RG_Compta_6 : La référence d'une écriture comptable doit être unique
         if (StringUtils.isNoneEmpty(pEcritureComptable.getReference())) {

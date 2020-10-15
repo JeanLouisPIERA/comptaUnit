@@ -177,12 +177,7 @@ stages{
 		        }
 	
 	    }
-	    post {
-	    	always {
-	    		cleanWs()
-	    		}
 	    
-	    }
 	        
 	       
 	 } 
