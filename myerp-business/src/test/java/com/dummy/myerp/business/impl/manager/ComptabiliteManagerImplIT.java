@@ -48,13 +48,8 @@ public class ComptabiliteManagerImplIT {
 	@Rollback
 	@Transactional
     public void checkEcritureComptableContext() throws NotFoundException  {
-    	
-        Integer max = comptabilite.getListEcritureComptable().size();
-        Random random = new Random();
-        Integer nb = random.nextInt(max)-6;
-        Integer idTest = max - nb;
-        
-        EcritureComptable pEcritureComptable = daoProxyImpl.getComptabiliteDao().getEcritureComptable(idTest);
+    	  
+        EcritureComptable pEcritureComptable = daoProxyImpl.getComptabiliteDao().getEcritureComptable(-2);
   	
         // ===== RG_Compta_6 : La référence d'une écriture comptable doit être unique
         if (StringUtils.isNoneEmpty(pEcritureComptable.getReference())) {
