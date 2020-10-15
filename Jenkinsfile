@@ -88,7 +88,6 @@ stages{
 				
 				publishHTML	(target:	[
 							allowMissing: false,
-							allowScripts: true,
 						    alwaysLinkToLastBuild: true,
 					        keepAll: true,
 					        reportDir: 'myerp-business/target/site/jacoco-integration-test-coverage-report',
@@ -98,7 +97,6 @@ stages{
 							
 				publishHTML	(target:	[
 							allowMissing: false,
-							allowScripts: true,
 						    alwaysLinkToLastBuild: true,
 					        keepAll: true,
 					        reportDir: 'myerp-consumer/target/site/jacoco-integration-test-coverage-report',
@@ -108,7 +106,6 @@ stages{
 							
 				publishHTML	(target:	[
 							allowMissing: false,
-							allowScripts: true,
 						    alwaysLinkToLastBuild: true,
 					        keepAll: true,
 					        reportDir: 'myerp-model/target/site/jacoco-integration-test-coverage-report',
@@ -118,7 +115,6 @@ stages{
 							
 				publishHTML	(target:	[
 							allowMissing: false,
-							allowScripts: true,
 						    alwaysLinkToLastBuild: true,
 					        keepAll: true,
 					        reportDir: 'myerp-technical/target/site/jacoco-integration-test-coverage-report',
