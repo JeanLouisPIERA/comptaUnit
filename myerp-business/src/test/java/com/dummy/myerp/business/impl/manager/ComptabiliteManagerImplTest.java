@@ -2,6 +2,7 @@ package com.dummy.myerp.business.impl.manager;
 
 
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,7 +12,7 @@ import java.util.Locale;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +26,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.TransactionManager;
@@ -196,7 +198,21 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.setLibelle("Libelle");
         // 2 lignes mais les 2 sont au débit
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 1234.00, 0.00));	
-        vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 1234.00,0.00));
+        vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 0.00,1234.00));
+        int vNbrCredit = 0;
+        int vNbrDebit = 0;
+        for (LigneEcritureComptable vLigneEcritureComptable : vEcritureComptable.getListLigneEcriture()) {
+            if (BigDecimal.ZERO.compareTo(ObjectUtils.defaultIfNull(vLigneEcritureComptable.getCredit(),
+                                                                    BigDecimal.ZERO)) != 0) {
+                vNbrCredit++;
+            }
+            if (BigDecimal.ZERO.compareTo(ObjectUtils.defaultIfNull(vLigneEcritureComptable.getDebit(),
+                                                                    BigDecimal.ZERO)) != 0) {
+                vNbrDebit++;
+            }}
+            Assertions.assertTrue(vNbrCredit+vNbrDebit>=2, "L'écriture comptable doit avoir au moins deux lignes");
+            Assertions.assertTrue(vNbrCredit>=1, "L'écriture comptable doit avoir au moins une ligne au crédit");
+            Assertions.assertTrue(vNbrDebit>=1, "L'écriture comptable doit avoir au moins une ligne au débit");
        
         Assertions.assertThrows(FunctionalException.class, () -> {
         	manager.checkEcritureComptableUnit(vEcritureComptable);

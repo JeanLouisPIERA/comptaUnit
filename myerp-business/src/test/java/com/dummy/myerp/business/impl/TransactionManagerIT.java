@@ -16,6 +16,8 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
+
 
 @RunWith(SpringRunner.class)
 @Transactional
@@ -39,6 +41,7 @@ public class TransactionManagerIT {
 
         TransactionStatus status = ptmMyERP.getTransaction(vTDef);
         
+        
         Assertions.assertTrue(status.isNewTransaction()==true, "Echec du test la méthode beginTransactionMyERP : la transaction n'a pas été créée");
     }
 	
@@ -53,6 +56,7 @@ public class TransactionManagerIT {
         if (status != null) {
             ptmMyERP.commit(status);
         }
+        
         
         Assertions.assertTrue(status.isCompleted()==true, "Echec du test sur la méthode commitMyERP : la transaction n'a pas été committée");
     }
@@ -69,6 +73,7 @@ public class TransactionManagerIT {
            
             ptmMyERP.rollback(status);
         }
+        
         
         Assertions.assertTrue(status.isCompleted()==true, "Echec du test sur la méthode rollbackMyERP : la transaction n'a pas été rolled-back");
     }

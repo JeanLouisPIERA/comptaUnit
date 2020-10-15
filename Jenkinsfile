@@ -38,7 +38,7 @@ stages{
 	        }
 	        
 	        
-	        stage("Tests d'intégration FAILSAFE")	{
+	        stage("Tests d'integration FAILSAFE")	{
 	            steps	{
 	            bat "mvn integration-test -P inttests"
 	            }     
