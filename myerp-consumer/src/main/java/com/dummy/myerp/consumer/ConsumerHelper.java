@@ -1,11 +1,14 @@
 package com.dummy.myerp.consumer;
 
+import org.springframework.stereotype.Component;
+
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 
 
 /**
  * Classe d'aide pour les classes du module consumer
  */
+@Component
 public abstract class ConsumerHelper {
 
     /** Le DaoProxy à utiliser pour accéder aux autres classes de DAO */

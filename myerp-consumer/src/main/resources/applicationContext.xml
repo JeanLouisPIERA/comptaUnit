@@ -28,7 +28,7 @@
 	 
 
     <!-- ConsumerHelper -->
-    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <bean id="ConsumerHelper" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
         <property name="targetClass" value="com.dummy.myerp.consumer.ConsumerHelper"/>
         <property name="targetMethod" value="configure"/>
         <property name="arguments">
@@ -37,6 +37,13 @@
             </list>
         </property>
     </bean>
+    
+    
+    <!-- bean id="daoProxy" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetClass" value="com.dummy.myerp.consumer.dao.contrat.DaoProxy"/>
+    </bean-->
+    
+    
 
 	<!-- DaoProxy -->
     <bean id="DaoProxy" class="com.dummy.myerp.consumer.dao.impl.DaoProxyImpl" factory-method="getInstance">
@@ -50,7 +57,7 @@
         <constructor-arg value="javax.sql.DataSource"/>
     </bean-->
     
-    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <bean id="txManagerMYERP" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     	<property name="dataSource" ref="dataSourceMYERP" />
     	
 	</bean>

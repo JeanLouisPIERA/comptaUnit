@@ -17,6 +17,7 @@ import org.springframework.transaction.TransactionStatus;
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
 import com.dummy.myerp.business.impl.TransactionManager;
+import com.dummy.myerp.consumer.dao.impl.DaoProxyImpl;
 import com.dummy.myerp.consumer.db.DataSourcesEnum;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
@@ -39,6 +40,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * Instantiates a new Comptabilite manager.
      */
     public ComptabiliteManagerImpl() {
+    	
     }
 
 
@@ -61,6 +63,8 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     public List<EcritureComptable> getListEcritureComptable() {
         return getDaoProxy().getComptabiliteDao().getListEcritureComptable();
     }
+    
+    
     
     //=================================================================================================
 
@@ -297,9 +301,10 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     @Override
     public void insertEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException {
         this.checkEcritureComptable(pEcritureComptable);
-        //TransactionStatus vTS = getTransactionManager().beginTransactionMyERP();------> Correction
-        TransactionManager transactionManager = TransactionManager.getInstance();
-        TransactionStatus vTS = transactionManager.beginTransactionMyERP();
+        TransactionStatus vTS = getTransactionManager().beginTransactionMyERP();
+        //------> Correction
+        //TransactionManager transactionManager = TransactionManager.getInstance();
+        //TransactionStatus vTS = transactionManager.beginTransactionMyERP();
         try {
             getDaoProxy().getComptabiliteDao().insertEcritureComptable(pEcritureComptable);
             getTransactionManager().commitMyERP(vTS);

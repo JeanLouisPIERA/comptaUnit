@@ -1,15 +1,22 @@
 package com.dummy.myerp.business.impl;
 
+import javax.inject.Named;
+
+import org.springframework.stereotype.Component;
+
 import com.dummy.myerp.business.contrat.BusinessProxy;
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
+import com.dummy.myerp.consumer.dao.impl.DaoProxyImpl;
 import com.dummy.myerp.business.impl.TransactionManager;
 
 
 /**
  * <p>Implémentation du Proxy d'accès à la couche Business.</p>
  */
+@Named
+@Component
 public class BusinessProxyImpl implements BusinessProxy {
 
     // ==================== Attributs Static ====================

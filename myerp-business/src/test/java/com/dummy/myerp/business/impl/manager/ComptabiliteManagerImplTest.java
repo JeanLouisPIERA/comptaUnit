@@ -280,9 +280,17 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 1234.00, 0.00));	
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 1233.00, 0.00));
         
-        Assertions.assertThrows(FunctionalException.class, () -> {
-        	manager.checkEcritureComptableUnit(vEcritureComptable);
-          });
+        if(vEcritureComptable.getReference().contains(journalCode)==false) {
+            Assertions.assertTrue(vEcritureComptable.getReference().contains(journalCode)==false, 
+            		"Le code journal dans la référence ne correspond pas au journal où se trouve l'écriture");
+        	}
+        if(vEcritureComptable.getReference().contains(annee)==false) {
+            Assertions.assertTrue(vEcritureComptable.getReference().contains(annee)==false, 
+            		"L'année dans la référence ne correspond pas à la date de l'écriture\" + annee");
+        	}
+           
+        
+        
         
         
     }

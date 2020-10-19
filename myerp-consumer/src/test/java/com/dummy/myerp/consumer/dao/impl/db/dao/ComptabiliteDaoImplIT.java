@@ -63,7 +63,7 @@ public class ComptabiliteDaoImplIT {
 	public void testInsertEcritureComptable() throws ParseException {
 		
 		
-		DataSourceTransactionManager txManager = (DataSourceTransactionManager) context.getBean("txManager");
+		DataSourceTransactionManager txManager = (DataSourceTransactionManager) context.getBean("txManagerMYERP");
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 	    TransactionStatus status = txManager.getTransaction(def);
 				
@@ -150,7 +150,7 @@ public class ComptabiliteDaoImplIT {
 	@Transactional
 	public void testUpdateEcritureComptable() throws NotFoundException, ParseException {
 		
-		DataSourceTransactionManager txManager = (DataSourceTransactionManager) context.getBean("txManager");
+		DataSourceTransactionManager txManager = (DataSourceTransactionManager) context.getBean("txManagerMYERP");
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 	    TransactionStatus status = txManager.getTransaction(def);
 	    

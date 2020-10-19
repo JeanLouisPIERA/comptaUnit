@@ -11,10 +11,12 @@
           class="com.dummy.myerp.business.impl.BusinessProxyImpl"
           scope="singleton"
           factory-method="getInstance">
-        <constructor-arg ref="DaoProxy"/>
+        <constructor-arg> <ref bean="DaoProxy"/> </constructor-arg>
         <constructor-arg ref="TransactionManager"/>
     </bean>
 
+	
+	
 
     <!-- ========== Transaction Managers ========== -->
     <import resource="transactionContext.xml"/>

@@ -4,14 +4,6 @@ pipeline {
 	        label 'master'
     		}
 	    
-	    
-	    environment {
-		   POSTGRES_URL="postgresql://127.0.0.1:9032:5432/" 
-		   POSTGRES_DB="db_myerp"
-	       POSTGRES_USER="usr_myerp"
-	       POSTGRES_PASSWORD="myerp"
-		   }
-	
 	
 		triggers {
         	pollSCM('0-59/1 * * * *')
@@ -25,11 +17,6 @@ stages{
 	            }
 	        }
 	        	
-	       stage("Compilation du code des tests  ") {
-	            steps	{
-	            bat "mvn test-compile  "
-	            }
-	       }
 	       
 	       stage("Tests unitaires JUNIT")	{
 	            steps	{

@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
+import com.dummy.myerp.consumer.dao.impl.DaoProxyImpl;
 
 
 @RunWith(SpringRunner.class)
@@ -26,9 +27,12 @@ public class TransactionManagerIT {
 	
 
 
-	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml", "sqlContext.xml"});
+	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml", "transactionContext.xml"});
 	DataSource MYERP = (DataSource) context.getBean("dataSourceMYERP");
-	DataSourceTransactionManager ptmMyERP = (DataSourceTransactionManager) context.getBean("txManager");
+	//DataSourceTransactionManager ptmMyERP = (DataSourceTransactionManager) context.getBean("txManager");
+	TransactionManager txManagerMYERP = (TransactionManager) context.getBean("txManagerMYERP");
+	DataSourceTransactionManager ptmMyERP = (DataSourceTransactionManager) context.getBean("TransactionManager");
+	
 	
 	
 	

@@ -43,8 +43,8 @@ public class EcritureComptable {
 
     /** La liste des lignes d'écriture comptable. */
     @Valid
-    @Size(min = 2)
-    private final List<LigneEcritureComptable> listLigneEcriture = new ArrayList<>();
+    @Size(min = 1)
+    private List<LigneEcritureComptable> listLigneEcriture = new ArrayList<>();
     
     
     // ==================== Constructeur ====================
@@ -83,6 +83,9 @@ public class EcritureComptable {
     }
     public void setLibelle(String pLibelle) {
         libelle = pLibelle;
+    }
+    public void setListLigneEcriture(List<LigneEcritureComptable> pListLigneEcriture) {
+         listLigneEcriture = pListLigneEcriture;
     }
     public List<LigneEcritureComptable> getListLigneEcriture() {
         return listLigneEcriture;
