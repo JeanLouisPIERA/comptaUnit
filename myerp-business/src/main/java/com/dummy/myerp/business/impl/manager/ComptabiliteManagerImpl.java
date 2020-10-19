@@ -70,10 +70,11 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
     /**
      * {@inheritDoc}
+     * @throws FunctionalException 
      */
     // DONE 1 à tester
     @Override
-    public synchronized void addReference(EcritureComptable pEcritureComptable) {
+    public synchronized void addReference(EcritureComptable pEcritureComptable) throws FunctionalException {
         // DONE 1 à implémenter
         // Bien se réferer à la JavaDoc de cette méthode !
         /* Le principe :
