@@ -111,44 +111,20 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 	 */
     //======== DONE 1
     @Override
-    public void createAndCheckReferenceEcritureComptableRG5(EcritureComptable pEcritureComptable) {
-    	//Récupère la partie XX de la référrence
+    public void createAndCheckReferenceEcritureComptableRG5(EcritureComptable pEcritureComptable) throws FunctionalException {
     	String journalCode = pEcritureComptable.getJournal().getCode(); 
-    	
-    	//Recupère la partie AAAA de la référence
-    	Calendar calendar = new GregorianCalendar();
+        
+        Calendar calendar = new GregorianCalendar();
     	calendar.setTime(pEcritureComptable.getDate());
-    	Integer annee = calendar.get(Calendar.YEAR);
-    	
-    	//Récupère la dernière valeur utilisée d'une séquence dans le journal comptable 
-    	JournalComptable journal = pEcritureComptable.getJournal();
-    	String sequence = ""; 
-    	Integer vId;
-		try {
-			vId = getDaoProxy().getComptabiliteDao().queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum.MYERP, "myerp.ecriture_comptable", journal,
-			        Integer.class);
-		} catch (Exception e) {
-			vId = null;
-		}
-    	
-    	//Calcul et formatage de la part ##### de la référence
-    	DecimalFormat df = new DecimalFormat("00000");
-    			if (vId == null) {sequence = df.format(1) ;} 
-    			else {sequence = df.format(vId + 1);}
-    	
-    	//Constuction du String reference au format xx-AAAA/#####
-        StringBuilder vStB = new StringBuilder();
-        String vSEP1 = "-"; 
-        String vSEP2 = "/";
-        vStB.append(journalCode)
-        	.append(vSEP1)
-            .append(annee)
-            .append(vSEP2).append(sequence);
-        String reference = vStB.toString();
-            
-		//Mise à jour de la référence de l'écriture avec la référence calculée (RG_Compta_5)
-        pEcritureComptable.setReference(reference);
-    	
+    	Integer year = calendar.get(Calendar.YEAR);
+    	StringBuilder vStB = new StringBuilder();
+    	vStB.append(year);
+    	String annee = vStB.toString();
+  	
+        if(pEcritureComptable.getReference().contains(journalCode)==false)
+        	throw new FunctionalException("Le code journal dans la référence ne correspond pas au journal où se trouve l'écriture");
+        if(pEcritureComptable.getReference().contains(annee)==false)
+        	throw new FunctionalException("L'année dans la référence ne correspond pas à la date de l'écriture" + annee);
     }
     
     //=====================================================================================================
@@ -219,19 +195,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         // DONE 2 ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
         
-        String journalCode = pEcritureComptable.getJournal().getCode(); 
-        
-        Calendar calendar = new GregorianCalendar();
-    	calendar.setTime(pEcritureComptable.getDate());
-    	Integer year = calendar.get(Calendar.YEAR);
-    	StringBuilder vStB = new StringBuilder();
-    	vStB.append(year);
-    	String annee = vStB.toString();
-  	
-        if(pEcritureComptable.getReference().contains(journalCode)==false)
-        	throw new FunctionalException("Le code journal dans la référence ne correspond pas au journal où se trouve l'écriture");
-        if(pEcritureComptable.getReference().contains(annee)==false)
-        	throw new FunctionalException("L'année dans la référence ne correspond pas à la date de l'écriture" + annee);
+        this.createAndCheckReferenceEcritureComptableRG5(pEcritureComptable);
         
     }
     

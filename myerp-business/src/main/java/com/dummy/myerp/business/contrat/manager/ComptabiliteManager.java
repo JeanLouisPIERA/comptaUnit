@@ -69,7 +69,7 @@ public interface ComptabiliteManager {
 	 * Attention : l'écriture n'est pas enregistrée en persistance
 	 */
     //======== DONE 1
-    void createAndCheckReferenceEcritureComptableRG5(EcritureComptable pEcritureComptable);
+    void createAndCheckReferenceEcritureComptableRG5(EcritureComptable pEcritureComptable) throws FunctionalException;
     
     
     /**
