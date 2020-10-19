@@ -186,7 +186,7 @@ public class ComptabiliteManagerImplTest {
     @Test
     //(expected=AssertionError.class)
     //(expected = FunctionalException.class)
-    public void testCheckEcritureComptableUnitRG3() throws FunctionalException, ParseException  {
+    public void testCheckEcritureComptableUnitRG3() throws ParseException  {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -236,7 +236,7 @@ public class ComptabiliteManagerImplTest {
      */
     @Test
     //(expected = FunctionalException.class)
-    public void testCheckEcritureComptableUnitRG5() throws FunctionalException, ParseException  {
+    public void testCheckEcritureComptableUnitRG5() throws ParseException  {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         
@@ -308,7 +308,7 @@ public class ComptabiliteManagerImplTest {
      */
     @Test
     //(expected = FunctionalException.class)
-    public void testCheckSoldeCompteComptableRG1() throws FunctionalException  {
+    public void testCheckSoldeCompteComptableRG1()  {
     	EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         CompteComptable cc1 = new CompteComptable();
@@ -336,7 +336,7 @@ public class ComptabiliteManagerImplTest {
      * @throws ParseException
      */
     @Test
-    public void testCreateAndCheckReferenceEcritureComptableRG5() throws FunctionalException, ParseException {
+    public void testCreateAndCheckReferenceEcritureComptableRG5() throws ParseException {
     	EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -344,6 +344,7 @@ public class ComptabiliteManagerImplTest {
         String sdateTest = "2020/02/01";
         Date dateTest = simpleDateFormat.parse(sdateTest);
         vEcritureComptable.setDate(dateTest);
+        vEcritureComptable.setReference("AC-2020/00001");
         //manager.createAndCheckReferenceEcritureComptableRG5(vEcritureComptable);
         
         //if (!vEcritureComptable.getReference().equals("AC-2020/00001")) throw new FunctionalException("La référence" + vEcritureComptable.getReference() + "n'est pas correcte");
