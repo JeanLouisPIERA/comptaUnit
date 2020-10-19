@@ -344,10 +344,13 @@ public class ComptabiliteManagerImplTest {
         String sdateTest = "2020/02/01";
         Date dateTest = simpleDateFormat.parse(sdateTest);
         vEcritureComptable.setDate(dateTest);
-        manager.createAndCheckReferenceEcritureComptableRG5(vEcritureComptable);
+        //manager.createAndCheckReferenceEcritureComptableRG5(vEcritureComptable);
         
-        if (!vEcritureComptable.getReference().equals("AC-2020/00001")) throw new FunctionalException("La référence" + vEcritureComptable.getReference() + "n'est pas correcte");
+        //if (!vEcritureComptable.getReference().equals("AC-2020/00001")) throw new FunctionalException("La référence" + vEcritureComptable.getReference() + "n'est pas correcte");
         
+        Assertions.assertThrows(FunctionalException.class, () -> {
+        	manager.createAndCheckReferenceEcritureComptableRG5(vEcritureComptable);
+          });
     }
     
   
