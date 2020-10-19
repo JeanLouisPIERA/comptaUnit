@@ -17,22 +17,29 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
+import com.dummy.myerp.consumer.ConsumerHelper;
+import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 import com.dummy.myerp.consumer.dao.impl.DaoProxyImpl;
 
 
-@RunWith(SpringRunner.class)
-@Transactional
-@Rollback(true)
+
 public class TransactionManagerIT {
 	
+	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"classpath*:applicationContext.xml", "transactionContext.xml", "transactionContext.xml"} );
+	DataSource MYERP = (DataSource) context.getBean("dataSourceMYERP");
+	DataSourceTransactionManager ptmMyERP = (DataSourceTransactionManager) context.getBean("txManagerMYERP");
+	TransactionManager pTransactionManager = (TransactionManager) context.getBean("TransactionManager");
+	DaoProxyImpl DaoProxyImpl = (DaoProxyImpl) context.getBean("DaoProxy");
+	ConsumerHelper consumerHelper = (ConsumerHelper) context.getBean("ConsumerHelper");
+	DaoProxy daoProxy = ConsumerHelper.getDaoProxy();
 
-
-	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml", "transactionContext.xml"});
+	/*
+	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"classpath*:applicationContext.xml", "transactionContext.xml"});
 	DataSource MYERP = (DataSource) context.getBean("dataSourceMYERP");
 	//DataSourceTransactionManager ptmMyERP = (DataSourceTransactionManager) context.getBean("txManager");
 	TransactionManager txManagerMYERP = (TransactionManager) context.getBean("txManagerMYERP");
 	DataSourceTransactionManager ptmMyERP = (DataSourceTransactionManager) context.getBean("TransactionManager");
-	
+	*/
 	
 	
 	
