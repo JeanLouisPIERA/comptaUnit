@@ -37,6 +37,7 @@ public class ComptabiliteManagerImplUT {
                                                                                  new BigDecimal(123)));
      */
 	
+	
 	private ComptabiliteManagerImpl manager = new ComptabiliteManagerImpl();
 	
 	/**
@@ -216,13 +217,6 @@ public class ComptabiliteManagerImplUT {
             Assertions.assertTrue(vEcritureComptable.getReference().contains(year), 
             		"Le code journal dans la référence ne correspond pas au journal où se trouve l'écriture");
             
-        	
-        if(vEcritureComptable.getReference().contains(annee)==false) {
-            Assertions.assertTrue(vEcritureComptable.getReference().contains(annee)==false, 
-            		"L'année dans la référence ne correspond pas à la date de l'écriture\" + annee");
-        	}
-           
-        
     }
 
 }
