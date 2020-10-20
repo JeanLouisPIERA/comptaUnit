@@ -167,7 +167,7 @@ stages{
 	     
 	     post{
 		    always{
-			    cleanWs
+			    cleanWs()
 			    }
 	    }      
 	 } 
