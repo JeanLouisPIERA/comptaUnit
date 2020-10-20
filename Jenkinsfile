@@ -165,6 +165,10 @@ stages{
 	
 	    }
 	    
-	        
+	    post{
+		    always{
+			    cleanWs
+			    }
+	    }    
 	       
 	 } 

@@ -55,6 +55,21 @@ public class ComptabiliteManagerImplIT {
 	DaoProxyImpl DaoProxyImpl = (DaoProxyImpl) context.getBean("DaoProxy");
 	ConsumerHelper consumerHelper = (ConsumerHelper) context.getBean("ConsumerHelper");
 	DaoProxy daoProxy = ConsumerHelper.getDaoProxy();
+	
+	@Test
+	public void testGettters() {
+		
+		DaoProxy daoProxy = ConsumerHelper.getDaoProxy();
+	   	
+	   	BusinessProxyImpl businessProxyImpl = BusinessProxyImpl.getInstance(daoProxy, pTransactionManager);
+	   	ComptabiliteManagerImpl comptaManager = (ComptabiliteManagerImpl) businessProxyImpl.getComptabiliteManager();
+		
+	   Assert.assertFalse(comptaManager.getListCompteComptable().isEmpty());
+	   Assert.assertFalse(comptaManager.getListJournalComptable().isEmpty());	
+	   Assert.assertFalse(comptaManager.getListEcritureComptable().isEmpty());
+	   
+	  
+	}
 	    
    @Test
     public void testCheckEcritureComptableContext() throws ParseException {
