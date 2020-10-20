@@ -12,6 +12,7 @@ import javax.inject.Named;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -54,49 +55,7 @@ public class ComptabiliteManagerImplIT {
 	DaoProxyImpl DaoProxyImpl = (DaoProxyImpl) context.getBean("DaoProxy");
 	ConsumerHelper consumerHelper = (ConsumerHelper) context.getBean("ConsumerHelper");
 	DaoProxy daoProxy = ConsumerHelper.getDaoProxy();
-	
-	 
-    @Test
-	public void testInsertAndDeleteEcritureComptable() throws ParseException {
-	    	
-    	DaoProxy daoProxy = ConsumerHelper.getDaoProxy();
-    	
-    	BusinessProxyImpl businessProxyImpl = BusinessProxyImpl.getInstance(daoProxy, pTransactionManager);
-    	ComptabiliteManagerImpl comptaManager = (ComptabiliteManagerImpl) businessProxyImpl.getComptabiliteManager();
-    	
-    	EcritureComptable vEcritureComptable = new EcritureComptable();
-    	vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.FRANCE);
-        String sdateTest = "2020/02/01";
-        Date dateTest = simpleDateFormat.parse(sdateTest);
-        vEcritureComptable.setDate(dateTest);
-        vEcritureComptable.setReference("AC-2020/00021");
-        vEcritureComptable.setLibelle("Libelle");
-        
-        CompteComptable compte = new CompteComptable();
-        compte.setNumero(606);
-        compte.setNumero(401);
-        List<LigneEcritureComptable> listLigne = new ArrayList<>();
-        LigneEcritureComptable ligne1 = vEcritureComptable.createLigne(606, 1243.00, 0.00);
-        listLigne.add(ligne1);
-        LigneEcritureComptable ligne2 = vEcritureComptable.createLigne(401, 0.00, 1243.00);
-        listLigne.add(ligne2);
-        vEcritureComptable.setListLigneEcriture(listLigne);
-        
-        Assertions.assertDoesNotThrow(() -> {
-        	 comptaManager.insertEcritureComptable(vEcritureComptable);
-        	 EcritureComptable ecritureRef = daoProxy.getComptabiliteDao().getEcritureComptableByRef(vEcritureComptable.getReference());
-          }, "L'écriture comptable n'a pas été correctement insérée");
-          
-        
-        Assertions.assertThrows(NotFoundException.class, () -> {
-	       	 comptaManager.deleteEcritureComptable(vEcritureComptable.getId());
-	         EcritureComptable ecritureRef = daoProxy.getComptabiliteDao().getEcritureComptableByRef(vEcritureComptable.getReference());
-	         });
-        
-    }
-    
-    
+	    
    @Test
     public void testCheckEcritureComptableContext() throws ParseException {
 	   
@@ -130,4 +89,99 @@ public class ComptabiliteManagerImplIT {
           });
    
    }
+   
+   @Test
+   public void testCheckEcritureComptable() throws ParseException {
+   	
+   	DaoProxy daoProxy = ConsumerHelper.getDaoProxy();
+      	
+	   	BusinessProxyImpl businessProxyImpl = BusinessProxyImpl.getInstance(daoProxy, pTransactionManager);
+	   	ComptabiliteManagerImpl comptaManager = (ComptabiliteManagerImpl) businessProxyImpl.getComptabiliteManager();
+	   	
+	   	EcritureComptable vEcritureComptable = new EcritureComptable();
+   	vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+       SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.FRANCE);
+       String sdateTest = "2020/02/01";
+       Date dateTest = simpleDateFormat.parse(sdateTest);
+       vEcritureComptable.setDate(dateTest);
+       vEcritureComptable.setReference("AC-2020/00010");
+       vEcritureComptable.setLibelle("Libelle");
+       
+       CompteComptable compte = new CompteComptable();
+       compte.setNumero(606);
+       compte.setNumero(401);
+       List<LigneEcritureComptable> listLigne = new ArrayList<>();
+       LigneEcritureComptable ligne1 = vEcritureComptable.createLigne(606, 1243.00, 0.00);
+       listLigne.add(ligne1);
+       LigneEcritureComptable ligne2 = vEcritureComptable.createLigne(401, 0.00, 1243.00);
+       listLigne.add(ligne2);
+       vEcritureComptable.setListLigneEcriture(listLigne);
+       
+       Assertions.assertThrows(FunctionalException.class, () -> {
+       	comptaManager.insertEcritureComptable(vEcritureComptable);
+       	comptaManager.checkEcritureComptable(vEcritureComptable);;
+         });
+   	
+   }
+   
+   @Test
+	public void testInsertAndDeleteEcritureComptable() throws ParseException {
+	    	
+   	DaoProxy daoProxy = ConsumerHelper.getDaoProxy();
+   	
+   	BusinessProxyImpl businessProxyImpl = BusinessProxyImpl.getInstance(daoProxy, pTransactionManager);
+   	ComptabiliteManagerImpl comptaManager = (ComptabiliteManagerImpl) businessProxyImpl.getComptabiliteManager();
+   	
+   	EcritureComptable vEcritureComptable = new EcritureComptable();
+   	   JournalComptable journal = new JournalComptable("AC", "Achat");
+   	   vEcritureComptable.setJournal(journal);
+       SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.FRANCE);
+       String sdateTest = "2020/02/01";
+       Date dateTest = simpleDateFormat.parse(sdateTest);
+       vEcritureComptable.setDate(dateTest);
+       vEcritureComptable.setReference("AC-2020/00033");
+       vEcritureComptable.setLibelle("Libelle");
+       
+       CompteComptable compte = new CompteComptable();
+       compte.setNumero(606);
+       compte.setNumero(401);
+       List<LigneEcritureComptable> listLigne = new ArrayList<>();
+       LigneEcritureComptable ligne1 = vEcritureComptable.createLigne(606, 1243.00, 0.00);
+       listLigne.add(ligne1);
+       LigneEcritureComptable ligne2 = vEcritureComptable.createLigne(401, 0.00, 1243.00);
+       listLigne.add(ligne2);
+       vEcritureComptable.setListLigneEcriture(listLigne);
+       
+       Assertions.assertDoesNotThrow(() -> {
+       	 comptaManager.insertEcritureComptable(vEcritureComptable);
+       	 EcritureComptable ecritureRef = daoProxy.getComptabiliteDao().getEcritureComptableByRef(vEcritureComptable.getReference());
+         }, "L'écriture comptable n'a pas été correctement insérée");
+       
+       
+       JournalComptable journalUpdate = new JournalComptable("BQ", "Banque");
+   	   vEcritureComptable.setJournal(journalUpdate);
+       String sdateUpdate = "2021/02/01";
+       Date dateUpdate = simpleDateFormat.parse(sdateUpdate);
+       vEcritureComptable.setDate(dateUpdate);
+       vEcritureComptable.setReference("AC-2021/00004");
+       vEcritureComptable.setLibelle("Libelle1");
+       
+       
+       Assertions.assertDoesNotThrow(() -> {
+       	 comptaManager.updateEcritureComptable(vEcritureComptable);
+       	 EcritureComptable ecritureRef = daoProxy.getComptabiliteDao().getEcritureComptable(vEcritureComptable.getId());
+       	 Assert.assertTrue(ecritureRef.getJournal().getCode().equals(vEcritureComptable.getJournal().getCode()));
+       	 Assert.assertTrue(ecritureRef.getReference().equals(vEcritureComptable.getReference()));
+       	 Assert.assertTrue(ecritureRef.getDate().equals(vEcritureComptable.getDate()));
+       	 Assert.assertTrue(ecritureRef.getLibelle().equals(vEcritureComptable.getLibelle()));
+         }, "L'écriture comptable n'a pas été correctement mise à jour");
+         
+       
+       Assertions.assertThrows(NotFoundException.class, () -> {
+	       	 comptaManager.deleteEcritureComptable(vEcritureComptable.getId());
+	         EcritureComptable ecritureRef = daoProxy.getComptabiliteDao().getEcritureComptableByRef(vEcritureComptable.getReference());
+	         });
+       
+   }
+   
 }

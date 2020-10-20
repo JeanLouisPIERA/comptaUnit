@@ -286,7 +286,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
         //vJdbcTemplate.update(SQLupdateEcritureComptable, vSqlParams);
         //-----------> ERREUR org.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar 
-        vJdbcTemplate.update(SQLinsertEcritureComptable, vSqlParams);
+        vJdbcTemplate.update(SQLupdateEcritureComptable, vSqlParams);
 
         // ===== Liste des lignes d'écriture
         this.deleteListLigneEcritureComptable(pEcritureComptable.getId());
