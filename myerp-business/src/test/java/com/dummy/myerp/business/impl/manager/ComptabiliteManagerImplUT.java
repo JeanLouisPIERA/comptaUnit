@@ -16,8 +16,9 @@ import javax.validation.ValidatorFactory;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+
 
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;

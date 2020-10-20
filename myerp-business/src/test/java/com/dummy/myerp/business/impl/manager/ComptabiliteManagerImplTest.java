@@ -100,11 +100,14 @@ public class ComptabiliteManagerImplTest {
     	EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         CompteComptable cc1 = new CompteComptable();
+        cc1.setNumero(1);
         CompteComptable cc2 = new CompteComptable();
+        cc2.setNumero(2);
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 1234.00, 0.00));	
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 0.00, 1234.00));
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(2, 1234.00, 0.00));	
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 0.00, 1234.00));
+       
     	
     	Assertions.assertThrows(FunctionalException.class, () -> {
     		manager.checkSoldeCompteComptableRG1(vEcritureComptable, cc1, 20);
