@@ -168,8 +168,6 @@ public class ComptabiliteManagerImplUT {
      * Format et contenu de la référence :l'année dans la référence ne correspond pas à la date de l'écriture, 
      * idem pour le code journal
      * L'enregistrement de la séquence n'est pas testé ici. Il est testé dans le test de la méthode addReference
-     * Pour compromettre l'exécution du test, supprimer (expected = FunctionalException.class)
-     * @throws FunctionalException
      * @throws ParseException
      */
     @Test

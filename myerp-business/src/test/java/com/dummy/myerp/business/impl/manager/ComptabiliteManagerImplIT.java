@@ -57,7 +57,7 @@ public class ComptabiliteManagerImplIT {
 	
 	 
     @Test
-	public void testInsertAndDeleteEcritureComptable() throws FunctionalException, ParseException, NotFoundException {
+	public void testInsertAndDeleteEcritureComptable() throws ParseException {
 	    	
     	DaoProxy daoProxy = ConsumerHelper.getDaoProxy();
     	
@@ -65,6 +65,47 @@ public class ComptabiliteManagerImplIT {
     	ComptabiliteManagerImpl comptaManager = (ComptabiliteManagerImpl) businessProxyImpl.getComptabiliteManager();
     	
     	EcritureComptable vEcritureComptable = new EcritureComptable();
+    	vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.FRANCE);
+        String sdateTest = "2020/02/01";
+        Date dateTest = simpleDateFormat.parse(sdateTest);
+        vEcritureComptable.setDate(dateTest);
+        vEcritureComptable.setReference("AC-2020/00021");
+        vEcritureComptable.setLibelle("Libelle");
+        
+        CompteComptable compte = new CompteComptable();
+        compte.setNumero(606);
+        compte.setNumero(401);
+        List<LigneEcritureComptable> listLigne = new ArrayList<>();
+        LigneEcritureComptable ligne1 = vEcritureComptable.createLigne(606, 1243.00, 0.00);
+        listLigne.add(ligne1);
+        LigneEcritureComptable ligne2 = vEcritureComptable.createLigne(401, 0.00, 1243.00);
+        listLigne.add(ligne2);
+        vEcritureComptable.setListLigneEcriture(listLigne);
+        
+        Assertions.assertDoesNotThrow(() -> {
+        	 comptaManager.insertEcritureComptable(vEcritureComptable);
+        	 EcritureComptable ecritureRef = daoProxy.getComptabiliteDao().getEcritureComptableByRef(vEcritureComptable.getReference());
+          }, "L'écriture comptable n'a pas été correctement insérée");
+          
+        
+        Assertions.assertThrows(NotFoundException.class, () -> {
+	       	 comptaManager.deleteEcritureComptable(vEcritureComptable.getId());
+	         EcritureComptable ecritureRef = daoProxy.getComptabiliteDao().getEcritureComptableByRef(vEcritureComptable.getReference());
+	         });
+        
+    }
+    
+    
+   @Test
+    public void testCheckEcritureComptableContext() throws ParseException {
+	   
+	   	DaoProxy daoProxy = ConsumerHelper.getDaoProxy();
+   	
+	   	BusinessProxyImpl businessProxyImpl = BusinessProxyImpl.getInstance(daoProxy, pTransactionManager);
+	   	ComptabiliteManagerImpl comptaManager = (ComptabiliteManagerImpl) businessProxyImpl.getComptabiliteManager();
+	   	
+	   	EcritureComptable vEcritureComptable = new EcritureComptable();
     	vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.FRANCE);
         String sdateTest = "2020/02/01";
@@ -82,19 +123,11 @@ public class ComptabiliteManagerImplIT {
         LigneEcritureComptable ligne2 = vEcritureComptable.createLigne(401, 0.00, 1243.00);
         listLigne.add(ligne2);
         vEcritureComptable.setListLigneEcriture(listLigne);
-        
-        comptaManager.insertEcritureComptable(vEcritureComptable);
-        
-        EcritureComptable ecritureRef = daoProxy.getComptabiliteDao().getEcritureComptableByRef(vEcritureComptable.getReference());
-        Assertions.assertTrue(vEcritureComptable.getReference().equals(ecritureRef.getReference()), "La procédure d'insertion a échoué"+ ecritureRef.getReference() + ecritureRef.getReference()+"/");
-        
-        comptaManager.deleteEcritureComptable(ecritureRef.getId());
-        
-        Assertions.assertThrows(NotFoundException.class, () -> {
-        	EcritureComptable ecriture = daoProxy.getComptabiliteDao().getEcritureComptableByRef(vEcritureComptable.getReference());
+	   
+        Assertions.assertThrows(FunctionalException.class, () -> {
+        	comptaManager.insertEcritureComptable(vEcritureComptable);
+        	comptaManager.checkEcritureComptableContext(vEcritureComptable);;
           });
-        
-    }
-
-
+   
+   }
 }
