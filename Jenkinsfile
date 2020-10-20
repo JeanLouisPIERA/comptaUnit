@@ -163,14 +163,11 @@ stages{
 		            }
 		        }
 	
-	  
-	    
-	    post{
+	    }
+	     
+	     post{
 		    always{
 			    cleanWs
 			    }
-	    }    
-	    
-	    }
-	       
+	    }      
 	 } 
