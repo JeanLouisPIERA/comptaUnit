@@ -33,25 +33,28 @@ public class TransactionManagerIT {
 	ConsumerHelper consumerHelper = (ConsumerHelper) context.getBean("ConsumerHelper");
 	DaoProxy daoProxy = ConsumerHelper.getDaoProxy();
 
-	/*
-	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"classpath*:applicationContext.xml", "transactionContext.xml"});
-	DataSource MYERP = (DataSource) context.getBean("dataSourceMYERP");
-	//DataSourceTransactionManager ptmMyERP = (DataSourceTransactionManager) context.getBean("txManager");
-	TransactionManager txManagerMYERP = (TransactionManager) context.getBean("txManagerMYERP");
-	DataSourceTransactionManager ptmMyERP = (DataSourceTransactionManager) context.getBean("TransactionManager");
-	*/
-	
-	
+	public TransactionStatus createStatus() {
+	DefaultTransactionDefinition vTDef = new DefaultTransactionDefinition();
+    vTDef.setName("Transaction_txManagerMyERP");
+    vTDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+    TransactionStatus status = ptmMyERP.getTransaction(vTDef);
+	return status;
+	}
 	
 	@Test
 	public  void testBeginTransactionMyERP() {
 		
+		/*
         DefaultTransactionDefinition vTDef = new DefaultTransactionDefinition();
         vTDef.setName("Transaction_txManagerMyERP");
         vTDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 
         TransactionStatus status = ptmMyERP.getTransaction(vTDef);
+        */
         
+		TransactionStatus status = this.createStatus();
+		pTransactionManager.beginTransactionMyERP();
         
         Assertions.assertTrue(status.isNewTransaction()==true, "Echec du test la méthode beginTransactionMyERP : la transaction n'a pas été créée");
     }
@@ -59,6 +62,7 @@ public class TransactionManagerIT {
 	@Test
 	public void commitMyERP() {
 		
+		/*
 		DefaultTransactionDefinition vTDef = new DefaultTransactionDefinition();
         vTDef.setName("Transaction_txManagerMyERP");
         vTDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
@@ -67,14 +71,18 @@ public class TransactionManagerIT {
         if (status != null) {
             ptmMyERP.commit(status);
         }
-        
+        */
+		
+		TransactionStatus status = this.createStatus();
+		pTransactionManager.commitMyERP(status);
+		
         
         Assertions.assertTrue(status.isCompleted()==true, "Echec du test sur la méthode commitMyERP : la transaction n'a pas été committée");
     }
 	
 	@Test
 	public void rollbackMyERP() {
-		
+		/*
 		DefaultTransactionDefinition vTDef = new DefaultTransactionDefinition();
         vTDef.setName("Transaction_txManagerMyERP");
         vTDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
@@ -84,8 +92,11 @@ public class TransactionManagerIT {
            
             ptmMyERP.rollback(status);
         }
+        */
         
-        
+		TransactionStatus status = this.createStatus();
+		pTransactionManager.rollbackMyERP(status);
+		
         Assertions.assertTrue(status.isCompleted()==true, "Echec du test sur la méthode rollbackMyERP : la transaction n'a pas été rolled-back");
     }
 	

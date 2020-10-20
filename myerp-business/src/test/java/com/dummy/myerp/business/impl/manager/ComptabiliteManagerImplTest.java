@@ -339,9 +339,9 @@ public class ComptabiliteManagerImplTest {
     public void testCreateAndCheckReferenceEcritureComptableRG5() throws ParseException {
     	EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
-        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        vEcritureComptable.setJournal(new JournalComptable("BQ", "Achat"));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.FRANCE);
-        String sdateTest = "2020/02/01";
+        String sdateTest = "2021/02/01";
         Date dateTest = simpleDateFormat.parse(sdateTest);
         vEcritureComptable.setDate(dateTest);
         vEcritureComptable.setReference("AC-2020/00001");
