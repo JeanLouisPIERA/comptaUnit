@@ -129,47 +129,7 @@
     </dependencies>
 
 
-    <!-- =============================================================== -->
-    <!-- Profiles -->
-    <!-- =============================================================== -->
-    <profiles>
-        <!-- Profile utilisé pour lancer les tests d'intégration de la couche Business -->
-        <profile>
-            <id>test-business</id>
-            <build>
-                <plugins>
-                    <!-- Ajout du répertoire src/test-business/java en tant que source de test du module -->
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>build-helper-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>add-test-source</id>
-                                <phase>generate-test-sources</phase>
-                                <goals>
-                                    <goal>add-test-source</goal>
-                                </goals>
-                                <configuration>
-                                    <sources>
-                                        <source>src/test-business/java</source>
-                                    </sources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-                <testResources>
-                    <testResource>
-                        <directory>src/test/resources</directory>
-                    </testResource>
-                    <testResource>
-                        <directory>src/test-business/resources</directory>
-                    </testResource>
-                </testResources>
-            </build>
-        </profile>
-    </profiles>
-
+    
 
     <!-- =============================================================== -->
     <!-- Build -->
@@ -266,9 +226,7 @@
                 
                 <plugin>
 			      <groupId>org.jacoco</groupId>
-			      <artifactId>jacoco-maven-plugin</artifactId>
-			     
-			      
+			      <artifactId>jacoco-maven-plugin</artifactId>		      
 			      <configuration>
 					    <rules>
 					      <rule>
@@ -349,7 +307,7 @@
 						</execution>
                 
                 <!-- ===== Merging unit and integration test coverage data ===== -->
-                		<!-- execution>
+                		<execution>
 						  <id>merge-unit-and-integration</id>
 						    <phase>post-integration-test</phase>
 						      <goals>
@@ -366,23 +324,23 @@
 						      </fileSets>
 						      <destFile>${project.build.directory}/jacoco-output/merged.exec</destFile>
 						    </configuration>
-						  </execution-->
+						  </execution>
 						
                 
                 <!-- ===== Generating the merged unit and integration test coverage report ===== -->
                 
-		                <!-- execution>
+		                <execution>
 						  <id>create-merged-report</id>
 						  <phase>post-integration-test</phase>
 						  <goals>
 						    <goal>report</goal>
 						  </goals>
 						  <configuration>
-						    <dataFile>${project.build.directory}/jacoco-output/merged.exec</dataFile-->
+						    <dataFile>${project.build.directory}/jacoco-output/merged.exec</dataFile>
 						    <!-- outputDirectory>${project.reporting.outputDirectory}/jacoco-merged-test-coverage-report</outputDirectory-->
-						  	<!-- outputDirectory>${project.build.directory}/site/jacoco-merged-test-coverage-report</outputDirectory>
+						  	<outputDirectory>${project.build.directory}/site/jacoco-merged-test-coverage-report</outputDirectory>
 						  </configuration>
-						</execution-->
+						</execution>
                 
                 		<!-- Ensures that the minimum coverage average rate is 70%. -->
 				        <execution>

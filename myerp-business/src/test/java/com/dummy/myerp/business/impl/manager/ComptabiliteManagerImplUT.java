@@ -58,7 +58,7 @@ public class ComptabiliteManagerImplUT {
         String sdateTest = "2020/02/01";
         Date dateTest = simpleDateFormat.parse(sdateTest);
         //@NotNull
-        //vEcritureComptable.setDate(dateTest);
+        vEcritureComptable.setDate(dateTest);
         
         //@Pattern Respect du regexp
         vEcritureComptable.setReference("AC******-2020/00001");
