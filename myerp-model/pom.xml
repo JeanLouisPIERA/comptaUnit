@@ -306,7 +306,7 @@
 						  </configuration>
 						</execution>
                 
-                		<!-- Ensures that the minimum coverage average rate is 70%. -->
+                		<!-- Ensures that the minimum coverage average rate is 75%. -->
 				        <execution>
 							<id>jacoco-check</id>
 							<goals>
