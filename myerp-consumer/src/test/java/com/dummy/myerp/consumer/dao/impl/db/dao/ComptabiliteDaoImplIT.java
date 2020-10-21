@@ -1,5 +1,6 @@
 package com.dummy.myerp.consumer.dao.impl.db.dao;
 
+import java.math.BigDecimal;
 import java.sql.Types;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -76,20 +77,31 @@ public class ComptabiliteDaoImplIT {
 		ecriture.setLibelle(libelle);
 		ecriture.setReference(reference);
 		
-		CompteComptable compte = new CompteComptable();
-	       compte.setNumero(606);
-	       compte.setNumero(401);
-	       List<LigneEcritureComptable> listLigne = new ArrayList<>();
-	       LigneEcritureComptable ligne1 = ecriture.createLigne(606, 1243.00, 0.00);
-	       listLigne.add(ligne1);
-	       LigneEcritureComptable ligne2 = ecriture.createLigne(401, 0.00, 1243.00);
-	       listLigne.add(ligne2);
-	       ecriture.setListLigneEcriture(listLigne);
-		
 		return ecriture;
 		
 	}
 	
+	private EcritureComptable createListLigneEcritureComptable(EcritureComptable ecriture) {
+		
+		   LigneEcritureComptable ligneEcriture = new LigneEcritureComptable();
+		   List<LigneEcritureComptable> listLigneEcriture = new ArrayList<LigneEcritureComptable>();
+		   
+		   CompteComptable vCompte = new CompteComptable();
+		   vCompte.setNumero(706);
+		   LigneEcritureComptable ligneEcriture1 = new LigneEcritureComptable(vCompte, "libelle",new BigDecimal(1243.00), new BigDecimal(0.00) );
+		
+		   CompteComptable pCompte = new CompteComptable();
+		   pCompte.setNumero(411);
+		   LigneEcritureComptable ligneEcriture2 = new LigneEcritureComptable(pCompte, "libelle", new BigDecimal(0.00),new BigDecimal(1243.00) );
+		   
+		   listLigneEcriture.add(0, ligneEcriture1); 
+		   listLigneEcriture.add(1, ligneEcriture2);
+		   
+	       ecriture.setListLigneEcriture(listLigneEcriture);
+		
+		return ecriture;
+		
+	}
 	
 	
 	@Test
@@ -137,6 +149,28 @@ public class ComptabiliteDaoImplIT {
 			daoProxyImpl.getComptabiliteDao().getEcritureComptableByRef(ecriture.getReference());
 			Assertions.assertEquals("AC-2021/00001", daoProxyImpl.getComptabiliteDao().getEcritureComptableByRef(ecriture.getReference()).getReference());
 	         }, "La mise à jour de l'écriture comptable n'a pas été correctement persistée");
+		
+		txManager.rollback(status);
+		
+	}
+	
+	@Test
+	public void testInsertListEcritureComptable() throws ParseException, NotFoundException{
+	
+	
+		DataSourceTransactionManager txManager = (DataSourceTransactionManager) context.getBean("txManagerMYERP");
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+	    TransactionStatus status = txManager.getTransaction(def);
+				
+		EcritureComptable ecriture= this.setEcritureComptable(null, "AC","2020-02-01" , "Libelle", "AC-2024/00031");
+		comptabilite.insertEcritureComptable(ecriture);
+		EcritureComptable ecritureTest = daoProxyImpl.getComptabiliteDao().getEcritureComptableByRef(ecriture.getReference());
+		this.createListLigneEcritureComptable(ecritureTest);
+		comptabilite.insertListLigneEcritureComptable(ecritureTest);
+		
+		Assertions.assertDoesNotThrow(() -> {
+			Assert.assertTrue(daoProxyImpl.getComptabiliteDao().getEcritureComptableByRef(ecriture.getReference()).getListLigneEcriture().size()==2);
+			}, "La mise à jour des lignes de l'écriture comptable n'a pas été correctement persistée");
 		
 		txManager.rollback(status);
 		
