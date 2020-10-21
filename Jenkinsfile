@@ -34,7 +34,7 @@ stages{
 	        stage("Code coverage. Le score minimum de couverture des lignes = 75%")	{
 	        
 	            steps	{
-	            bat " mvn verify jacoco:check jacoco:report"
+	            bat " mvn verify jacoco:check jacoco:report -X"
 							
 				publishHTML	(target:	[
 							allowMissing: false,
