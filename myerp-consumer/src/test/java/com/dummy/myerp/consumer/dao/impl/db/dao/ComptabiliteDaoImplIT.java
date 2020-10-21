@@ -123,7 +123,7 @@ public class ComptabiliteDaoImplIT {
 		Assertions.assertEquals(1, id2-id1, "Echec du test d'enregistrement d'une écriture comptable en base de données");
 		
 		Assertions.assertDoesNotThrow(() -> {
-			daoProxyImpl.getComptabiliteDao().getEcritureComptable(ecriture.getId()).getReference().equals("AC-2020/00005");
+			(daoProxyImpl.getComptabiliteDao().getEcritureComptableByRef("AC-2020/00001").getReference()).equals("AC-2020/00001");
 	         }, "La création de l'écriture comptable n'a pas été correctement persistée");
 		
 		
@@ -144,6 +144,10 @@ public class ComptabiliteDaoImplIT {
 		
 		EcritureComptable ecritureUpdate = this.setEcritureComptable(ecriture, "BQ", "2021-02-01", "LibelleUpdate", "AC-2021/00001");  
 		comptabilite.updateEcritureComptable(ecritureUpdate);
+		
+		Assertions.assertThrows(NotFoundException.class, () -> {
+			comptabilite.getEcritureComptableByRef("AC-2020/00001");
+		     });
 		
 		Assertions.assertDoesNotThrow(() -> {
 			daoProxyImpl.getComptabiliteDao().getEcritureComptableByRef(ecriture.getReference());
