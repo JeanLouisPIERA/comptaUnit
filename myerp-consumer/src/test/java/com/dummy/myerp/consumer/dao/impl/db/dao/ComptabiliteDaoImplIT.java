@@ -133,8 +133,7 @@ public class ComptabiliteDaoImplIT {
 
 	@Test
 	public void testUpdateEcritureComptable() throws ParseException{
-	
-	
+		
 		DataSourceTransactionManager txManager = (DataSourceTransactionManager) context.getBean("txManagerMYERP");
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 	    TransactionStatus status = txManager.getTransaction(def);
