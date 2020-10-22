@@ -1,13 +1,8 @@
 package com.dummy.myerp.technical.exception;
 
-
-
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.Configuration;
-
-
-
 
 @Configuration("/applicationContext.xml")
 public class FunctionalExceptionTest {

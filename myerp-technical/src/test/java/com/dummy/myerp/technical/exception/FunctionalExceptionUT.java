@@ -6,15 +6,10 @@ import org.junit.Test;
 
 public class FunctionalExceptionUT {
 	
-	
-	
-	
-	
 	@Test
 	public void checkMessageFunctionalException() {
 		Assert.assertTrue("Le message de l'exception n'a pas été correctement envoyé", new FunctionalException("pMessage").getMessage().equals(new Exception("pMessage").getMessage()));
 	}
-	
 	
 	@Test
 	public void checkCauseFunctionalException() {
@@ -23,7 +18,6 @@ public class FunctionalExceptionUT {
 		exception.initCause(pcause);
 		
 		Exception functionalException = new FunctionalException(pcause);
-		
 		
 		Assert.assertTrue("Problème dans la reconnaissance de l'exception par FunctionalException", functionalException.getCause().toString().equals(exception.getCause().toString())); 
 		
@@ -38,7 +32,6 @@ public class FunctionalExceptionUT {
 		
 		Assert.assertTrue("Le message de l'exception n'a pas été correctement envoyé", new FunctionalException("pMessage").getMessage().equals(new Exception("pMessage").getMessage()));
 		Assert.assertTrue("Problème dans la reconnaissance de l'exception par FunctionalException", functionalException.getCause().toString().equals(exception.getCause().toString())); 
-		
 		
 	}
 

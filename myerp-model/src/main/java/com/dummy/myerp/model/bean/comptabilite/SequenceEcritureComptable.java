@@ -47,18 +47,7 @@ public class SequenceEcritureComptable {
 
 
     // ==================== Méthodes ====================
-    /*
-    @Override
-    public String toString() {
-        final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
-        final String vSEP = ",";
-        vStB.append("{")
-            .append("annee=").append(annee)
-            .append(vSEP).append("derniereValeur=").append(derniereValeur)
-            .append("}");
-        return vStB.toString();
-    }
-    */
+    
     @Override
     public String toString() {
         final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());

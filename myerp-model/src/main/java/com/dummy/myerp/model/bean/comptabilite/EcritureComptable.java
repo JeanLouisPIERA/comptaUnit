@@ -15,9 +15,6 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-import com.dummy.myerp.technical.exception.FunctionalException;
-import com.dummy.myerp.technical.exception.TechnicalException;
-
 
 /**
  * Bean représentant une Écriture Comptable
@@ -136,51 +133,7 @@ public class EcritureComptable {
     }
 
     // ==================== Méthodes ====================
-    /**
-     * Nombreuses corrections
-     * public String toString() {
-        final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
-        final String vSEP = ", ";
-        final String vSSP = "/ ";
-        vStB.append("{")
-            .append("id=").append(id)
-            //.append(vSEP).append("journal=").append(journal) ---------------------jounnal est un objet sans signification
-              .append(vSEP).append("journal=").append(journal.getCode())
-            //.append(vSEP).append("reference='").append(reference)--------- remove "'" after =
-              .append(vSEP).append("reference=").append(reference)
-            //.append('\'')------------------------------------------------ remove signe escape
-            .append(vSEP).append("date=").append(date.toString())
-            //.append(vSEP).append("libelle='").append(libelle)--------- remove "'" after =
-            .append(vSEP).append("libelle=").append(libelle)
-            //.append('\'')------------------------------------------------ remove signe escape
-            .append(vSEP).append("totalDebit=").append(this.getTotalDebit().toPlainString())
-            .append(vSEP).append("totalCredit=").append(this.getTotalCredit().toPlainString())
-            .append("}");
-        	/*
-        	 * Plusieurs erreurs de syntaxe et inutiles car retour d'objets LigneEcriture issus de la liste 
-            //.append(vSEP).append("listLigneEcriture=[\n")---------------------\n retour à la ligne, [ est inutile
-              .append(vSEP).append("listLigneEcriture=")
-            //.append(StringUtils.join(listLigneEcriture, "\n")).append("\n]") ---------"\n" n'est pas un séparateur, séparateur obligatoire
-            .append(StringUtils.join(listLigneEcriture, ','))
-    
-    @Override
-    public String toString() {
-        final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
-        final String vSEP = ", ";
-        final String vSSP = "/ ";
-        vStB.append("{")
-            .append("id=").append(id)
-            .append(vSEP).append("journal=").append(journal.getCode())
-            .append(vSEP).append("reference=").append(reference)
-            .append(vSEP).append("date=").append(date.toString())
-            .append(vSEP).append("libelle=").append(libelle)
-            .append(vSEP).append("totalDebit=").append(this.getTotalDebit().toPlainString())
-            .append(vSEP).append("totalCredit=").append(this.getTotalCredit().toPlainString())
-            .append("}");
-        return vStB.toString();
-    }
-    */
-    
+        
     @Override
     public String toString() {
         final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());

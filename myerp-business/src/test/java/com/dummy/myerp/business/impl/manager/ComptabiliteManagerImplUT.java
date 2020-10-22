@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Assertions;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
-import com.dummy.myerp.technical.exception.FunctionalException;
 
 public class ComptabiliteManagerImplUT {
 	
@@ -66,16 +65,8 @@ public class ComptabiliteManagerImplUT {
         //@Size min 1 max 200
         vEcritureComptable.setLibelle("Libelle");
         
-        /*
-         * CompteComptable @NotNull
-         * Libelle @Size 200
-         * BigDecimal debit @MontantComptable @Digits(integer = 13, fraction = 2)
-         * BigDecimal credit @MontantComptable @Digits(integer = 13, fraction = 2)
-         */
-        
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 123456789000000000000.00, 0.00));	
         vEcritureComptable.getListLigneEcriture().add(vEcritureComptable.createLigne(1, 0.00, 123456789.0012345674));
-        
         
         Configuration<?> vConfiguration = Validation.byDefaultProvider().configure();
         ValidatorFactory vFactory = vConfiguration.buildValidatorFactory();
@@ -83,7 +74,6 @@ public class ComptabiliteManagerImplUT {
         Set<ConstraintViolation<EcritureComptable>> vViolations = vValidator.validate(vEcritureComptable);
         
         Assert.assertTrue("L'écriture comptable ne respecte pas les contraintes de validation",!vViolations.isEmpty());
-        
         
     }
     

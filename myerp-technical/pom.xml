@@ -111,16 +111,8 @@
         <dependency>
 			    <groupId>org.mockito</groupId>
 			    <artifactId>mockito-all</artifactId>
-			    <version>1.10.19</version>
 			    <scope>test</scope>
 			</dependency>
-        
-        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
-			<!-- dependency>
-			    <groupId>org.junit.jupiter</groupId>
-			    <artifactId>junit-jupiter</artifactId>
-			    <scope>test</scope>
-			</dependency-->
 			
 			<!-- https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter -->
 			<dependency>
@@ -155,12 +147,7 @@
 					    <artifactId>junit-jupiter</artifactId>
 					    <scope>test</scope>
 					</dependency>
-				
-			
-					
-			
-			
-			
+		
 			<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api 
 		        the JAXB library (Java Architecture for XML Binding) is missing in the classpath. 
 		        JAXB is included in Java SE 10 or older, but it is removed from Java SE from Java 11 or newer –moved to Java EE under Jakarta EE project.
@@ -171,8 +158,6 @@
 				    <artifactId>jaxb-api</artifactId>
 				    <version>2.4.0-b180830.0359</version>
 				</dependency>
-			
-			
 
         <!-- ===== JSR 303 - Bean validation ===== -->
         <!-- implementation -->
@@ -184,37 +169,16 @@
 </dependencies>
 
 
-
-
-    
-
-
-
     <!-- =============================================================== -->
     <!-- Build -->
     <!-- =============================================================== -->
     <build>
     <plugins>
     
-   
-     <!-- ===== junit-platform-surefire pour Mockito ===== -->
-    <!-- plugin>
-	    <artifactId>maven-surefire-plugin</artifactId>
-	    <dependencies>
-	        <dependency>
-	             <groupId>org.junit.platform</groupId>
-	             <artifactId>junit-platform-surefire-provider</artifactId>
-	             <version>1.0.1</version>
-	         </dependency>
-	     </dependencies>
-	</plugin-->
-	
-	
 	 <!-- ===== Test / Reporting ===== -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    
                     
                     <configuration>
 				        <!-- Sets the VM argument line used when unit tests are run. -->
@@ -242,25 +206,10 @@
 					        </includes>
 					      </configuration>
 					    </execution>
-					    <!-- execution>
-					      <id>inttests</id>
-					      <phase>integration-test</phase>
-					      <goals>
-					        <goal>test</goal>
-					      </goals>
-					      <configuration>
-					        <skipTests>false</skipTests>
-					        <includes>
-					           <include>**/*Test.java</include>
-					           <include>**/*IT.java</include>
-					        </includes>
-					      </configuration>
-					    </execution-->
 					  </executions>
                 </plugin>
-	
-	
-	<plugin>
+
+				<plugin>
 			      <groupId>org.apache.maven.plugins</groupId>
 			      <artifactId>maven-failsafe-plugin</artifactId>
 			      
@@ -301,11 +250,7 @@
                 <plugin>
 			      <groupId>org.jacoco</groupId>
 			      <artifactId>jacoco-maven-plugin</artifactId>
-			      
-			      
-			      
-			     
-			     
+	     
 			      <executions>
 			      
 			      <!-- =====Configuring jacoco unit test coverage data===== -->
@@ -381,8 +326,7 @@
 						      <destFile>${project.build.directory}/jacoco-output/merged.exec</destFile>
 						    </configuration>
 						  </execution>
-						
-                
+						             
                 <!-- ===== Generating the merged unit and integration test coverage report ===== -->
                 
 		                <execution>
@@ -424,34 +368,17 @@
 					        </limits>
 					      </rule>
 					    </rules>
-					    
-					    
+					       
 				  	</configuration>
 							
-						</execution>
-                
-					
-			      </executions>
-			      
-			      <!-- ===== Failing the build ===== -->
-                
+				</execution>
                 		
-						  
-						
-			      
-			    </plugin>
-              
-			      
-			      
-	         		    
-    
-    
-                
-    
+			 </executions>
+			        
+		</plugin>
+ 
     </plugins>
-    </build>
-    
-    
-    
+ 
+  </build>
     
 </project>

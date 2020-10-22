@@ -56,21 +56,12 @@
         <!-- ===== Version properties ===== -->
         <log4j.version>2.8.1</log4j.version>
         <spring.version>4.3.7.RELEASE</spring.version>
-        
-        <!-- Used to locate the profile specific configuration file.   -->
-        <!-- jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec</jacoco.it.execution.data.file>
-        <jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.execution.data.file-->
-        
-        <!-- sonar.projectKey>JeanLouisPIERA_oc-testing-java-cours</sonar.projectKey>
-		<sonar.organization>brolfix2020</sonar.organization>
-		<sonar.host.url>https://sonarcloud.io</sonar.host.url-->
-		 
+         
        <jacoco.ut.execution.data.file>${project.build.directory}/jacoco-output/jacoco-unit-tests.exec</jacoco.ut.execution.data.file>
        <jacoco.it.execution.data.file>${project.build.directory}/jacoco-output/jacoco-integration-tests.exec</jacoco.it.execution.data.file>
        <jacoco.merge.execution.data.file>${project.build.directory}/jacoco-output/merged.exec</jacoco.merge.execution.data.file>
        
     </properties>
-
 
     <!-- =============================================================== -->
     <!-- Modules -->
@@ -81,7 +72,6 @@
         <module>myerp-consumer</module>
         <module>myerp-business</module>
     </modules>
-
 
     <!-- =============================================================== -->
     <!-- Profiles -->
@@ -100,19 +90,6 @@
             </properties>
         </profile>
 
-        <!-- Profile utilisé pour lancer les tests d'intégration du module Business -->
-        <!-- profile>
-            <id>test-business</id>
-        </profile-->
-        <!-- Profile utilisé pour lancer les tests d'intégration ddu module Consumer -->
-        <!-- profile>
-            <id>test-consumer</id>
-        </profile-->
-        <!-- Profile utilisé pour lancer les tests d'intégration ddu module Technical -->
-        <!-- profile>
-            <id>test-technical</id>
-        </profile-->
-        
 	    <!-- Profil utilisé pour lancer les tests unitaires de tous les modules -->   
 	    <profile>
 	        <id>unittests</id>
@@ -352,8 +329,7 @@
 			    <version>${dep.junit-jupiter.version}</version>
 			    <scope>test</scope>
 			</dependency>
-			
-            
+			    
             <!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
 			<dependency>
 			    <groupId>org.assertj</groupId>
@@ -369,12 +345,6 @@
 			    <scope>test</scope>
 			</dependency>
 			
-			<!-- dependency>
-			    <groupId>org.junit.jupiter</groupId>
-			    <artifactId>junit-jupiter-engine</artifactId>
-			    <version>5.3.2</version>
-			    <scope>test</scope>
-			</dependency-->
 			<dependency>
 			    <groupId>org.mockito</groupId>
 			    <artifactId>mockito-core</artifactId>
@@ -405,29 +375,7 @@
 				    <version>5.3.2.RELEASE</version>
 				    <scope>test</scope>
 				</dependency>
-				
-			
-			<!-- dependency>
-			    <groupId>junit</groupId>
-			    <artifactId>junit</artifactId>
-			    <version>4.12</version>
-			    <scope>test</scope>
-			</dependency-->
-			
-			<!-- dependency>
-			    <groupId>org.hamcrest</groupId>
-			    <artifactId>hamcrest-library</artifactId>
-			    <version>1.3</version>
-			    <scope>test</scope>
-			</dependency>
-			<dependency>
-			    <groupId>com.jayway.jsonpath</groupId>
-			    <artifactId>json-path</artifactId>
-			    <version>2.2.0</version>
-			    <scope>test</scope>
-			</dependency-->
-			
-			
+		
         </dependencies>
     </dependencyManagement>
 
@@ -503,24 +451,6 @@
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>2.8.2</version>
                 </plugin>
-                
-                <!-- ===== NEW - Indicateur d'activation des maven profiles ===== -->
-                <!-- plugin>
-		            <groupId>org.apache.maven.plugins</groupId>
-		            <artifactId>maven-help-plugin</artifactId>
-		            <version>3.2.0</version>
-		            <executions>
-		                <execution>
-		                    <id>show-profiles</id>
-		                    <phase>compile</phase>
-		                    <goals>
-		                        <goal>active-profiles</goal>
-		                    </goals>
-		                </execution>
-		            </executions>
-		        </plugin-->
-		        
-		        
 
                 <!-- ===== Test / Reporting ===== -->
                 <plugin>
@@ -554,20 +484,6 @@
 					        </includes>
 					      </configuration>
 					    </execution>
-					    <!-- execution>
-					      <id>inttests</id>
-					      <phase>integration-test</phase>
-					      <goals>
-					        <goal>test</goal>
-					      </goals>
-					      <configuration>
-					        <skipTests>false</skipTests>
-					        <includes>
-					           <include>**/*Test.java</include>
-					           <include>**/*IT.java</include>
-					        </includes>
-					      </configuration>
-					    </execution-->
 					  </executions>
                 </plugin>
                 
@@ -635,9 +551,7 @@
 					      </rule>
 					    </rules>
 					    
-				  	</configuration>
-			     
-			     
+  				  	</configuration>
 			      <executions>
 			      
 			      <!-- =====Configuring jacoco unit test coverage data===== -->
@@ -740,27 +654,10 @@
 							
 						</execution>
                 
-					
 			      </executions>
 			      
-			      <!-- ===== Failing the build ===== -->
-                
-                		
-						  
-						
-			      
-			    </plugin>
-              
-			      
-			      
-						
-			      
-			    
-			    
-	         		    
-			    
-                       
-                
+			   </plugin>
+       
                 <!-- ===== Plugin d'analyse de code Checkstyle ===== -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -804,21 +701,7 @@
                     <artifactId>build-helper-maven-plugin</artifactId>
                     <version>1.10</version>
                 </plugin>
-                
-                 <!-- ===== junit-platform-surefire pour Mockito ===== -->
-                <!--  plugin>
-				    <artifactId>maven-surefire-plugin</artifactId>
-				    <dependencies>
-				        <dependency>
-				             <groupId>org.junit.platform</groupId>
-				             <artifactId>junit-platform-surefire-provider</artifactId>
-				             <version>1.0.1</version>
-				         </dependency>
-				     </dependencies>
-				</plugin-->
-                
-                
-                
+               
             </plugins>
         </pluginManagement>
     </build>
@@ -963,13 +846,7 @@
                         </reports>
                     </reportSet>
                 </reportSets>
-            </plugin>
-            
-           
-            
-            
-            
-            
+            </plugin>         
         </plugins>
     </reporting>
 </project>

@@ -8,8 +8,6 @@ import com.dummy.myerp.business.contrat.BusinessProxy;
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
-import com.dummy.myerp.consumer.dao.impl.DaoProxyImpl;
-import com.dummy.myerp.business.impl.TransactionManager;
 
 
 /**

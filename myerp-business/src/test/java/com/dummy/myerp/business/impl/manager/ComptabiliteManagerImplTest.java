@@ -1,56 +1,22 @@
 package com.dummy.myerp.business.impl.manager;
 
-
-
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import java.util.Locale;
-
-import javax.sql.DataSource;
-
-import org.apache.commons.lang3.ObjectUtils;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito.Then;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.Transactional;
-
-
-import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
-import com.dummy.myerp.business.impl.TransactionManager;
-import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
-import com.dummy.myerp.consumer.dao.impl.DaoProxyImpl;
-import com.dummy.myerp.consumer.dao.impl.db.dao.ComptabiliteDaoImpl;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
-import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
-import com.dummy.myerp.technical.exception.NotFoundException;
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
-
-import junit.framework.AssertionFailedError;
 
 @Configuration("/applicationContext.xml")
 public class ComptabiliteManagerImplTest {
 	
-
 	private ComptabiliteManagerImpl manager = new ComptabiliteManagerImpl();
 	
-
-
     /**
      * Test intégration 
      * Toutes les contraintes unitaires sont respectées sur les attributs de l'Ecriture Comptable
@@ -80,10 +46,7 @@ public class ComptabiliteManagerImplTest {
         
     }
     
-    
-    
-    
-    
+ 
     //======= DONE 3
     /**
      * RG_Compta_1 non respectée 
@@ -113,8 +76,6 @@ public class ComptabiliteManagerImplTest {
     		manager.checkSoldeCompteComptableRG1(vEcritureComptable, cc1, 20);
           });
     }
-    
-    
     
     //====== DONE 1
     /**

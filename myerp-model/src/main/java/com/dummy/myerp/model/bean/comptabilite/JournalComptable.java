@@ -61,26 +61,7 @@ public class JournalComptable {
 
 
     // ==================== Méthodes ====================
-    /**
-     * Corrections multiples erreurs
-     * final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
-        final String vSEP = ", ";
-        vStB.append("{")
-            .append("code='").append(code) ------------------et sur "'" aprés =
-            //.append('\'')------------------------------------------------------erreur sur le signe \ pour escape 
-            //.append(vSEP).append("libelle='").append(libelle).append('\'') ---- erreur sur \ et sur "'" aprés =
     
-    @Override
-    public String toString() {
-        final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
-        final String vSEP = ",";
-        vStB.append("{")
-            .append("code=").append(code)
-            .append(vSEP).append("libelle=").append(libelle)
-            .append("}");
-        return vStB.toString();
-    }
-    */
     
     @Override
     public String toString() {

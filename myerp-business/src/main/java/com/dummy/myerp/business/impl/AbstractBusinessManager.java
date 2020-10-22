@@ -7,8 +7,6 @@ import javax.validation.ValidatorFactory;
 
 import com.dummy.myerp.business.contrat.BusinessProxy;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
-import com.dummy.myerp.consumer.dao.impl.DaoProxyImpl;
-import com.dummy.myerp.business.impl.TransactionManager;
 
 
 

@@ -173,10 +173,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
             String pSeqName, JournalComptable journal, Class<T> pSeqValueClass) {
             
         return this.queryGetSequenceValueJournalPostgreSQL(pDataSourcesId, pSeqName, journal, pSeqValueClass);
-    	
-    	
-    	
-        
+       
         }
     
     /**
@@ -201,8 +198,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
          T vSeqValue = vJdbcTemplate.queryForObject(vSeqSQL, pSeqValueClass);
 
          return vSeqValue;
-    	
-        
+    	  
         }
    
 
@@ -328,12 +324,5 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         vSqlParams.addValue("ecriture_id", pEcritureId);
         vJdbcTemplate.update(SQLdeleteListLigneEcritureComptable, vSqlParams);
     }
-/*
-	@Override
-	public <T> T queryGetSequenceValueJournalPostgreSQL(DataSourcesEnum pDataSourcesId, String pSeqName,
-			JournalComptable journal, Class<T> pSeqValueClass) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	*/
+
 }

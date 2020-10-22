@@ -37,14 +37,7 @@
             </list>
         </property>
     </bean>
-    
-    
-    <!-- bean id="daoProxy" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-        <property name="targetClass" value="com.dummy.myerp.consumer.dao.contrat.DaoProxy"/>
-    </bean-->
-    
-    
-
+  
 	<!-- DaoProxy -->
     <bean id="DaoProxy" class="com.dummy.myerp.consumer.dao.impl.DaoProxyImpl" factory-method="getInstance">
         <property name="comptabiliteDao" ref="ComptabiliteDaoImpl"/>
