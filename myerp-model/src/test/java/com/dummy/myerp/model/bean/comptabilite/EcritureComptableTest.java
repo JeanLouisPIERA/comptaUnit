@@ -41,8 +41,15 @@ public class EcritureComptableTest {
                                                                     vLibelle,
                                                                     vDebit, vCredit);
         EcritureComptable ecriture = new EcritureComptable();
-        LigneEcritureComptable ligne = ecriture.createLigne(1, 200.0, 0.0);
-        Assert.assertTrue("La ligne d'écriture n'a pas été correctement créée", vtest.toString().equals(ligne.toString()));
+        
+        //Test sans erreur
+        LigneEcritureComptable ligneT = ecriture.createLigne(1, 200.0, 0.0);
+        Assert.assertTrue("La ligne d'écriture n'a pas été correctement créée", vtest.toString().equals(ligneT.toString()));
+        
+        //Test avec erreur
+        LigneEcritureComptable ligneF = ecriture.createLigne(2, 300.0, 0.0);
+        Assert.assertFalse("La ligne d'écriture n'a pas été correctement créée", vtest.toString().equals(ligneF.toString()));
+        
     }
 	
 	
@@ -66,9 +73,16 @@ public class EcritureComptableTest {
         vEcriture.getListLigneEcriture().add(vEcriture.createLigne(2, 0.00, 301.00));
         vEcriture.getListLigneEcriture().add(vEcriture.createLigne(2, 40.00, 7.00));
         
-        Double retour = 341.0;
-        Double dvRetour = vEcriture.getTotalCredit().doubleValue();
-        Assert.assertTrue("La calcul du total des montants au débit de cette écriture est faux",dvRetour==retour.doubleValue());
+        //Test sans erreur
+        Double retourTV = 341.0;
+        Double dvRetourDTV = vEcriture.getTotalDebit().doubleValue(); 
+        Assert.assertTrue("La calcul du total des montants au débit de cette écriture est faux",dvRetourDTV==retourTV.doubleValue());
+        
+        //Test sans erreur
+        Double retourTF = 342.0;
+        Double dvRetourDTF = vEcriture.getTotalDebit().doubleValue(); 
+        Assert.assertFalse("La calcul du total des montants au débit de cette écriture est faux",dvRetourDTF==retourTF.doubleValue());
+        
     }
     
     /**
@@ -89,10 +103,17 @@ public class EcritureComptableTest {
         vEcriture.getListLigneEcriture().add(vEcriture.createLigne(1, 100.50, 33.00));
         vEcriture.getListLigneEcriture().add(vEcriture.createLigne(2, 0.00, 301.00));
         vEcriture.getListLigneEcriture().add(vEcriture.createLigne(2, 40.00, 7.00));
+         
+        //Test sans erreur
+        Double retourTV = 341.0;
+        Double dvRetourCTV = vEcriture.getTotalCredit().doubleValue(); 
+        Assert.assertTrue("La calcul du total des montants au crédit de cette écriture est faux",dvRetourCTV==retourTV.doubleValue());
         
-        Double retour = 341.0;
-        Double dvRetour = vEcriture.getTotalCredit().doubleValue();
-        Assert.assertTrue("La calcul du total des montants au crédit de cette écriture est faux",dvRetour==retour.doubleValue());
+        //Test sans erreur
+        Double retourTF = 342.0;
+        Double dvRetourCTF = vEcriture.getTotalCredit().doubleValue(); 
+        Assert.assertFalse("La calcul du total des montants au crédit de cette écriture est faux",dvRetourCTF==retourTF.doubleValue());
+        
         
     }
 

@@ -28,8 +28,14 @@ public class CompteComptableUT {
 	public void checkCompteToString() {
 		
 		CompteComptable compte = new CompteComptable(608,"Achats");
+		
+		//Test sans erreur
 		String test = "CompteComptable{numero=608, libelle='Achats'}";
 		Assert.assertTrue("Problème sur la méthode toString de la classe CompteComptable"+ "test=" + test + "compte=" + compte, compte.toString().equals(test));
+		
+		//Test avec erreur
+		String testF = "CompteComptable{numero=707, libelle='Ventes'}";
+		Assert.assertFalse("Problème sur la méthode toString de la classe CompteComptable"+ "test=" + test + "compte=" + compte, compte.toString().equals(testF));
 		
 	}
 	
@@ -43,12 +49,17 @@ public class CompteComptableUT {
 	public void checkGetByNumero() {
 		
 			CompteComptable vTest = new CompteComptable();
-			vTest.setNumero(607);
 			
 			List<CompteComptable> testList = new ArrayList<CompteComptable>();
 			testList.add(vTest);
 			
+			//Test sans erreur
+			vTest.setNumero(607);
 			Assert.assertTrue("Problème sur la méthode GetByNumero",(vTest.equals(CompteComptable.getByNumero(testList, 607))));
+			
+			//Test avec erreur
+			vTest.setNumero(608);
+			Assert.assertFalse("Problème sur la méthode GetByNumero",(vTest.equals(CompteComptable.getByNumero(testList, 607))));
 			
 			}	
 	

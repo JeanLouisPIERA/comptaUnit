@@ -23,6 +23,7 @@ import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
+import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
 
 
@@ -80,7 +81,7 @@ public class ComptabiliteDaoImplIT {
 	
 	
 	@Test
-	public void testInsertEcritureComptable() throws ParseException {
+	public void testInsertEcritureComptable() throws ParseException, NotFoundException {
 		
 		
 		DataSourceTransactionManager txManager = (DataSourceTransactionManager) context.getBean("txManagerMYERP");
@@ -90,17 +91,21 @@ public class ComptabiliteDaoImplIT {
 	    List<EcritureComptable> listEcritures = daoProxyImpl.getComptabiliteDao().getListEcritureComptable();		
 		Integer id1=listEcritures.size();
 	    
-		EcritureComptable ecriture= this.setEcritureComptable(null, "AC", "2020-02-01", "Libelle", "AC-2020/00001");
+		EcritureComptable ecriture= this.setEcritureComptable(null, "AC", "2020-02-01", "Libelle", "AC-2020/00100");
 		comptabilite.insertEcritureComptable(ecriture);
         
 		Integer id2 = daoProxyImpl.getComptabiliteDao().getListEcritureComptable().size();
 		
+		//test sans erreur
 		Assertions.assertEquals(1, id2-id1, "Echec du test d'enregistrement d'une écriture comptable en base de données");
+		Assertions.assertTrue(daoProxyImpl.getComptabiliteDao().getEcritureComptableByRef("AC-2020/00100").getReference().toString().equals("AC-2020/00100"), "La création de l'écriture comptable n'a pas été correctement persistée");
 		
-		Assertions.assertDoesNotThrow(() -> {
-			(daoProxyImpl.getComptabiliteDao().getEcritureComptableByRef("AC-2020/00001").getReference()).equals("AC-2020/00001");
-	         }, "La création de l'écriture comptable n'a pas été correctement persistée");
 		
+		//test avec erreur - échec d'insertion d'une écriture nulle
+		EcritureComptable dEcriture = null;
+		Assertions.assertThrows(NullPointerException.class, () -> {
+			comptabilite.insertEcritureComptable(dEcriture);
+	         });
 		
 		txManager.rollback(status);
 		
@@ -113,27 +118,29 @@ public class ComptabiliteDaoImplIT {
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 	    TransactionStatus status = txManager.getTransaction(def);
 				
-		EcritureComptable ecriture= this.setEcritureComptable(null, "AC","2020-02-01" , "Libelle", "AC-2020/00001");
+		EcritureComptable ecriture= this.setEcritureComptable(null, "AC","2020-02-01" , "Libelle", "AC-2020/01000");
 		comptabilite.insertEcritureComptable(ecriture);
 		
-		EcritureComptable ecritureUpdate = this.setEcritureComptable(ecriture, "BQ", "2021-02-01", "LibelleUpdate", "AC-2021/00001");  
+		EcritureComptable ecritureUpdate = this.setEcritureComptable(ecriture, "BQ", "2021-02-01", "LibelleUpdate", "AC-2021/01001");  
 		comptabilite.updateEcritureComptable(ecritureUpdate);
 		
-		Assertions.assertThrows(NotFoundException.class, () -> {
-			comptabilite.getEcritureComptableByRef("AC-2020/00001");
-		     });
-		
+		//test sans erreur
 		Assertions.assertDoesNotThrow(() -> {
 			daoProxyImpl.getComptabiliteDao().getEcritureComptableByRef(ecriture.getReference());
-			Assertions.assertEquals("AC-2021/00001", daoProxyImpl.getComptabiliteDao().getEcritureComptableByRef(ecriture.getReference()).getReference());
+			Assertions.assertEquals("AC-2021/01001", daoProxyImpl.getComptabiliteDao().getEcritureComptableByRef(ecriture.getReference()).getReference());
 	         }, "La mise à jour de l'écriture comptable n'a pas été correctement persistée");
+		
+		//test avec erreur
+		Assertions.assertThrows(NotFoundException.class, () -> {
+			comptabilite.getEcritureComptableByRef("AC-2020/01000");
+		     });
 		
 		txManager.rollback(status);
 		
 	}
 	
 	@Test
-	public void testInsertListEcritureComptable() throws ParseException, NotFoundException{
+	public void testInsertListLignesEcritureComptable() throws ParseException, NotFoundException{
 	
 	
 		DataSourceTransactionManager txManager = (DataSourceTransactionManager) context.getBean("txManagerMYERP");
@@ -146,9 +153,16 @@ public class ComptabiliteDaoImplIT {
 		this.createListLigneEcritureComptable(ecritureTest);
 		comptabilite.insertListLigneEcritureComptable(ecritureTest);
 		
+		//test sans erreur
 		Assertions.assertDoesNotThrow(() -> {
 			Assert.assertTrue(daoProxyImpl.getComptabiliteDao().getEcritureComptableByRef(ecriture.getReference()).getListLigneEcriture().size()==2);
 			}, "La mise à jour des lignes de l'écriture comptable n'a pas été correctement persistée");
+		
+		//test avec erreur - échec d'insertion de liste des lignes d'écriture d'une écriture nulle
+				EcritureComptable dEcriture = null;
+				Assertions.assertThrows(NullPointerException.class, () -> {
+					comptabilite.insertListLigneEcritureComptable(dEcriture);
+			         });
 		
 		txManager.rollback(status);
 		
@@ -164,16 +178,24 @@ public class ComptabiliteDaoImplIT {
 		EcritureComptable ecriture= this.setEcritureComptable(null, "AC","2020-02-01" , "Libelle", "AC-2020/00005");
 		comptabilite.insertEcritureComptable(ecriture);
 		
+		//test sans erreur
 		Assertions.assertThrows(NotFoundException.class, () -> {
 			comptabilite.deleteEcritureComptable(ecriture.getId()); 
 			daoProxyImpl.getComptabiliteDao().getEcritureComptable(ecriture.getId());
 		     });
+		
+		//test avec erreur
+		List<EcritureComptable> listEcritures = daoProxyImpl.getComptabiliteDao().getListEcritureComptable();		
+		Integer id1=listEcritures.size();
+		comptabilite.deleteEcritureComptable(-10); 
+		Integer id2 = daoProxyImpl.getComptabiliteDao().getListEcritureComptable().size();
+		Assertions.assertEquals(0, id2-id1, "Problème : une Ecriture Comptable inexistante ne peut pas être supprimée");
 	
 		txManager.rollback(status);
 	}
 
 	@Test 
-	public void testDeleteListLigneEcritureComptable() throws ParseException{
+	public void testDeleteListLignesEcritureComptable() throws ParseException{
 		
 		DataSourceTransactionManager txManager = (DataSourceTransactionManager) context.getBean("txManagerMYERP");
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
@@ -183,9 +205,17 @@ public class ComptabiliteDaoImplIT {
 		comptabilite.insertEcritureComptable(ecriture);
 		comptabilite.deleteListLigneEcritureComptable(ecriture.getId()); 
 		
+		//test sans erreur
 		Assertions.assertDoesNotThrow(() -> {
 			 Assert.assertTrue(daoProxyImpl.getComptabiliteDao().getEcritureComptable(ecriture.getId()).getListLigneEcriture().isEmpty());
 	         }, "La liste des lignes d'écriture n'a pas été correctement supprimée");
+		
+		
+		//test avec erreur - échec de suppresion d'une liste de lignes d'une écriture nulle
+				EcritureComptable dEcriture = null;
+				Assertions.assertThrows(NullPointerException.class, () -> {
+					comptabilite.deleteListLigneEcritureComptable(dEcriture.getId()); 
+			         });
 		
 	
 		txManager.rollback(status);

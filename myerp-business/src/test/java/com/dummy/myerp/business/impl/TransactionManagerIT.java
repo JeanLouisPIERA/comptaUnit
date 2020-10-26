@@ -42,8 +42,12 @@ public class TransactionManagerIT {
 		TransactionStatus status = this.createStatus();
 		pTransactionManager.beginTransactionMyERP();
         
+		//test sans erreur
         Assertions.assertTrue(status.isNewTransaction()==true, "Echec du test la méthode beginTransactionMyERP : la transaction n'a pas été créée");
-    }
+    
+        //test avec erreur
+        Assertions.assertFalse(status.isNewTransaction()==false, "Echec du test la méthode beginTransactionMyERP : la transaction n'a pas été créée");
+	}
 	
 	@Test
 	public void commitMyERP() {
@@ -51,7 +55,11 @@ public class TransactionManagerIT {
 		TransactionStatus status = this.createStatus();
 		pTransactionManager.commitMyERP(status);
 		
+		//test sans erreur
         Assertions.assertTrue(status.isCompleted()==true, "Echec du test sur la méthode commitMyERP : la transaction n'a pas été committée");
+        
+        //test avec erreur
+        Assertions.assertFalse(status.isCompleted()==false, "Echec du test sur la méthode commitMyERP : la transaction n'a pas été committée");
     }
 	
 	@Test
@@ -60,7 +68,11 @@ public class TransactionManagerIT {
 		TransactionStatus status = this.createStatus();
 		pTransactionManager.rollbackMyERP(status);
 		
+		//test avec erreur
         Assertions.assertTrue(status.isCompleted()==true, "Echec du test sur la méthode rollbackMyERP : la transaction n'a pas été rolled-back");
+        
+        //test sans erreur
+        Assertions.assertFalse(status.isCompleted()==false, "Echec du test sur la méthode rollbackMyERP : la transaction n'a pas été rolled-back");
     }
 	
 }

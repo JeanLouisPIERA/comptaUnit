@@ -10,6 +10,7 @@ import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
+import com.dummy.myerp.technical.exception.NotFoundException;
 
 
 /**
@@ -91,18 +92,7 @@ public interface ComptabiliteManager {
      */
     // DONE tests à compléter
     void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException;
-    
-    /**
-     * DONE 3 ====== RG_Compta_1 : Le solde d'un compte comptable est égal à la somme des montants au débit des lignes d'écriture 
-  	 * diminuées de la somme des montants au crédit. 
-  	 * Si le résultat est positif, le solde est dit "débiteur", si le résultat est négatif le solde est dit "créditeur".
-     * @param pEcritureComptable
-     * @param pCompteComptable
-     * @param solde
-     * @throws FunctionalException
-     */
-      void checkSoldeCompteComptableRG1(EcritureComptable pEcritureComptable, CompteComptable pCompteComptable, Integer solde) 
-    		  throws FunctionalException; 
+
      
       
       /**
@@ -135,6 +125,8 @@ public interface ComptabiliteManager {
      * Supprime l'écriture comptable d'id {@code pId}.
      *
      * @param pId l'id de l'écriture
+     * @throws FunctionalException 
+     * @throws NotFoundException 
      */
-    void deleteEcritureComptable(Integer pId);
+    void deleteEcritureComptable(Integer pId) throws FunctionalException, NotFoundException;
 }

@@ -25,6 +25,7 @@ import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
+import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
 
 public class ComptabiliteManagerImplIT {
@@ -45,7 +46,7 @@ public class ComptabiliteManagerImplIT {
         String sdateTest = "2020/02/01";
         Date dateTest = simpleDateFormat.parse(sdateTest);
         vEcritureComptable.setDate(dateTest);
-        vEcritureComptable.setReference("AC-2020/00011");
+        vEcritureComptable.setReference("AC-2020/00005");
         vEcritureComptable.setLibelle("Libelle");
         
         CompteComptable compte = new CompteComptable();
@@ -70,11 +71,15 @@ public class ComptabiliteManagerImplIT {
 	   	
 	   	BusinessProxyImpl businessProxyImpl = BusinessProxyImpl.getInstance(daoProxy, pTransactionManager);
 	   	ComptabiliteManagerImpl comptaManager = (ComptabiliteManagerImpl) businessProxyImpl.getComptabiliteManager();
+	   	
+	   	Assert.assertTrue(comptaManager.getListCompteComptable().get(0).getNumero()==401);
+	    Assert.assertFalse(comptaManager.getListJournalComptable().get(0).getLibelle().toString().equals("AC"));	
+	    Assert.assertFalse(comptaManager.getListEcritureComptable().get(0).getReference().toString().equals("BQ-2016/00005"));
 		
-	    Assert.assertFalse(comptaManager.getListCompteComptable().isEmpty());
+	   	Assert.assertFalse(comptaManager.getListCompteComptable().isEmpty());
 	    Assert.assertFalse(comptaManager.getListJournalComptable().isEmpty());	
 	    Assert.assertFalse(comptaManager.getListEcritureComptable().isEmpty());
-	  
+	    
 	}
 	    
    @Test
@@ -88,13 +93,21 @@ public class ComptabiliteManagerImplIT {
 	   	BusinessProxyImpl businessProxyImpl = BusinessProxyImpl.getInstance(daoProxy, pTransactionManager);
 	   	ComptabiliteManagerImpl comptaManager = (ComptabiliteManagerImpl) businessProxyImpl.getComptabiliteManager();
 	   
+	   	//Test sans erreur
 	   	EcritureComptable vEcritureComptable = this.createEcritureComptable();
         
         Assertions.assertDoesNotThrow(() -> {
         	comptaManager.insertEcritureComptable(vEcritureComptable);
-        	comptaManager.checkEcritureComptableContext(vEcritureComptable);; 
+        	comptaManager.checkEcritureComptableContext(vEcritureComptable);
             }, "L'écriture comptable ne respecte pas les contraintes de validation");
         
+        //Test avec erreur
+        vEcritureComptable.setReference("AC-2021/00012");
+       
+        Assertions.assertThrows(FunctionalException.class, () -> {
+        	 comptaManager.insertEcritureComptable(vEcritureComptable);
+        	 comptaManager.checkEcritureComptableContext(vEcritureComptable);
+	         });
         
         txManager.rollback(status);
    }
@@ -110,61 +123,58 @@ public class ComptabiliteManagerImplIT {
 	   	BusinessProxyImpl businessProxyImpl = BusinessProxyImpl.getInstance(daoProxy, pTransactionManager);
 	   	ComptabiliteManagerImpl comptaManager = (ComptabiliteManagerImpl) businessProxyImpl.getComptabiliteManager();
 	   	
+	   	//Test sans erreur
 	    EcritureComptable vEcritureComptable = this.createEcritureComptable();
-       
+        
         Assertions.assertDoesNotThrow(() -> {
         	comptaManager.insertEcritureComptable(vEcritureComptable);
            	comptaManager.checkEcritureComptable(vEcritureComptable);;
             }, "L'écriture comptable ne respecte pas les règles de gestion.");
+        
+        //Test avec erreur
+        vEcritureComptable.getListLigneEcriture().clear();
+        
+        Assertions.assertThrows(FunctionalException.class, () -> {
+       	 comptaManager.insertEcritureComptable(vEcritureComptable);
+       	 comptaManager.checkEcritureComptableContext(vEcritureComptable);
+	         });
         
         txManager.rollback(status);
    	
    }
    
    @Test
-	public void testInsertAndUpdateAndDeleteEcritureComptable() throws ParseException {
+	public void testInsertAndUpdateAndDeleteEcritureComptable() throws ParseException, NotFoundException, FunctionalException {
 	   
 	   	
 	   	DaoProxy daoProxy = ConsumerHelper.getDaoProxy();
 	   	
 	   	BusinessProxyImpl businessProxyImpl = BusinessProxyImpl.getInstance(daoProxy, pTransactionManager);
 	   	ComptabiliteManagerImpl comptaManager = (ComptabiliteManagerImpl) businessProxyImpl.getComptabiliteManager();
-	   	
-	   	EcritureComptable vEcritureComptable = new EcritureComptable();
-	   	   JournalComptable journal = new JournalComptable("AC", "Achat");
-	   	   vEcritureComptable.setJournal(journal);
-	       SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.FRANCE);
-	       String sdateTest = "2020/02/01";
-	       Date dateTest = simpleDateFormat.parse(sdateTest);
-	       vEcritureComptable.setDate(dateTest);
-	       vEcritureComptable.setReference("AC-2020/00033");
-	       vEcritureComptable.setLibelle("Libelle");
-	       
-	       CompteComptable compte = new CompteComptable();
-	       compte.setNumero(606);
-	       compte.setNumero(401);
-	       List<LigneEcritureComptable> listLigne = new ArrayList<>();
-	       LigneEcritureComptable ligne1 = vEcritureComptable.createLigne(606, 1243.00, 0.00);
-	       listLigne.add(ligne1);
-	       LigneEcritureComptable ligne2 = vEcritureComptable.createLigne(401, 0.00, 1243.00);
-	       listLigne.add(ligne2);
-	       vEcritureComptable.setListLigneEcriture(listLigne);
-	       
-	       Assertions.assertDoesNotThrow(() -> {
-	       	 comptaManager.insertEcritureComptable(vEcritureComptable);
-	       	 EcritureComptable ecritureRef = daoProxy.getComptabiliteDao().getEcritureComptableByRef(vEcritureComptable.getReference());
-	         }, "L'écriture comptable n'a pas été correctement insérée");
-	       
-	       
+ 	
+        //Test INSERT sans erreur
+		EcritureComptable vEcritureComptable = this.createEcritureComptable();
+        Assertions.assertDoesNotThrow(() -> {
+       	 comptaManager.insertEcritureComptable(vEcritureComptable);
+       	 vEcritureComptable.equals(daoProxy.getComptabiliteDao().getEcritureComptableByRef(vEcritureComptable.getReference()));
+         }, "L'écriture comptable n'a pas été correctement insérée");
+        
+        //Test INSERT avec erreur
+         vEcritureComptable.getListLigneEcriture().clear();
+         Assertions.assertFalse(vEcritureComptable.equals(daoProxy.getComptabiliteDao().getEcritureComptableByRef(vEcritureComptable.getReference())), 
+    		   "L'écriture n'a pas été correctement insérée");
+
+         
 	       JournalComptable journalUpdate = new JournalComptable("BQ", "Banque");
 	   	   vEcritureComptable.setJournal(journalUpdate);
 	       String sdateUpdate = "2021/02/01";
+	       SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.FRANCE);
 	       Date dateUpdate = simpleDateFormat.parse(sdateUpdate);
 	       vEcritureComptable.setDate(dateUpdate);
-	       vEcritureComptable.setReference("AC-2021/00004");
+	       vEcritureComptable.setReference("AC-2021/000038");
 	       vEcritureComptable.setLibelle("Libelle1");
 	       
-	       
+	       //Test UPDATE sans erreur 
 	       Assertions.assertDoesNotThrow(() -> {
 	       	 comptaManager.updateEcritureComptable(vEcritureComptable);
 	       	 EcritureComptable ecritureRef = daoProxy.getComptabiliteDao().getEcritureComptable(vEcritureComptable.getId());
@@ -173,12 +183,23 @@ public class ComptabiliteManagerImplIT {
 	       	 Assert.assertTrue(ecritureRef.getDate().equals(vEcritureComptable.getDate()));
 	       	 Assert.assertTrue(ecritureRef.getLibelle().equals(vEcritureComptable.getLibelle()));
 	         }, "L'écriture comptable n'a pas été correctement mise à jour");
-	         
 	       
+	       //Test UPDATE avec erreur 
+	       EcritureComptable ecritureComptableRef = this.createEcritureComptable();
+	       Assertions.assertFalse(ecritureComptableRef.equals(daoProxy.getComptabiliteDao().getEcritureComptableByRef(vEcritureComptable.getReference())), 
+	    		   "L'écriture n'a pas été correctement insérée");  
+	       
+	       //Test DELETE sans erreur - on recherche une écriture qui vient bien d'être supprimée -> delete a bien fonctionné
 	       Assertions.assertThrows(NotFoundException.class, () -> {
 		       	 comptaManager.deleteEcritureComptable(vEcritureComptable.getId());
 		         EcritureComptable ecritureRef = daoProxy.getComptabiliteDao().getEcritureComptableByRef(vEcritureComptable.getReference());
 		         });
+	       
+	      //Test DELETE avec erreur  - on veut supprimer une écriture qui n'existe pas -> delete n'a pas fonctionné
+	       Assertions.assertThrows(NotFoundException.class, () -> {
+		       	 comptaManager.deleteEcritureComptable(-10);
+		         });
+		      
 	       
 	   }
    

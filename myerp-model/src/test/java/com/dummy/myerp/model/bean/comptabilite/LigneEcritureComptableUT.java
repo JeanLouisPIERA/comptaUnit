@@ -26,11 +26,21 @@ public class LigneEcritureComptableUT {
 		ligne.setDebit(new BigDecimal(100.0));
 		ligne.setCredit(new BigDecimal (0.0));
 		
-	
+		//Test sans erreur
 		String test = "LigneEcritureComptable{compteComptable=CompteComptable{numero=607, libelle='null'}, libelle='pLibelle', debit=100, credit=0}";
-		
 		Assert.assertTrue("Problème sur la méthode toString de la classe LigneEcritureComptable" + "LIGNE=" + ligne + "TEST=" + test, ligne.toString().equals(test));
 		
+		//Test avec erreur
+				String testFN = "LigneEcritureComptable{compteComptable=CompteComptable{numero=606, libelle='null'}, libelle='pLibelle', debit=100, credit=0}";
+				Assert.assertFalse("Problème sur la méthode toString de la classe LigneEcritureComptable" + "LIGNE=" + ligne + "TEST=" + test, ligne.toString().equals(testFN));
+		
+				//Test avec erreur
+				String testFL = "LigneEcritureComptable{compteComptable=CompteComptable{numero=607, libelle='false'}, libelle='pLibelle', debit=100, credit=0}";
+				Assert.assertFalse("Problème sur la méthode toString de la classe LigneEcritureComptable" + "LIGNE=" + ligne + "TEST=" + test, ligne.toString().equals(testFL));		
+		
+		
+				//Test avec erreur à itérer autant de fois que d'éléments dans les appends du StringBuilder		
+				
 	}
 	
 	 

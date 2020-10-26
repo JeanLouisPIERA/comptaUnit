@@ -49,7 +49,7 @@ public class EcritureComptableUT {
 	    listLigneEcriture.add(ecriture.createLigne(1, 1234.00, 0.00));	
         listLigneEcriture.add(ecriture.createLigne(2, 0.00, 1234.00));
 	    			
-				
+		//Test sans erreur		
 		String stringTest = "EcritureComptable{id=20, journal=JournalComptable{code='AC', libelle='null'}, reference='AC-2020/00001', date=Sat Feb 01 00:00:00 CET 2020, libelle='pLibelle', totalDebit=1234, totalCredit=1234, listLigneEcriture=[\n"
 			+"LigneEcritureComptable{compteComptable=CompteComptable{numero=1, libelle='null'}, libelle='1234', debit=1234, credit=0}"+"\n"
 			+"LigneEcritureComptable{compteComptable=CompteComptable{numero=2, libelle='null'}, libelle='-1234', debit=0, credit=1234}"
@@ -57,7 +57,24 @@ public class EcritureComptableUT {
 			
 		Assert.assertTrue("La méthode toString ne fonctionne pas pour la classe EcritureComptable" + "ECRITURE=" + ecriture + "STRINGTEST=" + stringTest, stringTest.equals(ecriture.toString()));
 		
+		//Test avec erreur sur la date	
+		String stringTestFD = "EcritureComptable{id=20, journal=JournalComptable{code='AC', libelle='null'}, reference='AC-2020/00001', date=Sat Feb 01, libelle='pLibelle', totalDebit=1234, totalCredit=1234, listLigneEcriture=[\n"
+			+"LigneEcritureComptable{compteComptable=CompteComptable{numero=1, libelle='null'}, libelle='1234', debit=1234, credit=0}"+"\n"
+			+"LigneEcritureComptable{compteComptable=CompteComptable{numero=2, libelle='null'}, libelle='-1234', debit=0, credit=1234}"
+			+"\n]"+"}";
+			
+		Assert.assertFalse("Probleme DATE : La méthode toString ne fonctionne pas pour la classe EcritureComptable" + "ECRITURE=" + ecriture + "STRINGTEST=" + stringTestFD, stringTestFD.equals(ecriture.toString()));
 		
+		//Test avec erreur surID		
+				String stringTestFID = "EcritureComptable{id=18, journal=JournalComptable{code='AC', libelle='null'}, reference='AC-2020/00001', date=Sat Feb 01 00:00:00 CET 2020, libelle='pLibelle', totalDebit=1234, totalCredit=1234, listLigneEcriture=[\n"
+					+"LigneEcritureComptable{compteComptable=CompteComptable{numero=1, libelle='null'}, libelle='1234', debit=1234, credit=0}"+"\n"
+					+"LigneEcritureComptable{compteComptable=CompteComptable{numero=2, libelle='null'}, libelle='-1234', debit=0, credit=1234}"
+					+"\n]"+"}";
+					
+				Assert.assertFalse("Problème IDLa méthode toString ne fonctionne pas pour la classe EcritureComptable" + "ECRITURE=" + ecriture + "STRINGTEST=" + stringTestFID, stringTestFID.equals(ecriture.toString()));		
+		
+		//Test avec erreur à itérer autant de fois que d'éléments dans les appends du StringBuilder
+	
 	}
 	
 

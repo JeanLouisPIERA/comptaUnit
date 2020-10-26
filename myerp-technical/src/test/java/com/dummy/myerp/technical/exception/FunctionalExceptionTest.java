@@ -14,7 +14,11 @@ public class FunctionalExceptionTest {
 	
 	@Test
 	public void checkMessageFunctionalException() {
+		//test sans erreur
 		Assert.assertTrue("Le message de l'exception n'a pas été correctement envoyé", new FunctionalException("pMessage").getMessage().equals(new Exception("pMessage").getMessage()));
+	
+		//test avec erreur
+				Assert.assertFalse("Le message de l'exception n'a pas été correctement envoyé", new FunctionalException("pMessage").getMessage().equals(new Exception("vMessage").getMessage()));
 	}
 	
 

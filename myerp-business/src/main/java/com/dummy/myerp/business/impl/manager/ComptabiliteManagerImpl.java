@@ -196,34 +196,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         
     }
     
-    //====================================================================================================================
     
-    /**
-     * DONE 3 ====== RG_Compta_1 : Le solde d'un compte comptable est égal à la somme des montants au débit des lignes d'écriture 
-  	 * diminuées de la somme des montants au crédit. 
-  	 * Si le résultat est positif, le solde est dit "débiteur", si le résultat est négatif le solde est dit "créditeur".
-     * @param pEcritureComptable
-     * @param pCompteComptable
-     * @param solde
-     * @throws FunctionalException
-     */
-    public void checkSoldeCompteComptableRG1(EcritureComptable pEcritureComptable, CompteComptable pCompteComptable, Integer solde) throws FunctionalException  {
-    	Integer soldeCredit = 0;
-    	Integer soldeDebit = 0;
-        for (LigneEcritureComptable vLigneEcritureComptable : pEcritureComptable.getListLigneEcriture()) {
-            if(vLigneEcritureComptable.getCompteComptable().equals(pCompteComptable)) {
-            	if(vLigneEcritureComptable.getCredit()!=null) soldeCredit += vLigneEcritureComptable.getCredit().intValue();
-            	if(vLigneEcritureComptable.getDebit()!=null) soldeDebit += vLigneEcritureComptable.getDebit().intValue();
-            }
-        }
-        Integer result = soldeCredit - soldeDebit;
-        if(solde!=result) 
-        	throw new FunctionalException("La RG Compta 1 n'est pas respectée : le solde d'un compte comptable n'est pas égal \n"
-        			+ " à la somme des montants au débit des lignes d'écriture diminuées de la somme des montants au crédit. "); 
-        
-    }
-    
-    //========================================================================================================================
 
     /**
      * Vérifie que l'Ecriture comptable respecte les règles de gestion liées au contexte
@@ -292,11 +265,13 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
     /**
      * {@inheritDoc}
+     * @throws NotFoundException 
      */
     @Override
-    public void deleteEcritureComptable(Integer pId) {
+    public void deleteEcritureComptable(Integer pId) throws FunctionalException, NotFoundException{
         TransactionStatus vTS = getTransactionManager().beginTransactionMyERP();
         try {
+        	getDaoProxy().getComptabiliteDao().getEcritureComptable(pId);// Erreur à ajouter pour lancer une exception sur une Id inexistante
             getDaoProxy().getComptabiliteDao().deleteEcritureComptable(pId);
             getTransactionManager().commitMyERP(vTS);
             vTS = null;
