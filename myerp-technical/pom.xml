@@ -361,7 +361,7 @@
 					        </excludes>
 					        <limits>
 					          <limit>
-					            <counter>LINE</counter>
+					            <counter>INSTRUCTION</counter>
 					            <value>COVEREDRATIO</value>
 					            <minimum>0.75</minimum>
 					          </limit>
