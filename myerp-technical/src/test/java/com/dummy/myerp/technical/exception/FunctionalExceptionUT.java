@@ -41,18 +41,12 @@ public class FunctionalExceptionUT {
 	@Test
 	public void checkCauseAndMessageFunctionalException() {
 		Throwable pcause = new Throwable();
-		Exception exception = new Exception("pMessage");
+		Exception exception = new Exception();
+		FunctionalException functionalException = new FunctionalException("pMessage", pcause);
 		exception.initCause(pcause);
 		
-		//test sans erreur
-		FunctionalException functionalException = new FunctionalException("pMessage");
-		Assert.assertTrue("Le message de l'exception n'a pas été correctement envoyé", functionalException.getMessage().equals(exception.getMessage()));
-		
-		
-		//test avecerreur
-		FunctionalException functionalExceptionF = new FunctionalException("vMessage");
-				Assert.assertFalse("Le message de l'exception n'a pas été correctement envoyé", functionalExceptionF.getMessage().equals(exception.getMessage()));
-				
+		Assert.assertTrue("Le message de l'exception n'a pas été correctement envoyé", new FunctionalException("pMessage").getMessage().equals(new Exception("pMessage").getMessage()));
+		Assert.assertTrue("Problème dans la reconnaissance de l'exception par FunctionalException", functionalException.getCause().toString().equals(exception.getCause().toString())); 
 		
 	}
 

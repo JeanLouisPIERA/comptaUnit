@@ -35,18 +35,12 @@ public class TechnicalExceptionUT {
 	@Test
 	public void checkCauseAndMessageTechnicalException() {
 		Throwable pcause = new Throwable();
-		Exception exception = new Exception("pMessage");
+		Exception exception = new Exception();
+		TechnicalException technicalException = new TechnicalException("pMessage", pcause);
 		exception.initCause(pcause);
 		
-		//test sans erreur
-		TechnicalException technicalException = new TechnicalException("pMessage");
-		Assert.assertTrue("Le message de l'exception n'a pas été correctement envoyé", technicalException.getMessage().equals(exception.getMessage()));
-		
-		
-		//test avecerreur
-		TechnicalException technicalExceptionF = new TechnicalException("vMessage");
-				Assert.assertFalse("Le message de l'exception n'a pas été correctement envoyé", technicalExceptionF.getMessage().equals(exception.getMessage()));
-				
+		Assert.assertTrue("Le message de l'exception n'a pas été correctement envoyé", new TechnicalException("pMessage").getMessage().equals(new Exception("pMessage").getMessage()));
+		Assert.assertTrue("Problème dans la reconnaissance de l'exception par FunctionalException", technicalException.getCause().toString().equals(exception.getCause().toString())); 
 		
 	}
 

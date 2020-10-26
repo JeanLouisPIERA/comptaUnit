@@ -50,19 +50,15 @@ public class NotFoundExceptionUT {
 		@Test
 		public void checkCauseAndMessageNotFoundException() {
 			Throwable pcause = new Throwable();
-			Exception exception = new Exception("pMessage");
+			Exception exception = new Exception();
+			NotFoundException notfoundException = new NotFoundException("pMessage", pcause);
 			exception.initCause(pcause);
 			
-			//test sans erreur
-			NotFoundException notFoundException = new NotFoundException("pMessage");
-			Assert.assertTrue("Le message de l'exception n'a pas été correctement envoyé", notFoundException.getMessage().equals(exception.getMessage()));
-			
-			
-			//test avec erreur
-			NotFoundException notFoundExceptionF = new NotFoundException("vMessage");
-					Assert.assertFalse("Le message de l'exception n'a pas été correctement envoyé", notFoundExceptionF.getMessage().equals(exception.getMessage()));
-					
-			
+			Assert.assertTrue("Le message de l'exception n'a pas été correctement envoyé", new NotFoundException("pMessage").getMessage().equals(new Exception("pMessage").getMessage()));
+			Assert.assertTrue("Problème dans la reconnaissance de l'exception par FunctionalException", notfoundException.getCause().toString().equals(exception.getCause().toString())); 
+						
 		}
+			
+	
 
 }
